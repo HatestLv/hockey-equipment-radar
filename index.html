@@ -6,8 +6,8 @@
 <title>HOCKEY EQUIPMENT RADAR — Cenu un modeļu radars</title>
 <script>
   (function(){
-    const saved = localStorage.getItem('hsr_theme') || 'dark';
-    document.documentElement.setAttribute('data-theme', saved);
+    const savedTheme = localStorage.getItem('hsr_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
   })();
 </script>
 <style>
@@ -35,7 +35,6 @@
   --img-grad:radial-gradient(ellipse at 50% 85%,#2e3342,var(--card) 70%);
   --switch-bg:#15171e;
   --switch-border:#343949;
-  --store-hover-bg:rgba(255,255,255,.03);
   --shadow-header:rgba(0,0,0,.55);
   --profile-card-bg:#181a21;
 }
@@ -64,7 +63,6 @@
   --img-grad:radial-gradient(ellipse at 50% 85%,#e2e8f0,#ffffff 70%);
   --switch-bg:#e2e8f0;
   --switch-border:#cbd5e1;
-  --store-hover-bg:rgba(0,0,0,.03);
   --shadow-header:rgba(0,0,0,.06);
   --profile-card-bg:#ffffff;
 }
@@ -72,36 +70,217 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--body-bg);background-attachment:fixed;color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;transition:background-color .2s ease,color .2s ease}
 a{color:var(--link)}
-.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+
+/* HEADER - 2 LĪMEŅI */
 header{position:relative;z-index:5;background:var(--header-bg);border-bottom:2px solid var(--header-border);box-shadow:0 8px 24px var(--shadow-header);transition:all .2s ease}
-header .wrap{display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding-top:14px;padding-bottom:14px}
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);font-weight:900;letter-spacing:.04em;font-size:18px}
+.header-row-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:12px;padding-bottom:10px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:900;letter-spacing:.04em;font-size:17px;flex-shrink:0}
 
 /* LOGO LIELUMS UN PĀRSLĒGŠANA */
-.brand-logo-wrap{display:flex;align-items:center;min-height:58px}
-.brand-logo{height:clamp(50px,4.6vw,62px);width:auto;max-width:280px;object-fit:contain;display:block}
+.brand-logo-wrap{display:flex;align-items:center;min-height:48px}
+.brand-logo{height:clamp(44px,4.2vw,54px);width:auto;max-width:260px;object-fit:contain;display:block}
 [data-theme="light"] .brand-logo{filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))}
 
-.logo-light { display: none !important; }
-.logo-dark { display: block !important; }
-[data-theme="light"] .logo-dark { display: none !important; }
-[data-theme="light"] .logo-light { display: block !important; }
+.logo-light{display:none !important}
+.logo-dark{display:block !important}
+[data-theme="light"] .logo-dark{display:none !important}
+[data-theme="light"] .logo-light{display:block !important}
 
-.brand-logo-err{display:none;border:1px dashed var(--red);background:rgba(237,32,39,.12);color:#fca5a5;padding:6px 12px;border-radius:6px;font-size:12px;font-family:monospace;gap:6px;align-items:center}
-.brand-text{display:inline-flex;align-items:center;gap:10px}
-.brand-icon{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;background:#ed2027;color:#fff;border-radius:8px;box-shadow:0 0 14px rgba(237,32,39,.45)}
+.brand-logo-err{display:none;border:1px dashed var(--red);background:rgba(237,32,39,.12);color:#fca5a5;padding:4px 8px;border-radius:6px;font-size:11px;font-family:monospace;gap:6px;align-items:center}
+.brand-text{display:inline-flex;align-items:center;gap:8px}
+.brand-icon{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;background:#ed2027;color:#fff;border-radius:8px;box-shadow:0 0 12px rgba(237,32,39,.45)}
 
-/* NAVIGĀCIJAS POGAS */
-nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+/* MEKLĒŠANAS JOSLA */
+.header-search{flex:1;max-width:440px;position:relative;display:flex;align-items:center}
+.header-search input{
+  width:100%;
+  height:36px;
+  background:var(--input-bg);
+  border:1px solid var(--switch-border);
+  color:var(--text);
+  border-radius:99px;
+  padding:0 36px 0 14px;
+  font-size:13px;
+  outline:none;
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+.header-search input:focus{
+  border-color:var(--red);
+  box-shadow:0 0 0 2px rgba(237,32,39,.18);
+}
+.search-icon{position:absolute;right:12px;color:var(--muted);pointer-events:none;display:grid;place-items:center}
+
+/* HEADER LABĀS PUSĒJĀS POGAS */
+.header-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+
+/* VALODU POGA & DROPDOWN */
+.lang-box{position:relative}
+.lang-btn{
+  background:var(--switch-bg);
+  border:1px solid var(--switch-border);
+  color:var(--text);
+  height:32px;
+  padding:0 10px;
+  border-radius:99px;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  cursor:pointer;
+  font-size:12px;
+  font-weight:700;
+  transition:all .2s ease;
+  outline:none;
+}
+.lang-btn:hover, .lang-btn.active{border-color:var(--red);transform:scale(1.04)}
+.lang-menu{
+  position:absolute;
+  top:calc(100% + 8px);
+  right:0;
+  width:150px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:12px;
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+  padding:6px;
+  z-index:100;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(-6px);
+  transition:all .2s ease;
+}
+.lang-menu.open{opacity:1;visibility:visible;transform:translateY(0)}
+.lang-opt{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  width:100%;
+  padding:8px 10px;
+  border:none;
+  background:transparent;
+  color:var(--text);
+  font-size:13px;
+  font-weight:600;
+  text-align:left;
+  cursor:pointer;
+  border-radius:8px;
+  transition:background .15s ease;
+}
+.lang-opt:hover{background:var(--card-hover);color:var(--red)}
+.lang-opt.active{background:rgba(237,32,39,.12);color:var(--red)}
+
+/* TĒMAS SLĒDZIS */
+.theme-switch{
+  position:relative;
+  width:64px;
+  height:32px;
+  border-radius:99px;
+  background:var(--switch-bg);
+  border:1px solid var(--switch-border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:2px;
+  cursor:pointer;
+  box-shadow:inset 0 2px 4px rgba(0,0,0,.25);
+  transition:all .2s ease;
+  outline:none;
+}
+.theme-switch:hover{transform:scale(1.05);border-color:var(--red)}
+.ts-icon{width:26px;height:26px;display:grid;place-items:center;z-index:2;transition:opacity .2s,color .2s}
+.ts-thumb{
+  position:absolute;
+  top:2px;
+  left:2px;
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  box-shadow:0 2px 6px rgba(0,0,0,.35);
+  transition:transform .28s cubic-bezier(.34,1.56,.64,1);
+  z-index:1;
+}
+[data-theme="dark"] .ts-moon{color:#f8fafc;opacity:1}
+[data-theme="dark"] .ts-sun{color:var(--muted);opacity:.35}
+[data-theme="dark"] .ts-thumb{transform:translateX(32px);background:linear-gradient(135deg,#ed2027,#991b1b)}
+[data-theme="light"] .ts-sun{color:#d97706;opacity:1}
+[data-theme="light"] .ts-moon{color:var(--muted);opacity:.35}
+[data-theme="light"] .ts-thumb{transform:translateX(0px);background:linear-gradient(135deg,#fbbf24,#f59e0b)}
+
+/* IZVĒLNES POGA & DROPDOWN */
+.menu-box{position:relative}
+.menu-btn{
+  background:var(--switch-bg);
+  border:1px solid var(--switch-border);
+  color:var(--text);
+  width:38px;
+  height:32px;
+  border-radius:10px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:4px;
+  cursor:pointer;
+  padding:0;
+  transition:all .2s ease;
+}
+.menu-btn:hover, .menu-btn.active{border-color:var(--red);color:var(--red);transform:scale(1.04)}
+.menu-btn span{display:block;width:17px;height:2px;background:currentColor;border-radius:2px;transition:all .2s ease}
+
+.dropdown-menu{
+  position:absolute;
+  top:calc(100% + 8px);
+  right:0;
+  width:190px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:12px;
+  box-shadow:0 12px 32px rgba(0,0,0,.35);
+  padding:6px;
+  z-index:100;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(-6px);
+  transition:all .2s cubic-bezier(.16,1,.3,1);
+}
+.dropdown-menu.open{opacity:1;visibility:visible;transform:translateY(0)}
+.dropdown-item{
+  display:block;
+  width:100%;
+  padding:9px 12px;
+  border-radius:8px;
+  color:var(--text);
+  text-decoration:none;
+  font-size:13px;
+  font-weight:700;
+  text-align:left;
+  background:transparent;
+  border:none;
+  cursor:pointer;
+  transition:all .15s ease;
+}
+.dropdown-item:hover{background:var(--card-hover);color:var(--red)}
+
+/* HEADER 2. RĪKSTU JOSLA - NAVIGĀCIJAS POGAS */
+.header-row-nav{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding-bottom:12px;
+  border-top:1px solid rgba(255,255,255,.05);
+  padding-top:10px;
+}
+[data-theme="light"] .header-row-nav{border-top:1px solid rgba(0,0,0,.05)}
+nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center}
 nav button{
   background:var(--switch-bg);
   border:1px solid var(--switch-border);
   color:var(--muted);
   height:34px;
-  padding:0 14px;
+  padding:0 16px;
   border-radius:10px;
   font:inherit;
-  font-size:14px;
+  font-size:13px;
   font-weight:700;
   cursor:pointer;
   display:inline-flex;
@@ -128,88 +307,29 @@ nav button.on{
   color:var(--red);
 }
 
-.header-actions{margin-left:auto;display:flex;align-items:center;gap:10px}
-.theme-box{display:flex;align-items:center}
-.theme-switch {
-  position: relative;
-  width: 64px;
-  height: 32px;
-  border-radius: 99px;
-  background: var(--switch-bg);
-  border: 1px solid var(--switch-border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 2px;
-  cursor: pointer;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,.25);
-  transition: all .2s ease;
-  outline: none;
-}
-.theme-switch:hover { transform: scale(1.05); border-color: var(--red); }
-.ts-icon {
-  width: 26px;
-  height: 26px;
-  display: grid;
-  place-items: center;
-  z-index: 2;
-  transition: opacity .2s, color .2s;
-}
-.ts-thumb {
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  box-shadow: 0 2px 6px rgba(0,0,0,.35);
-  transition: transform .28s cubic-bezier(.34, 1.56, .64, 1);
-  z-index: 1;
-}
-[data-theme="dark"] .ts-moon { color: #f8fafc; opacity: 1; }
-[data-theme="dark"] .ts-sun { color: var(--muted); opacity: .35; }
-[data-theme="dark"] .ts-thumb {
-  transform: translateX(32px);
-  background: linear-gradient(135deg, #ed2027, #991b1b);
-}
-[data-theme="light"] .ts-sun { color: #d97706; opacity: 1; }
-[data-theme="light"] .ts-moon { color: var(--muted); opacity: .35; }
-[data-theme="light"] .ts-thumb {
-  transform: translateX(0px);
-  background: linear-gradient(135deg, #fbbf24, #f59e0b);
-}
-
-.menu-box{position:relative}
-.menu-btn{background:var(--switch-bg);border:1px solid var(--switch-border);color:var(--text);width:40px;height:34px;border-radius:10px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4.5px;cursor:pointer;padding:0;transition:all .2s ease}
-.menu-btn:hover, .menu-btn.active{border-color:var(--red);color:var(--red);transform:scale(1.04)}
-.menu-btn span{display:block;width:18px;height:2px;background:currentColor;border-radius:2px;transition:all .2s ease}
-
-.dropdown-menu{position:absolute;top:calc(100% + 10px);right:0;width:240px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.35);padding:8px;z-index:99;opacity:0;visibility:hidden;transform:translateY(-8px);transition:all .2s cubic-bezier(.16,1,.3,1)}
-.dropdown-menu.open{opacity:1;visibility:visible;transform:translateY(0)}
-.dropdown-head{padding:6px 10px 8px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--line);margin-bottom:6px}
-.dropdown-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:var(--text);text-decoration:none;transition:all .15s ease}
-.dropdown-item:hover{background:var(--card-hover);color:var(--red)}
-.dropdown-item-icon{display:grid;place-items:center;width:34px;height:34px;border-radius:8px;background:rgba(237,32,39,.12);color:var(--red);font-size:16px;flex-shrink:0}
-.dropdown-item-content{display:flex;flex-direction:column}
-.dropdown-item-title{font-size:14px;font-weight:700;line-height:1.2}
-.dropdown-item-desc{font-size:11px;color:var(--muted);margin-top:2px}
-
 .notch{position:absolute;left:50%;transform:translateX(-50%);z-index:6;filter:drop-shadow(0 2px 0 var(--header-border))}
 .notch.down{bottom:-28px}
 .notch.up{top:-28px;filter:drop-shadow(0 -2px 0 var(--header-border))}
 .notch button{display:grid;place-items:center;width:100px;height:26px;border:0;cursor:pointer;color:var(--red);background:var(--notch-bg);clip-path:polygon(0 0,100% 0,82% 100%,18% 100%);padding-bottom:4px}
 .notch.up button{clip-path:polygon(18% 0,82% 0,100% 100%,0 100%);padding:4px 0 0}
 .notch button:hover{color:var(--text)}
-.meterbox{margin-top:12px}
-.mlabel{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);margin-bottom:8px}
-.meter{position:relative;height:8px;border-radius:99px;background:linear-gradient(90deg,#ef4444,#f59e0b 50%,#34d399)}
-.meter i{position:absolute;top:-4px;width:4px;height:16px;border-radius:2px;background:#fff;transform:translateX(-50%);box-shadow:0 0 0 2px var(--card)}
-#f-sort{width:auto;max-width:160px;text-overflow:ellipsis}
-h1{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-weight:800;font-size:clamp(28px,4vw,40px);line-height:1.15;letter-spacing:-.02em}
-.sub{color:var(--muted);font-size:clamp(14px,1.4vw,17px);line-height:1.5;margin:0 0 20px}
+
+/* KOPĪGIE LAPU VIRSRAKSTU BLOKI */
+.section-top-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  flex-wrap:wrap;
+  gap:14px;
+  margin-top:36px;
+  margin-bottom:10px;
+}
+h1{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-weight:800;font-size:clamp(28px,4vw,38px);line-height:1.15;letter-spacing:-.02em;margin:0}
+.sub{color:var(--muted);font-size:clamp(14px,1.4vw,16px);line-height:1.5;margin:0 0 20px}
+
 .sum{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:16px}
 .sum div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px}
-.sum small{display:block;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.sum small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
 .sum b{font-size:18px}
 
 .filters-bar{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:18px;overflow-x:auto;scrollbar-width:none}
@@ -226,37 +346,46 @@ h1{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-weight:
 .views button{background:var(--input-bg);color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:7px 12px;font:inherit;cursor:pointer;white-space:nowrap}
 .views button.on{color:var(--text);border-color:var(--red);background:var(--card)}
 
-.profile-container{max-width:820px;margin:24px auto 60px}
-.profile-card{background:var(--profile-card-bg);border:1px solid var(--line);border-radius:14px;padding:24px 28px;margin-bottom:20px;box-shadow:0 4px 18px rgba(0,0,0,.06)}
-.profile-sec-title{font-size:18px;font-weight:800;margin:0 0 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);padding-bottom:10px}
-.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
-.form-group{display:flex;flex-direction:column;gap:7px}
-.form-group label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-.form-group select,.form-group input{background:var(--input-bg);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:9px 12px;font:inherit}
-.form-group select:focus,.form-group input:focus{border-color:var(--red);outline:none}
-.form-helper{font-size:12px;color:var(--muted);line-height:1.4}
-.profile-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:28px}
-.btn-save-profile{background:var(--red);color:#fff;border:none;padding:12px 24px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 4px 12px rgba(237,32,39,.35);transition:all .15s ease}
-.btn-save-profile:hover{opacity:.92;transform:translateY(-1px)}
-.btn-reset-profile{background:var(--input-bg);color:var(--muted);border:1px solid var(--line);padding:11px 20px;border-radius:8px;font-weight:600;font-size:14px;cursor:pointer}
-.btn-reset-profile:hover{color:var(--text);border-color:var(--muted)}
-.save-toast{display:none;padding:10px 16px;border-radius:8px;background:rgba(52,211,153,.15);border:1px solid var(--green);color:var(--green);font-size:13px;font-weight:700;align-items:center;gap:8px}
-
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px}
 .stores-container{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:start}
 @media (max-width:960px){.stores-container{grid-template-columns:1fr;gap:24px}}
 .store-col{display:flex;flex-direction:column;gap:16px}
 .store-cards{display:flex;flex-direction:column;gap:16px}
-.store-header{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 14px 10px;text-decoration:none;position:relative;border-radius:12px;transition:all .2s ease;border-bottom:2px solid transparent}
-.store-header:hover{background:var(--store-hover-bg);border-bottom-color:var(--red)}
-.store-logo-box{width:100%;height:58px;display:flex;align-items:center;justify-content:center;position:relative}
-.store-logo-box img{max-width:85%;max-height:52px;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(0,0,0,.3));transition:transform .2s ease,filter .2s ease}
-.store-header:hover .store-logo-box img{transform:scale(1.06);filter:drop-shadow(0 6px 14px rgba(237,32,39,.35))}
+
+/* VEIKALU LOGO BEZ BLOKA UN RĀMJA */
+.store-header{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:8px 10px;
+  text-decoration:none;
+  position:relative;
+  background:transparent !important;
+  border:none !important;
+  box-shadow:none !important;
+}
+.store-header:hover{
+  background:transparent !important;
+  border:none !important;
+}
+.store-logo-box{width:100%;height:56px;display:flex;align-items:center;justify-content:center;position:relative}
+.store-logo-box img{
+  max-width:85%;
+  max-height:50px;
+  object-fit:contain;
+  filter:drop-shadow(0 4px 10px rgba(0,0,0,.3));
+  transition:transform .2s ease,filter .2s ease;
+}
+.store-header:hover .store-logo-box img{
+  transform:scale(1.08);
+  filter:drop-shadow(0 0 14px rgba(237,32,39,.55));
+}
 .store-fallback-logo{display:flex;align-items:center;justify-content:center;gap:8px;text-align:left}
 .store-icon-pill{width:32px;height:32px;border-radius:6px;background:rgba(237,32,39,.15);border:1px solid rgba(237,32,39,.35);color:var(--red);display:grid;place-items:center}
 .store-title{font-weight:800;font-size:15px;color:var(--text);letter-spacing:.02em}
 .store-ext-hint{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-top:6px;opacity:.65;transition:opacity .2s,color .2s}
 .store-header:hover .store-ext-hint{opacity:1;color:var(--link)}
+
 .card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 4px 16px rgba(0,0,0,.08);transition:all .2s ease}
 .card-zero{background:var(--card-zero);border-color:var(--line);border-style:dashed}
 .price.is-zero{color:var(--muted)}
@@ -288,19 +417,79 @@ h1{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-weight:
 .note{color:var(--muted);font-size:13px;margin:10px 0 0}
 .btn{display:block;text-align:center;padding:10px;background:var(--btn-bg);border-top:1px solid var(--line);color:var(--link);text-decoration:none;font-weight:600}
 .btn:hover{background:var(--btn-hover)}
+
+.meterbox{margin-top:12px}
+.mlabel{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);margin-bottom:8px}
+.meter{position:relative;height:8px;border-radius:99px;background:linear-gradient(90deg,#ef4444,#f59e0b 50%,#34d399)}
+.meter i{position:absolute;top:-4px;width:4px;height:16px;border-radius:2px;background:#fff;transform:translateX(-50%);box-shadow:0 0 0 2px var(--card)}
+
 .tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
 table{border-collapse:collapse;width:100%;background:var(--card);min-width:640px}
 th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line)}
 th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
-.empty{background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:28px;text-align:center;color:var(--muted)}
+
+.profile-container{max-width:820px;margin:0 auto 60px}
+.profile-card{background:var(--profile-card-bg);border:1px solid var(--line);border-radius:14px;padding:24px 28px;margin-bottom:20px;box-shadow:0 4px 18px rgba(0,0,0,.06)}
+.profile-sec-title{font-size:17px;font-weight:800;margin:0 0 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);padding-bottom:10px}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
+.form-group{display:flex;flex-direction:column;gap:7px}
+.form-group label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.form-group select,.form-group input{background:var(--input-bg);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:9px 12px;font:inherit}
+.form-group select:focus,.form-group input:focus{border-color:var(--red);outline:none}
+.form-helper{font-size:12px;color:var(--muted);line-height:1.4}
+.profile-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:28px}
+.btn-save-profile{background:var(--red);color:#fff;border:none;padding:12px 24px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 4px 12px rgba(237,32,39,.35);transition:all .15s ease}
+.btn-save-profile:hover{opacity:.92;transform:translateY(-1px)}
+.btn-reset-profile{background:var(--input-bg);color:var(--muted);border:1px solid var(--line);padding:11px 20px;border-radius:8px;font-weight:600;font-size:14px;cursor:pointer}
+.btn-reset-profile:hover{color:var(--text);border-color:var(--muted)}
+.save-toast{display:none;padding:10px 16px;border-radius:8px;background:rgba(52,211,153,.15);border:1px solid var(--green);color:var(--green);font-size:13px;font-weight:700;align-items:center;gap:8px}
+
 .src{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
 .src .card{padding:14px 16px;gap:8px}
+.empty{background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:28px;text-align:center;color:var(--muted)}
 
+/* INFO MODĀLIE LOGI (PAR MUMS, KONTAKTI) */
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  backdrop-filter:blur(4px);
+  z-index:999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+}
+.modal-overlay.open{display:flex}
+.modal-box{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  max-width:540px;
+  width:100%;
+  padding:26px 28px;
+  box-shadow:0 20px 40px rgba(0,0,0,.5);
+  position:relative;
+}
+.modal-close{
+  position:absolute;
+  top:16px;
+  right:16px;
+  background:transparent;
+  border:none;
+  color:var(--muted);
+  font-size:22px;
+  cursor:pointer;
+  line-height:1;
+}
+.modal-close:hover{color:var(--red)}
+
+/* FOOTER */
 footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-top:2px solid var(--header-border);box-shadow:0 -8px 24px var(--shadow-header);color:var(--muted);font-size:13px;padding:40px 0 32px}
 .footer-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:36px;align-items:start;margin-bottom:28px}
 @media (max-width:768px){.footer-grid{grid-template-columns:1fr;gap:24px}}
 .footer-brand-title{display:flex;align-items:center;gap:8px;margin-bottom:12px}
-.footer-logo{height:36px;width:auto;max-width:180px;object-fit:contain;display:block}
+.footer-logo{height:46px;width:auto;max-width:210px;object-fit:contain;display:block}
 [data-theme="light"] .footer-logo{filter:drop-shadow(0 1px 3px rgba(0,0,0,.25))}
 .footer-desc{margin:0;line-height:1.6;font-size:13px;color:var(--muted)}
 .footer-links{display:flex;flex-direction:column;gap:8px}
@@ -313,71 +502,89 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
 </style>
 </head>
 <body>
+
 <header>
   <div class="wrap">
-    <a class="brand" href="#" title="HOCKEY EQUIPMENT RADAR">
-      <div class="brand-logo-wrap">
-        <!-- Tumšais logo -->
-        <img class="brand-logo logo-dark" src="img/logo.svg" alt="HOCKEY EQUIPMENT RADAR"
-             onload="const bt=document.getElementById('brand-title'); if(bt) bt.style.display='none';"
-             onerror="if(!this.dataset.triedPng){this.dataset.triedPng='1';this.src='img/logo.png';}else{this.style.display='none';}">
+    <!-- 1. LĪMENIS: LOGO, MEKLĒŠANA, IESTATĪJUMI -->
+    <div class="header-row-top">
+      <a class="brand" href="#" title="HOCKEY EQUIPMENT RADAR">
+        <div class="brand-logo-wrap">
+          <img class="brand-logo logo-dark" src="img/logo.svg" alt="HOCKEY EQUIPMENT RADAR"
+               onload="const bt=document.getElementById('brand-title'); if(bt) bt.style.display='none';"
+               onerror="if(!this.dataset.triedPng){this.dataset.triedPng='1';this.src='img/logo.png';}else{this.style.display='none';}">
+          
+          <img class="brand-logo logo-light" src="img/logo_1.svg" alt="HOCKEY EQUIPMENT RADAR"
+               onload="const bt=document.getElementById('brand-title'); if(bt) bt.style.display='none';"
+               onerror="if(!this.dataset.triedPng){this.dataset.triedPng='1';this.src='img/logo_1.png';}else{this.style.display='none';}">
 
-        <!-- Gaišais logo -->
-        <img class="brand-logo logo-light" src="img/logo_1.svg" alt="HOCKEY EQUIPMENT RADAR"
-             onload="const bt=document.getElementById('brand-title'); if(bt) bt.style.display='none';"
-             onerror="if(!this.dataset.triedPng){this.dataset.triedPng='1';this.src='img/logo_1.png';}else{this.style.display='none';}">
-
-        <div id="logo-fallback" class="brand-logo-err">
-          <span>⚠️</span> <span>Logo fails nav atrasts mapē 'img/'</span>
+          <div id="logo-fallback" class="brand-logo-err">
+            <span>⚠️</span> <span>Mape 'img/' nav atrasta</span>
+          </div>
         </div>
-      </div>
-      <span class="brand-text" id="brand-title">
-        <span class="brand-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>
-          </svg>
+        <span class="brand-text" id="brand-title">
+          <span class="brand-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          </span>
+          <span>HER</span>
         </span>
-        <span>HOCKEY EQUIPMENT RADAR</span>
-      </span>
-    </a>
-    
-    <!-- Navigācija -->
-    <nav id="nav"></nav>
+      </a>
 
-    <div class="header-actions">
-      <div class="theme-box">
-        <button id="theme-toggle" class="theme-switch" type="button" aria-label="Pārslēgt tumšo vai gaišo režīmu" title="Pārslēgt tumšo / gaišo režīmu">
-          <span class="ts-icon ts-sun" aria-hidden="true">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-            </svg>
-          </span>
-          <span class="ts-icon ts-moon" aria-hidden="true">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-            </svg>
-          </span>
-          <span class="ts-thumb"></span>
-        </button>
+      <!-- Centrētais meklēšanas lauks -->
+      <div class="header-search">
+        <input type="text" id="site-search" placeholder="Meklēt modeli, sēriju..." autocomplete="off">
+        <span class="search-icon">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </span>
       </div>
 
-      <div class="menu-box">
-        <button id="menu-btn" class="menu-btn" type="button" aria-label="Atvērt izvēlni" title="Izvēlne" aria-expanded="false" aria-haspopup="true">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-        <div id="menu-dropdown" class="dropdown-menu" role="menu">
-          <div class="dropdown-head">Iestatījumi</div>
-          <a href="#" class="dropdown-item" data-open="profile" role="menuitem">
-            <span class="dropdown-item-icon">👤</span>
-            <div class="dropdown-item-content">
-              <span class="dropdown-item-title">Mans profils</span>
-              <span class="dropdown-item-desc">Izmēri, FIT un budžets</span>
-            </div>
-          </a>
+      <!-- Darbības labajā pusē -->
+      <div class="header-actions">
+        <!-- Valodu pārslēgs -->
+        <div class="lang-box">
+          <button id="lang-btn" class="lang-btn" type="button" aria-label="Valoda">
+            <span id="current-lang-flag">🇱🇻</span>
+            <span id="current-lang-code">LV</span>
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
+          </button>
+          <div id="lang-menu" class="lang-menu">
+            <button class="lang-opt" data-lang="lv"><span>🇱🇻</span> Latviešu</button>
+            <button class="lang-opt" data-lang="en"><span>🇬🇧</span> English</button>
+            <button class="lang-opt" data-lang="de"><span>🇩🇪</span> Deutsch</button>
+          </div>
+        </div>
+
+        <!-- Tēmas slēdzis -->
+        <div class="theme-box">
+          <button id="theme-toggle" class="theme-switch" type="button" aria-label="Pārslēgt tumšo/gaišo režīmu">
+            <span class="ts-icon ts-sun">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+            </span>
+            <span class="ts-icon ts-moon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </span>
+            <span class="ts-thumb"></span>
+          </button>
+        </div>
+
+        <!-- 3 svītriņu izvēlne -->
+        <div class="menu-box">
+          <button id="menu-btn" class="menu-btn" type="button" aria-label="Atvērt izvēlni">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <div id="menu-dropdown" class="dropdown-menu">
+            <button class="dropdown-item" data-open="profile">Mans profils</button>
+            <button class="dropdown-item" data-modal="about">Par mums</button>
+            <button class="dropdown-item" data-modal="contact">Kontakti</button>
+          </div>
         </div>
       </div>
+    </div>
+
+    <!-- 2. LĪMENIS: SADAĻU NAVIGĀCIJAS POGAS -->
+    <div class="header-row-nav">
+      <nav id="nav"></nav>
     </div>
   </div>
   <div class="notch down"><button data-go="bottom" aria-label="Uz lapas apakšu"><svg width="22" height="12" viewBox="0 0 22 12"><path d="M2 2l9 8 9-8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></button></div>
@@ -385,54 +592,84 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
 
 <main class="wrap" id="app"></main>
 
+<!-- PAR MUMS MODĀLAIS LOGS -->
+<div id="modal-about" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" data-close-modal>&times;</button>
+    <h2 style="margin:0 0 12px; font-size:20px;">Par Hockey Equipment Radar</h2>
+    <p style="color:var(--muted); font-size:14px; line-height:1.6; margin-bottom:14px;">
+      <b>HOCKEY EQUIPMENT RADAR (HER)</b> ir neatkarīgs Latvijas hokeja entuziastu izstrādāts rīks, kura galvenais uzdevums ir nodrošināt caurspīdīgu, ērtu un automatizētu inventāra cenu salīdzināšanu.
+    </p>
+    <p style="color:var(--muted); font-size:14px; line-height:1.6; margin-bottom:14px;">
+      Mēs ik dienu sinhronizējam datus no vadošajiem reģiona veikaliem (Hokeja Pasaule, Hokejam.lv, Sportega), pārbaudot noliktavas krājumus, izmēru pieejamību un labākās akcijas, lai spēlētāji vienmēr izdarītu izdevīgāko izvēli.
+    </p>
+  </div>
+</div>
+
+<!-- KONTAKTI MODĀLAIS LOGS -->
+<div id="modal-contact" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close" data-close-modal>&times;</button>
+    <h2 style="margin:0 0 12px; font-size:20px;">Kontakti un Sadarbība</h2>
+    <p style="color:var(--muted); font-size:14px; line-height:1.6; margin-bottom:16px;">
+      Priecāsimies par jebkuru atgriezenisko saiti, pamanītām kļūdām cenu datos vai ieteikumiem jaunu funkciju ieviešanai!
+    </p>
+    <div style="background:var(--input-bg); border:1px solid var(--line); border-radius:10px; padding:14px; margin-bottom:14px;">
+      <small style="color:var(--muted); display:block; text-transform:uppercase; font-size:11px; font-weight:700;">Oficiālais e-pasts</small>
+      <a href="mailto:heradar@gmail.com" style="color:var(--red); font-size:16px; font-weight:700; text-decoration:none;">heradar@gmail.com</a>
+    </div>
+    <p style="color:var(--muted); font-size:13px; line-height:1.5; margin:0;">
+      Aicinām sazināties arī veikalu pārstāvjus un inventāra izplatītājus datu integrāciju jautājumos.
+    </p>
+  </div>
+</div>
+
 <footer class="bar">
   <div class="notch up"><button data-go="top" aria-label="Uz lapas augšu"><svg width="22" height="12" viewBox="0 0 22 12"><path d="M2 10l9-8 9 8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></button></div>
   <div class="wrap">
     <div class="footer-grid">
       <div>
         <div class="footer-brand-title">
-          <!-- Tumšais logo -->
           <img src="img/logo.svg" alt="HOCKEY EQUIPMENT RADAR" class="footer-logo logo-dark"
-               onerror="if(!this.dataset.triedPng){this.dataset.triedPng='1';this.src='img/logo.png';}else{this.style.display='none';this.nextElementSibling.style.display='inline-flex';}">
+               onerror="if(!this.dataset.triedPng){this.dataset.triedPng='1';this.src='img/logo.png';}else{this.style.display='none';}">
           
-          <!-- Gaišais logo -->
           <img src="img/logo_1.svg" alt="HOCKEY EQUIPMENT RADAR" class="footer-logo logo-light"
-               onerror="if(!this.dataset.triedPng){this.dataset.triedPng='1';this.src='img/logo_1.png';}else{this.style.display='none';this.nextElementSibling.style.display='inline-flex';}">
+               onerror="if(!this.dataset.triedPng){this.dataset.triedPng='1';this.src='img/logo_1.png';}else{this.style.display='none';}">
 
           <span style="display:none;font-weight:800;font-size:14px;color:var(--text);align-items:center;gap:6px">
             <span>🏒</span> HOCKEY EQUIPMENT RADAR
           </span>
         </div>
-        <p class="footer-desc">
+        <p class="footer-desc" id="i18n-footer-desc">
           Neatkarīgs hokeja ekipējuma cenu un pieejamības agregators. Mēs uzraugām vadošo Latvijas un Eiropas tirdzniecības vietu piedāvājumu, lai palīdzētu spēlētājiem atrast piemērotāko inventāru par labāko cenu.
         </p>
         <p style="margin-top:10px; font-size:12px; color:var(--muted); line-height:1.5;">
-          Ziņot par kļūdu vai iesniegt ieteikumus var, sūtot ziņu uz e-pastu: <a href="mailto:heradar@gmail.com" style="color:var(--red); font-weight:700; text-decoration:none;">emactams@gmail.com</a>
+          Reportot kļūdas vai iesniegt ieteikumus var, sūtot ziņu uz e-pastu: <a href="mailto:heradar@gmail.com" style="color:var(--red); font-weight:700; text-decoration:none;">heradar@gmail.com</a>
         </p>
       </div>
       
       <!-- Footer labā puse -->
       <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px;">
         <div class="footer-links">
-          <span class="footer-links-title">Ātrās saites</span>
-          <a href="#" data-open="profile">Spēlētāja profils un iestatījumi</a>
+          <span class="footer-links-title" id="i18n-quick-links">Ātrās saites</span>
+          <a href="#" data-open="profile" id="i18n-link-profile">Spēlētāja profils un iestatījumi</a>
           <a href="https://www.hokejam.lv/" target="_blank" rel="noopener">Hokejam.lv</a>
           <a href="https://hokejapasaule.lv/" target="_blank" rel="noopener">Hokeja Pasaule</a>
           <a href="https://www.sportega.lv/" target="_blank" rel="noopener">Sportega</a>
         </div>
         <div class="footer-links" style="align-items:flex-end; text-align:right;">
-          <span class="footer-links-title">Lapas versija</span>
+          <span class="footer-links-title" id="i18n-site-version">Lapas versija</span>
           <span style="font-size:12px; color:var(--muted); line-height:1.5;">
-            Lapas (UI) atjauninājums:<br>
-            <b style="color:var(--text);">28.10.2026 21:50</b>
+            <span id="i18n-ui-update-lbl">Lapas (UI) atjauninājums:</span><br>
+            <b style="color:var(--text);" id="ui-last-modified">Tiek ielādēts...</b>
           </span>
         </div>
       </div>
-      
     </div>
+
     <div class="footer-bottom">
       <div class="footer-copy">© 2026 HOCKEY EQUIPMENT RADAR. Visas tiesības aizsargātas.</div>
-      <div class="footer-disclaimer">
+      <div class="footer-disclaimer" id="i18n-footer-disclaimer">
         Cenas, noliktavas atlikumi un piegādes izmaksas tiek iegūtas no publiskajiem veikalu datiem un var tikt mainītas bez iepriekšēja brīdinājuma. Pirms pirkuma veikšanas lūdzam precizēt informāciju konkrētā pārdevēja vietnē.
       </div>
     </div>
@@ -440,6 +677,148 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
 </footer>
 
 <script>
+/* 1. VALODU RESURSI (I18N) */
+const TRANSLATIONS = {
+  lv: {
+    tabNew: 'Jaunas slidas LV',
+    tabUsed: 'Lietotas slidas',
+    tabIntl: 'Ārzemju deals',
+    tabProfile: 'Mans profils',
+    searchPh: 'Meklēt modeli, sēriju...',
+    dataUpdate: 'Preču datu atjauninājums:',
+    syncing: 'Tiek sinhronizēts...',
+    subTitle: 'Hokeja Pasaule, Hokejam.lv, Sportega. Profila iestatījumi: {role}, izmēri {size}, prioritāte {fit}.',
+    sumBest: 'Labākais pārbaudītais',
+    sumLow: 'Zemākā cena (profilam)',
+    sumVer: 'Pārbaudīti piedāvājumi',
+    sumSrc: 'Datu avots',
+    sortLbl: 'Kārtot:',
+    sortDef: 'Pēc noklusējuma',
+    stockOnly: 'Tikai noliktavā',
+    btnCards: 'Kartes',
+    btnTable: 'Salīdzinājums',
+    price: 'Cena',
+    shipping: 'Piegāde',
+    total: 'Kopā',
+    sizes: 'Izmēri',
+    fit: 'Bauer FIT',
+    stock: 'Pieejamība',
+    checked: 'Pēdējā pārbaude',
+    inStock: 'Noliktavā',
+    outStock: 'Nav noliktavā (0 €)',
+    openStore: 'Atvērt veikalu →',
+    checkStore: 'Pārbaudīt {store} lapā →',
+    bestPriceBadge: '★ Labākā cena',
+    matchLbl: 'Atbilstība {role}',
+    usedTitle: 'Lietotas slidas',
+    usedSub: 'Sludinājumu agregācija šobrīd nav automātiska. Apskati piedāvājumus tiešajos avotos:',
+    intlTitle: 'Ārzemju piedāvājumi',
+    intlSub: 'Eiropas Savienības interneta veikali ar piegādi uz Latviju.',
+    intlEmpty: 'Veikalu saraksts tiek sagatavots. Tiks iekļauti pārbaudīti veikali ar skaidriem piegādes un atgriešanas nosacījumiem uz Latviju.',
+    profileTitle: 'Mans Spēlētāja Profils',
+    profileSub: 'Pielāgo savus izmērus, anatomiskās īpatnības un budžetu. Radars automātiski filtrēs un sarindos slidas tieši pēc šiem parametriem.'
+  },
+  en: {
+    tabNew: 'New Skates LV',
+    tabUsed: 'Used Skates',
+    tabIntl: 'Intl Deals',
+    tabProfile: 'My Profile',
+    searchPh: 'Search model, series...',
+    dataUpdate: 'Product data update:',
+    syncing: 'Syncing...',
+    subTitle: 'Hokeja Pasaule, Hokejam.lv, Sportega. Profile settings: {role}, size {size}, priority {fit}.',
+    sumBest: 'Best Verified',
+    sumLow: 'Lowest Price (Profile)',
+    sumVer: 'Verified Deals',
+    sumSrc: 'Data Source',
+    sortLbl: 'Sort:',
+    sortDef: 'Default',
+    stockOnly: 'In stock only',
+    btnCards: 'Cards',
+    btnTable: 'Comparison',
+    price: 'Price',
+    shipping: 'Shipping',
+    total: 'Total',
+    sizes: 'Sizes',
+    fit: 'Bauer FIT',
+    stock: 'Stock',
+    checked: 'Last Check',
+    inStock: 'In Stock',
+    outStock: 'Out of Stock (0 €)',
+    openStore: 'Open Store →',
+    checkStore: 'Check {store} →',
+    bestPriceBadge: '★ Best Price',
+    matchLbl: 'Match for {role}',
+    usedTitle: 'Used Skates',
+    usedSub: 'Classifieds aggregation is currently manual. View direct offerings:',
+    intlTitle: 'International Deals',
+    intlSub: 'European Union online stores delivering to Latvia.',
+    intlEmpty: 'Store directory is being prepared. Reliable EU stores with direct shipping will be added shortly.',
+    profileTitle: 'My Player Profile',
+    profileSub: 'Adjust your sizes, anatomy features, and budget. The radar will filter and score skates according to your preferences.'
+  },
+  de: {
+    tabNew: 'Neue Schlittschuhe',
+    tabUsed: 'Gebrauchte',
+    tabIntl: 'EU Deals',
+    tabProfile: 'Mein Profil',
+    searchPh: 'Modell oder Serie suchen...',
+    dataUpdate: 'Produktdaten-Update:',
+    syncing: 'Wird synchronisiert...',
+    subTitle: 'Hokeja Pasaule, Hokejam.lv, Sportega. Profil: {role}, Größe {size}, Priorität {fit}.',
+    sumBest: 'Bester geprüfter Preis',
+    sumLow: 'Niedrigster Preis',
+    sumVer: 'Geprüfte Angebote',
+    sumSrc: 'Datenquelle',
+    sortLbl: 'Sortieren:',
+    sortDef: 'Standard',
+    stockOnly: 'Nur auf Lager',
+    btnCards: 'Karten',
+    btnTable: 'Vergleich',
+    price: 'Preis',
+    shipping: 'Versand',
+    total: 'Gesamt',
+    sizes: 'Größen',
+    fit: 'Bauer FIT',
+    stock: 'Verfügbarkeit',
+    checked: 'Letzte Prüfung',
+    inStock: 'Auf Lager',
+    outStock: 'Nicht auf Lager (0 €)',
+    openStore: 'Zum Shop →',
+    checkStore: 'Bei {store} prüfen →',
+    bestPriceBadge: '★ Bester Preis',
+    matchLbl: 'Eignung für {role}',
+    usedTitle: 'Gebrauchte Schlittschuhe',
+    usedSub: 'Gebrauchtangebote werden derzeit manuell erfasst. Zu den Quellen:',
+    intlTitle: 'Internationale Angebote',
+    intlSub: 'Online-Shops aus der EU mit Versand nach Lettland.',
+    intlEmpty: 'Shop-Verzeichnis in Vorbereitung. Geprüfte EU-Shops mit klaren Lieferbedingungen folgen in Kürze.',
+    profileTitle: 'Mein Spielerprofil',
+    profileSub: 'Passe deine Schuhgröße, Passform und Budget an. Der Radar filtert passgenau nach deinen Kriterien.'
+  }
+};
+
+let CURR_LANG = localStorage.getItem('hsr_lang') || 'lv';
+const t = (k, params = {}) => {
+  let str = (TRANSLATIONS[CURR_LANG] && TRANSLATIONS[CURR_LANG][k]) || TRANSLATIONS['lv'][k] || k;
+  for (const [pKey, pVal] of Object.entries(params)) {
+    str = str.replace(`{${pKey}}`, pVal);
+  }
+  return str;
+};
+
+/* 2. AUTOMĀTISKAIS UI ATJAUNINĀJUMA LAIKS */
+function getUiTimestamp() {
+  try {
+    const d = new Date(document.lastModified);
+    if (isNaN(d.getTime())) return '28.10.2026 21:50';
+    const pad = n => ('0' + n).slice(-2);
+    return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  } catch(e) {
+    return '28.10.2026 21:50';
+  }
+}
+
 let LAST_DATA_UPDATE = 'Tiek sinhronizēts...';
 
 const MODELS = [
@@ -478,7 +857,6 @@ const RETAILERS = {
   sp: { id: 'sp', name: 'Sportega',       file: 'sportega',       url: 'https://www.sportega.lv/' }
 };
 
-// Pārbaudītie pamata dati ar visām tiešajām saitēm
 let OFFERS = [
   { model: 'bauer-vapor-fly40',  retailer: 'hp', section: 'new', price: 535, oldPrice: null, shipping: 3.5,  sizes: ['7','7.5'], fits: ['FIT 2'],         stock: true,  checked: '2026-10-28', url: 'https://hokejapasaule.lv/lv_lv/bauer-vapor-s25-fly40-senior-hokeja-slidas', status: 'VERIFIED' },
   { model: 'bauer-vapor-fly40',  retailer: 'hj', section: 'new', price: null, oldPrice: null, shipping: 0,    sizes: ['7.5','8'], fits: ['FIT 2'],         stock: false, checked: null,         url: 'https://www.hokejam.lv/lv/search?s=Vapor+FLY40', status: 'DEMO' },
@@ -526,19 +904,23 @@ const S = {
   tab: 'new',
   view: 'cards',
   stock: true,
-  sort: 'default'
+  sort: 'default',
+  searchQuery: ''
 };
 
-const TABS = { new:'Jaunas slidas LV', used:'Lietotas slidas', intl:'Ārzemju deals', profile:'Mans profils' };
-const model = id => MODELS.find(m => m.id === id);
 const eur = n => n == null ? '—' : '€' + n.toFixed(2);
 const total = o => (o && o.price != null) ? o.price + (o.shipping || 0) : null;
 const badge = s => s === 'VERIFIED' ? '<span class="badge b-ok">Pārbaudīts</span>'
-  : s === 'DEMO' ? '<span class="badge b-demo">Nav atrasts veikalā</span>'
+  : s === 'DEMO' ? '<span class="badge b-demo">Nav atrasts</span>'
   : '<span class="badge b-no">Nav pārbaudīts</span>';
 const row = (l, v) => `<div class="row"><span>${l}</span><span>${v}</span></div>`;
 
-const ROLES = { forward: 'uzbrucējam', defense: 'aizsargam' };
+const ROLES = {
+  lv: { forward: 'uzbrucējam', defense: 'aizsargam' },
+  en: { forward: 'forward', defense: 'defenseman' },
+  de: { forward: 'Stürmer', defense: 'Verteidiger' }
+};
+
 const SIZE_LABELS = {
   'pref': '7 un 7.5',
   '7': '7 Senior',
@@ -551,9 +933,10 @@ const SIZE_LABELS = {
 function meter(m) {
   const v = m.match && m.match[PROFILE.role];
   if (v == null) return '';
+  const currentRoleName = (ROLES[CURR_LANG] && ROLES[CURR_LANG][PROFILE.role]) || ROLES['lv'][PROFILE.role];
   return `<div class="meterbox">
     <div class="mlabel">
-      <span>Atbilstība ${ROLES[PROFILE.role]} <span class="badge b-spec">${m.profileBadge}</span></span>
+      <span>${t('matchLbl', { role: currentRoleName })} <span class="badge b-spec">${m.profileBadge}</span></span>
       <b>${v}%</b>
     </div>
     <div class="meter"><i style="left:${v}%"></i></div>
@@ -562,7 +945,7 @@ function meter(m) {
 
 function storeHeader(rKey) {
   const r = RETAILERS[rKey];
-  return `<a class="store-header" href="${r.url}" target="_blank" rel="noopener" title="Apmeklēt ${r.name}">
+  return `<a class="store-header" href="${r.url}" target="_blank" rel="noopener" title="${r.name}">
     <div class="store-logo-box">
       <img src="img/${r.file}.png" alt="${r.name}" onerror="if(!this.dataset.triedSvg){this.dataset.triedSvg='1';this.src='img/${r.file}.svg';}else{this.style.display='none';this.nextElementSibling.style.display='flex';}">
       <div class="store-fallback-logo" style="display:none">
@@ -580,17 +963,17 @@ function storeCard(m, rKey) {
   const r = RETAILERS[rKey];
   const o = OFFERS.find(x => x.model === m.id && x.retailer === rKey);
 
-  const t = total(o);
+  const tPrice = total(o);
   const matchSize = !o ? false : (PROFILE.size === 'pref' ? (o.sizes || []).some(s => s === '7' || s === '7.5') : (PROFILE.size === 'all' || (o.sizes || []).includes(PROFILE.size)));
   const matchFit = !o ? false : (PROFILE.fit === 'all' || (o.fits || []).includes(PROFILE.fit));
-  const matchPrice = (t != null) && (t >= PROFILE.min && t <= PROFILE.max);
+  const matchPrice = (tPrice != null) && (tPrice >= PROFILE.min && tPrice <= PROFILE.max);
   const matchStock = !o ? false : (S.stock ? o.stock : true);
   const matchModel = PROFILE.prefModel === 'all' || PROFILE.prefModel === m.id;
 
   const isAvailable = o && o.stock && o.price != null && matchSize && matchFit && matchPrice && matchStock && matchModel;
 
   if (isAvailable) {
-    const est = o.shipping == null ? ' <small>(piegāde nav zināma)</small>' : '';
+    const est = o.shipping == null ? ' <small>(?)</small>' : '';
     return `<article class="card">
       <div class="imgbox">
         <img src="img/${m.id}.png" alt="${m.brand} ${m.name}" onerror="this.parentNode.classList.add('missing')">
@@ -602,20 +985,19 @@ function storeCard(m, rKey) {
       <div class="body">
         <h3>${m.brand} ${m.name}</h3>
         <p class="shop">${r.name} &nbsp; ${badge(o.status)}</p>
-        ${row('Cena', `<span class="price">${eur(o.price)}</span>${o.oldPrice ? `<span class="old">${eur(o.oldPrice)}</span>` : ''}`)}
-        ${row('Piegāde', o.shipping == null ? 'Nav zināma' : eur(o.shipping))}
-        ${row('Kopā', eur(total(o)) + est)}
-        ${row('Izmēri', (o.sizes || []).join(', ') || 'Standarta')}
-        ${row('Bauer FIT', (o.fits || []).join(', ') || 'Standarta')}
-        ${row('Pieejamība', '<span style="color:var(--green);font-weight:700">Noliktavā</span>')}
-        ${row('Pēdējā pārbaude', o.checked || 'Pārbaudīts')}
+        ${row(t('price'), `<span class="price">${eur(o.price)}</span>${o.oldPrice ? `<span class="old">${eur(o.oldPrice)}</span>` : ''}`)}
+        ${row(t('shipping'), o.shipping == null ? '—' : eur(o.shipping))}
+        ${row(t('total'), eur(total(o)) + est)}
+        ${row(t('sizes'), (o.sizes || []).join(', ') || 'Standarta')}
+        ${row(t('fit'), (o.fits || []).join(', ') || 'Standarta')}
+        ${row(t('stock'), `<span style="color:var(--green);font-weight:700">${t('inStock')}</span>`)}
+        ${row(t('checked'), o.checked || '—')}
         ${meter(m)}
         <p class="note">${m.note}</p>
       </div>
-      <a class="btn" href="${o.url}" target="_blank" rel="noopener">Atvērt veikalu →</a>
+      <a class="btn" href="${o.url}" target="_blank" rel="noopener">${t('openStore')}</a>
     </article>`;
   } else {
-    const reason = !o ? 'Nav piedāvājuma' : !o.stock ? 'Izpārdots' : o.price == null ? 'Cena nav pieejama' : !matchModel ? 'Neatbilst vēlamajam modelim' : 'Neatbilst profila filtram';
     const targetUrl = (o && o.url) || r.url;
     return `<article class="card card-zero">
       <div class="imgbox">
@@ -627,18 +1009,18 @@ function storeCard(m, rKey) {
       </div>
       <div class="body">
         <h3>${m.brand} ${m.name}</h3>
-        <p class="shop">${r.name} &nbsp; <span class="badge b-no">${reason}</span></p>
-        ${row('Cena', `<span class="price is-zero">0.00 €</span>`)}
-        ${row('Piegāde', '—')}
-        ${row('Kopā', '0.00 €')}
-        ${row('Izmēri', 'Nav pieejams')}
-        ${row('Bauer FIT', '—')}
-        ${row('Pieejamība', '<span style="color:var(--amber)">Nav noliktavā (0 €)</span>')}
-        ${row('Pēdējā pārbaude', (o && o.checked) || 'Gaida pārbaudi')}
+        <p class="shop">${r.name} &nbsp; <span class="badge b-no">Nav pieejams</span></p>
+        ${row(t('price'), `<span class="price is-zero">0.00 €</span>`)}
+        ${row(t('shipping'), '—')}
+        ${row(t('total'), '0.00 €')}
+        ${row(t('sizes'), 'Nav pieejams')}
+        ${row(t('fit'), '—')}
+        ${row(t('stock'), `<span style="color:var(--amber)">${t('outStock')}</span>`)}
+        ${row(t('checked'), (o && o.checked) || '—')}
         ${meter(m)}
         <p class="note">${m.note}</p>
       </div>
-      <a class="btn btn-zero" href="${targetUrl}" target="_blank" rel="noopener">Pārbaudīt ${r.name} lapā →</a>
+      <a class="btn btn-zero" href="${targetUrl}" target="_blank" rel="noopener">${t('checkStore', { store: r.name })}</a>
     </article>`;
   }
 }
@@ -658,7 +1040,7 @@ function table(list) {
         const isBest = (minPrice !== null && tPrice === minPrice);
         
         const cellStyle = isBest ? `background:rgba(52,211,153,0.1); outline:2px solid var(--green); outline-offset:-2px; border-radius:6px; position:relative;` : ``;
-        const bestLabel = isBest ? `<div style="display:inline-block; background:var(--green); color:#000; font-size:9px; font-weight:900; padding:2px 6px; border-radius:4px; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.05em;">★ Labākā cena</div><br>` : ``;
+        const bestLabel = isBest ? `<div style="display:inline-block; background:var(--green); color:#000; font-size:9px; font-weight:900; padding:2px 6px; border-radius:4px; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.05em;">${t('bestPriceBadge')}</div><br>` : ``;
         const valColor = isBest ? `color:var(--green);` : ``;
 
         return `<td style="${cellStyle}">
@@ -685,11 +1067,11 @@ function filtersBar() {
       <span class="profile-pill-tag">MAINĪT ⚙️</span>
     </button>
     <div class="divider"></div>
-    <label>Kārtot:${sel('f-sort', [['default', 'Pēc noklusējuma'], ...MODELS.map(m => [m.id, m.name])], S.sort)}</label>
-    <label class="chk"><input type="checkbox" id="f-stock"${S.stock ? ' checked' : ''}> Tikai noliktavā</label>
+    <label>${t('sortLbl')} ${sel('f-sort', [['default', t('sortDef')], ...MODELS.map(m => [m.id, m.name])], S.sort)}</label>
+    <label class="chk"><input type="checkbox" id="f-stock"${S.stock ? ' checked' : ''}> ${t('stockOnly')}</label>
     <div class="views">
-      <button data-v="cards" class="${S.view === 'cards' ? 'on' : ''}">Kartes</button>
-      <button data-v="table" class="${S.view === 'table' ? 'on' : ''}">Salīdzinājums</button>
+      <button data-v="cards" class="${S.view === 'cards' ? 'on' : ''}">${t('btnCards')}</button>
+      <button data-v="table" class="${S.view === 'table' ? 'on' : ''}">${t('btnTable')}</button>
     </div>
   </div>`;
 }
@@ -701,7 +1083,19 @@ function viewNew() {
   const low = inStockOffers.length ? inStockOffers.reduce((a, b) => total(b) < total(a) ? b : a) : null;
 
   const rKeys = Object.keys(RETAILERS);
-  const sortedModels = [...MODELS].sort((a, b) => {
+
+  // Meklēšanas un kārtošanas filtrs
+  let filteredModels = [...MODELS];
+  if (S.searchQuery.trim()) {
+    const q = S.searchQuery.toLowerCase();
+    filteredModels = filteredModels.filter(m => 
+      m.name.toLowerCase().includes(q) || 
+      m.brand.toLowerCase().includes(q) || 
+      m.series.toLowerCase().includes(q)
+    );
+  }
+
+  const sortedModels = filteredModels.sort((a, b) => {
     if (S.sort === a.id) return -1;
     if (S.sort === b.id) return 1;
     return 0;
@@ -711,33 +1105,57 @@ function viewNew() {
     <div class="store-col">
       ${storeHeader(k)}
       <div class="store-cards">
-        ${sortedModels.map(m => storeCard(m, k)).join('')}
+        ${sortedModels.length ? sortedModels.map(m => storeCard(m, k)).join('') : '<div class="empty" style="padding:20px;">Nav atrasts neviens modelis</div>'}
       </div>
     </div>
   `).join('');
 
-  return `<div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:14px; margin-top:36px; margin-bottom:10px;">
-    <h1 style="margin:0;">Jaunas slidas Latvijā</h1>
+  const currentRoleName = (ROLES[CURR_LANG] && ROLES[CURR_LANG][PROFILE.role]) || ROLES['lv'][PROFILE.role];
+
+  return `
+  <div class="section-top-row">
+    <h1>${t('tabNew')}</h1>
     <div style="text-align:right; font-size:12px; color:var(--muted); padding-bottom:4px;">
-       Preču datu atjauninājums:<br>
+       ${t('dataUpdate')}<br>
        <b style="color:var(--text); font-size:14px; font-family:monospace;">${LAST_DATA_UPDATE}</b>
     </div>
   </div>
-  <p class="sub">Hokeja Pasaule, Hokejam.lv, Sportega. Profila iestatījumi: <b>${ROLES[PROFILE.role]}</b>, izmēri <b>${SIZE_LABELS[PROFILE.size] || PROFILE.size}</b>, prioritāte <b>${PROFILE.fit}</b>.</p>
+  <p class="sub">${t('subTitle', { role: `<b>${currentRoleName}</b>`, size: `<b>${SIZE_LABELS[PROFILE.size] || PROFILE.size}</b>`, fit: `<b>${PROFILE.fit}</b>` })}</p>
+  
   <div class="sum">
-    <div><small>Labākais pārbaudītais</small><b>${best ? eur(total(best)) : 'Nav pārbaudītu datu'}</b></div>
-    <div><small>Zemākā cena (profilam)</small><b>${low ? eur(total(low)) : '—'}</b></div>
-    <div><small>Pārbaudīti piedāvājumi</small><b>${verified} no ${OFFERS.length}</b></div>
-    <div><small>Datu avots</small><b><span class="badge b-ok">${DATA_SYNC_SOURCE}</span></b></div>
+    <div><small>${t('sumBest')}</small><b>${best ? eur(total(best)) : '—'}</b></div>
+    <div><small>${t('sumLow')}</small><b>${low ? eur(total(low)) : '—'}</b></div>
+    <div><small>${t('sumVer')}</small><b>${verified} / ${OFFERS.length}</b></div>
+    <div><small>${t('sumSrc')}</small><b><span class="badge b-ok">${DATA_SYNC_SOURCE}</span></b></div>
   </div>
   ${filtersBar()}
   ${S.view === 'cards' ? `<div class="stores-container">${columnsHtml}</div>` : table(OFFERS)}`;
 }
 
+function viewUsed() {
+  return `
+  <div class="section-top-row">
+    <h1>${t('usedTitle')}</h1>
+  </div>
+  <p class="sub">${t('usedSub')}</p>
+  <div class="src">${USED_SOURCES.map(s => `<div class="card"><b>${s.name}</b><span class="badge b-no">Manuāls avots</span><a class="btn" href="${s.url}" target="_blank" rel="noopener">Atvērt ${s.name} →</a></div>`).join('')}</div>`;
+}
+
+function viewIntl() {
+  return `
+  <div class="section-top-row">
+    <h1>${t('intlTitle')}</h1>
+  </div>
+  <p class="sub">${t('intlSub')}</p>
+  <div class="empty">${t('intlEmpty')}</div>`;
+}
+
 function viewProfile() {
   return `<div class="profile-container">
-    <h1>Mans Spēlētāja Profils</h1>
-    <p class="sub">Pielāgo savus izmērus, anatomiskās īpatnības un budžetu. Radars automātiski filtrēs un sarindos slidas tieši pēc šiem parametriem.</p>
+    <div class="section-top-row">
+      <h1>${t('profileTitle')}</h1>
+    </div>
+    <p class="sub">${t('profileSub')}</p>
     
     <div class="profile-card">
       <div class="profile-sec-title">
@@ -833,22 +1251,35 @@ function viewProfile() {
   </div>`;
 }
 
-function viewUsed() {
-  return `<h1>Lietotas slidas</h1>
-  <p class="sub">Sludinājumu agregācija šobrīd nav automātiska. Apskati piedāvājumus tiešajos avotos:</p>
-  <div class="src">${USED_SOURCES.map(s => `<div class="card"><b>${s.name}</b><span class="badge b-no">Manuāls avots</span><a class="btn" href="${s.url}" target="_blank" rel="noopener">Atvērt ${s.name} →</a></div>`).join('')}</div>`;
+function updateHeaderNav() {
+  const tabs = [
+    { k: 'new', label: t('tabNew') },
+    { k: 'used', label: t('tabUsed') },
+    { k: 'intl', label: t('tabIntl') }
+  ];
+  document.getElementById('nav').innerHTML = tabs
+    .map(({k, label}) => `<button data-t="${k}" class="${S.tab === k ? 'on' : ''}">${label}</button>`)
+    .join('');
 }
 
-function viewIntl() {
-  return `<h1>Ārzemju piedāvājumi</h1>
-  <p class="sub">Eiropas Savienības interneta veikali ar piegādi uz Latviju.</p>
-  <div class="empty">Veikalu saraksts tiek sagatavots. Tiks iekļauti pārbaudīti veikali ar skaidriem piegādes un atgriešanas nosacījumiem uz Latviju.</div>`;
+function updateStaticI18n() {
+  const flags = { lv: '🇱🇻', en: '🇬🇧', de: '🇩🇪' };
+  document.getElementById('current-lang-flag').textContent = flags[CURR_LANG] || '🇱🇻';
+  document.getElementById('current-lang-code').textContent = CURR_LANG.toUpperCase();
+  document.getElementById('site-search').placeholder = t('searchPh');
+
+  // Izkrītošās izvēlnes aktīvā valoda
+  document.querySelectorAll('.lang-opt').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === CURR_LANG);
+  });
+
+  // Kājenes teksti
+  document.getElementById('ui-last-modified').textContent = getUiTimestamp();
 }
 
 function render() {
-  document.getElementById('nav').innerHTML = Object.entries(TABS)
-    .filter(([k]) => k !== 'profile')
-    .map(([k, t]) => `<button data-t="${k}" class="${S.tab === k ? 'on' : ''}">${t}</button>`).join('');
+  updateHeaderNav();
+  updateStaticI18n();
 
   if (S.tab === 'new') document.getElementById('app').innerHTML = viewNew();
   else if (S.tab === 'used') document.getElementById('app').innerHTML = viewUsed();
@@ -912,18 +1343,66 @@ function toggleMenu(forceClose) {
   btn.setAttribute('aria-expanded', shouldOpen);
 }
 
+function toggleLangMenu(forceClose) {
+  const dropdown = document.getElementById('lang-menu');
+  const btn = document.getElementById('lang-btn');
+  if (!dropdown || !btn) return;
+
+  const shouldOpen = forceClose === undefined ? !dropdown.classList.contains('open') : !forceClose;
+  dropdown.classList.toggle('open', shouldOpen);
+  btn.classList.toggle('active', shouldOpen);
+}
+
+function openModal(id) {
+  const el = document.getElementById('modal-' + id);
+  if (el) el.classList.add('open');
+}
+
+function closeModal() {
+  document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
+}
+
+/* EVENT LISTENERS */
 document.addEventListener('click', e => {
   const th = e.target.closest('#theme-toggle');
   if (th) { toggleTheme(); return; }
 
+  const lb = e.target.closest('#lang-btn');
+  if (lb) { 
+    toggleMenu(true);
+    toggleLangMenu(); 
+    return; 
+  }
+
+  const lo = e.target.closest('.lang-opt');
+  if (lo) {
+    CURR_LANG = lo.dataset.lang;
+    localStorage.setItem('hsr_lang', CURR_LANG);
+    toggleLangMenu(true);
+    render();
+    return;
+  }
+
   const mb = e.target.closest('#menu-btn');
   if (mb) { 
+    toggleLangMenu(true);
     toggleMenu(); 
     return; 
   }
 
-  if (!e.target.closest('.menu-box')) {
+  if (!e.target.closest('.menu-box')) toggleMenu(true);
+  if (!e.target.closest('.lang-box')) toggleLangMenu(true);
+
+  const modBtn = e.target.closest('[data-modal]');
+  if (modBtn) {
     toggleMenu(true);
+    openModal(modBtn.dataset.modal);
+    return;
+  }
+
+  if (e.target.hasAttribute('data-close-modal') || e.target.classList.contains('modal-overlay')) {
+    closeModal();
+    return;
   }
 
   const op = e.target.closest('[data-open]');
@@ -968,9 +1447,9 @@ document.addEventListener('click', e => {
     return;
   }
 
-  const t = e.target.closest('[data-t]'), v = e.target.closest('[data-v]');
-  if (t) { S.tab = t.dataset.t; render(); }
-  if (v) { S.view = v.dataset.v; render(); }
+  const tBtn = e.target.closest('[data-t]'), vBtn = e.target.closest('[data-v]');
+  if (tBtn) { S.tab = tBtn.dataset.t; render(); }
+  if (vBtn) { S.view = vBtn.dataset.v; render(); }
 
   const g = e.target.closest('[data-go]');
   if (g) window.scrollTo({ top: g.dataset.go === 'bottom' ? document.body.scrollHeight : 0, behavior: 'smooth' });
@@ -982,6 +1461,15 @@ document.addEventListener('change', e => {
   else if (id === 'f-stock') S.stock = e.target.checked;
   else return;
   render();
+});
+
+// Reāllaika meklēšana
+document.addEventListener('input', e => {
+  if (e.target.id === 'site-search') {
+    S.searchQuery = e.target.value;
+    if (S.tab !== 'new') S.tab = 'new';
+    render();
+  }
 });
 
 render();
