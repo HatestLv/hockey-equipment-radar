@@ -94,12 +94,15 @@ header{position:relative;z-index:10;background:var(--header-bg);border-bottom:2p
 .brand-logo{height:clamp(44px,4.2vw,54px);width:auto;max-width:260px;object-fit:contain;display:block}
 [data-theme="light"] .brand-logo{filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))}
 
+/* SUBTILS SHADOW LOGO TUMŠAJĀ REŽĪMĀ */
+[data-theme="dark"] .brand-logo{filter:drop-shadow(0 2px 8px rgba(255,255,255,0.09))}
+
 .logo-light{display:none !important}
 .logo-dark{display:block !important}
 [data-theme="light"] .logo-dark{display:none !important}
 [data-theme="light"] .logo-light{display:block !important}
 
-/* MEKLĒŠANAS JOSLA — VIENOTA AR LABĀS PUSES POGĀM */
+/* MEKLĒŠANAS JOSLA */
 .header-search{flex:1;max-width:400px;position:relative;display:flex;align-items:center}
 .header-search input{
   width:100%;
@@ -277,7 +280,7 @@ header{position:relative;z-index:10;background:var(--header-bg);border-bottom:2p
 }
 .dropdown-item:hover{background:var(--card-hover);color:var(--red)}
 
-/* NAVIGĀCIJAS POGAS (2. LĪMENIS — BEZ IKONĀM, AR BRĪVĀM MALĀM) */
+/* NAVIGĀCIJAS POGAS (2. LĪMENIS) */
 .header-row-nav{
   display:flex;
   justify-content:flex-start;
@@ -368,7 +371,7 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
 .store-col{display:flex;flex-direction:column;gap:16px}
 .store-cards{display:flex;flex-direction:column;gap:16px}
 
-/* VEIKALU LOGO (INTERAKTĪVS AR SARKANU SPĪDUMU) */
+/* VEIKALU LOGO */
 .store-header{
   display:flex;
   flex-direction:column;
@@ -441,10 +444,10 @@ table{border-collapse:collapse;width:100%;background:var(--card);min-width:640px
 th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line)}
 th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
 
-/* HERO SLIDER (SĀKUMLAPA — NOLAISTS ZEMĀK AR PLŪSTOŠU PĀREJU) */
+/* HERO SLIDER (NOLAISTS PAR 42PX, PLŪSTOŠS FADE AR BANNER_1 / BANNER_2) */
 .hero-slider-wrap{
   position:relative;
-  margin-top:28px;
+  margin-top:42px;
   border-radius:14px;
   overflow:hidden;
   border:1px solid var(--line);
@@ -460,7 +463,7 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
   padding:0 36px;
   opacity:0;
   pointer-events:none;
-  transition:opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:opacity 0.8s ease-in-out;
   background-size:cover;
   background-position:center;
 }
@@ -694,7 +697,7 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
       </div>
     </div>
 
-    <!-- 2. LĪMENIS: SADAĻAS (BEZ IKONĀM, NEAPGRIEZTAS MALAS) -->
+    <!-- 2. LĪMENIS: SADAĻAS -->
     <div class="header-row-nav">
       <nav id="nav"></nav>
     </div>
@@ -762,7 +765,7 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
   </div>
 </div>
 
-<!-- LIGHTBOX (LIELĀS BILDES) -->
+<!-- LIGHTBOX -->
 <div id="modal-lightbox" class="modal-overlay">
   <div class="lightbox-content">
     <button class="modal-close" data-close-modal>&times;</button>
@@ -948,11 +951,11 @@ const t = (k, params = {}) => {
 function getUiTimestamp() {
   try {
     const d = new Date(document.lastModified);
-    if (isNaN(d.getTime())) return '02.11.2026 23:45';
+    if (isNaN(d.getTime())) return '03.11.2026 00:20';
     const pad = n => ('0' + n).slice(-2);
     return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
   } catch(e) {
-    return '02.11.2026 23:45';
+    return '03.11.2026 00:20';
   }
 }
 
@@ -1305,9 +1308,9 @@ function viewHome() {
   const recStick = STICK_MODELS[0];
 
   return `
-    <!-- HERO SLĪDNIS (NOLAISTS AR PLŪSTOŠU PĀREJU) -->
+    <!-- HERO SLĪDNIS (NOLAISTS PAR 42PX AR BANNER_1 / BANNER_2) -->
     <div class="hero-slider-wrap">
-      <div class="hero-slide active" style="background-image:linear-gradient(90deg, rgba(14,15,19,0.92) 40%, rgba(14,15,19,0.4)), url('img/banners/promo-fuse.jpg');">
+      <div class="hero-slide active" style="background-image:linear-gradient(90deg, rgba(14,15,19,0.92) 40%, rgba(14,15,19,0.4)), url('img/banners/banner_1.jpg');">
         <div class="hero-content">
           <span class="hero-tag">Jaunums veikalos</span>
           <h2 class="hero-title">Bauer Supreme S26 Kolekcija</h2>
@@ -1315,7 +1318,7 @@ function viewHome() {
           <a href="#" data-t="sticks" class="hero-btn">Skatīt nūju radaru →</a>
         </div>
       </div>
-      <div class="hero-slide" style="background-image:linear-gradient(90deg, rgba(14,15,19,0.92) 40%, rgba(14,15,19,0.4)), url('img/banners/promo-season.jpg');">
+      <div class="hero-slide" style="background-image:linear-gradient(90deg, rgba(14,15,19,0.92) 40%, rgba(14,15,19,0.4)), url('img/banners/banner_2.jpg');">
         <div class="hero-content">
           <span class="hero-tag">Cenu analīze</span>
           <h2 class="hero-title">Atrodi labāko inventāra cenu</h2>
@@ -1329,7 +1332,7 @@ function viewHome() {
       </div>
     </div>
 
-    <!-- REKOMENDĀCIJU BLOKS (CENTRĒTS 3 KOLONNĀS, BEZ POGAS) -->
+    <!-- REKOMENDĀCIJU BLOKS (CENTRĒTS 3 KOLONNĀS) -->
     <div class="home-recom">
       <div class="home-recom-title">
         <h3 style="margin:0 0 4px; font-size:18px; font-weight:800;">Pielāgots tavam stilam: <span style="color:var(--red); text-transform:uppercase;">${isForward ? 'Uzbrucējs' : 'Aizsargs'}</span></h3>
@@ -1340,16 +1343,16 @@ function viewHome() {
         ${renderCard(recSkate, 'hp')}
         ${renderCard(recStick, 'hp')}
         
-        <!-- 3. BOX: AIZSARGI TEASER (SIMETRIJAI) -->
+        <!-- 3. BOX: AIZSARGI PRO -->
         <article class="card card-zero">
           <div class="imgbox" style="cursor:default;">
             <div style="font-size:48px; opacity:0.85;">🛡️</div>
           </div>
           <div class="body">
-            <h3>Bauer Pro Aizsargi</h3>
+            <h3>Hokeja Aizsargu Radars PRO</h3>
             <p class="shop">Pilns ekipējuma komplekts &nbsp; <span class="badge b-demo">Drīzumā</span></p>
-            ${row('Kategorijas', 'Plecsargi · Kājsargi · Cimdi')}
-            ${row('Aizsardzība', 'Elites līmenis')}
+            ${row('Kategorijas', 'Plecsargi · Kājsargi · Cimdi · Bikses')}
+            ${row('Aizsardzība', 'Amatieru – Elites līmenis')}
             ${row('Pieejamība', '<span style="color:var(--amber)">Tiek izstrādāts</span>')}
             ${row('Statuss', 'Plānots 2026/2027')}
             <p class="note">Modulis ar precīziem anatomiskajiem izmēriem un aizsardzības klases salīdzināšanu drīzumā būs pieejams.</p>
@@ -1359,9 +1362,9 @@ function viewHome() {
       </div>
     </div>
 
-    <!-- PARTNERU VEIKALU LOGO SHOWCASE -->
-    <div style="margin-top:24px; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px 24px;">
-      <h3 style="margin:0 0 16px; font-size:16px; font-weight:800; text-align:center; color:var(--text); letter-spacing:.02em;">Salīdzinātie partneru veikali</h3>
+    <!-- SALĪDZINĀŠANĀ IESAISTĪTIE VEIKALI (TIEŠI UZ FONA, BEZ BLOKA) -->
+    <div style="margin-top:36px; padding:10px 0;">
+      <h2 style="margin:0 0 20px; font-size:20px; font-weight:900; text-align:center; color:var(--text); letter-spacing:.02em;">Salīdzināšanā iesaistītie veikali</h2>
       <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; align-items:center;">
         ${storeHeader('hj')}
         ${storeHeader('hp')}
@@ -1429,9 +1432,9 @@ function viewProtective() {
     <div class="uc-wrap">
       <img src="img/under-construction.jpg" alt="Aizsargu modulis izstrādē" class="uc-img" onerror="this.style.display='none'">
       <span class="hero-tag" style="margin-bottom:12px;">Drīzumā</span>
-      <h1 style="font-size:26px; margin-bottom:10px;">Hokeja Aizsargu Radars</h1>
+      <h1 style="font-size:26px; margin-bottom:10px;">Hokeja Aizsargu Radars PRO</h1>
       <p style="color:var(--muted); max-width:540px; margin:0 auto 20px; font-size:14px; line-height:1.6;">
-        Tiek izstrādāts viedais plecsargu, kājsargu un cimdu salīdzināšanas modulis ar precīziem izmēru kalkulatoriem un aizsardzības klases līmeņiem.
+        Tiek izstrādāts viedais plecsargu, kājsargu, bikšu un cimdu salīdzināšanas modulis ar precīziem izmēru kalkulatoriem un aizsardzības klases līmeņiem.
       </p>
       <button data-t="skates" class="btn-save-profile" style="padding:10px 20px; font-size:14px;">Atgriezties pie slidām</button>
     </div>
@@ -1816,7 +1819,6 @@ document.addEventListener('input', e => {
   }
 });
 
-// Sākumlapas slīdņa rotācija (plūstoša ar 0.8s pāreju)
 setInterval(() => {
   if (S.tab !== 'home') return;
   const slides = document.querySelectorAll('.hero-slide');
