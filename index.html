@@ -114,7 +114,7 @@ header{position:relative;z-index:5;background:var(--header-bg);border-bottom:2px
 /* HEADER LABĀS PUSĒJĀS POGAS */
 .header-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
 
-/* VALODU POGA & DROPDOWN */
+/* VALODU POGA & DROPDOWN AR KRĀSU KAROGIEM */
 .lang-box{position:relative}
 .lang-btn{
   background:var(--switch-bg);
@@ -125,7 +125,7 @@ header{position:relative;z-index:5;background:var(--header-bg);border-bottom:2px
   border-radius:99px;
   display:inline-flex;
   align-items:center;
-  gap:6px;
+  gap:7px;
   cursor:pointer;
   font-size:12px;
   font-weight:700;
@@ -133,11 +133,20 @@ header{position:relative;z-index:5;background:var(--header-bg);border-bottom:2px
   outline:none;
 }
 .lang-btn:hover, .lang-btn.active{border-color:var(--red);transform:scale(1.04)}
+.flag-icon{
+  display:inline-block;
+  width:18px;
+  height:12px;
+  border-radius:2px;
+  overflow:hidden;
+  box-shadow:0 0 1px rgba(0,0,0,.5);
+  flex-shrink:0;
+}
 .lang-menu{
   position:absolute;
   top:calc(100% + 8px);
   right:0;
-  width:150px;
+  width:155px;
   background:var(--card);
   border:1px solid var(--line);
   border-radius:12px;
@@ -153,7 +162,7 @@ header{position:relative;z-index:5;background:var(--header-bg);border-bottom:2px
 .lang-opt{
   display:flex;
   align-items:center;
-  gap:8px;
+  gap:10px;
   width:100%;
   padding:8px 10px;
   border:none;
@@ -231,7 +240,7 @@ header{position:relative;z-index:5;background:var(--header-bg);border-bottom:2px
   position:absolute;
   top:calc(100% + 8px);
   right:0;
-  width:190px;
+  width:180px;
   background:var(--card);
   border:1px solid var(--line);
   border-radius:12px;
@@ -261,17 +270,17 @@ header{position:relative;z-index:5;background:var(--header-bg);border-bottom:2px
 }
 .dropdown-item:hover{background:var(--card-hover);color:var(--red)}
 
-/* HEADER 2. RĪKSTU JOSLA - NAVIGĀCIJAS POGAS */
+/* HEADER 2. RĪKSTU JOSLA - NAVIGĀCIJAS POGAS (LĪDZINĀTAS PA KREISI) */
 .header-row-nav{
   display:flex;
-  justify-content:center;
+  justify-content:flex-start;
   align-items:center;
   padding-bottom:12px;
   border-top:1px solid rgba(255,255,255,.05);
   padding-top:10px;
 }
 [data-theme="light"] .header-row-nav{border-top:1px solid rgba(0,0,0,.05)}
-nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center}
+nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-start}
 nav button{
   background:var(--switch-bg);
   border:1px solid var(--switch-border);
@@ -434,8 +443,8 @@ th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05
 .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px}
 .form-group{display:flex;flex-direction:column;gap:7px}
 .form-group label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-.form-group select,.form-group input{background:var(--input-bg);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:9px 12px;font:inherit}
-.form-group select:focus,.form-group input:focus{border-color:var(--red);outline:none}
+.form-group select,.form-group input,.form-group textarea{background:var(--input-bg);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:9px 12px;font:inherit}
+.form-group select:focus,.form-group input:focus,.form-group textarea:focus{border-color:var(--red);outline:none}
 .form-helper{font-size:12px;color:var(--muted);line-height:1.4}
 .profile-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:28px}
 .btn-save-profile{background:var(--red);color:#fff;border:none;padding:12px 24px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 4px 12px rgba(237,32,39,.35);transition:all .15s ease}
@@ -465,8 +474,10 @@ th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05
   background:var(--card);
   border:1px solid var(--line);
   border-radius:14px;
-  max-width:540px;
+  max-width:580px;
   width:100%;
+  max-height:90vh;
+  overflow-y:auto;
   padding:26px 28px;
   box-shadow:0 20px 40px rgba(0,0,0,.5);
   position:relative;
@@ -483,6 +494,10 @@ th{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05
   line-height:1;
 }
 .modal-close:hover{color:var(--red)}
+
+.faq-item{margin-bottom:12px;border:1px solid var(--line);border-radius:8px;padding:10px 14px;background:var(--input-bg)}
+.faq-q{font-weight:700;font-size:13px;color:var(--text);margin-bottom:4px}
+.faq-a{font-size:12px;color:var(--muted);line-height:1.5}
 
 /* FOOTER */
 footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-top:2px solid var(--header-border);box-shadow:0 -8px 24px var(--shadow-header);color:var(--muted);font-size:13px;padding:40px 0 32px}
@@ -539,17 +554,32 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
 
       <!-- Darbības labajā pusē -->
       <div class="header-actions">
-        <!-- Valodu pārslēgs -->
+        <!-- Valodu pārslēgs ar krāsainām SVG ikonām -->
         <div class="lang-box">
           <button id="lang-btn" class="lang-btn" type="button" aria-label="Valoda">
-            <span id="current-lang-flag">🇱🇻</span>
+            <span id="current-lang-flag" class="flag-icon"></span>
             <span id="current-lang-code">LV</span>
             <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
           </button>
           <div id="lang-menu" class="lang-menu">
-            <button class="lang-opt" data-lang="lv"><span>🇱🇻</span> Latviešu</button>
-            <button class="lang-opt" data-lang="en"><span>🇬🇧</span> English</button>
-            <button class="lang-opt" data-lang="de"><span>🇩🇪</span> Deutsch</button>
+            <button class="lang-opt" data-lang="lv">
+              <span class="flag-icon">
+                <svg width="18" height="12" viewBox="0 0 20 14"><rect width="20" height="14" fill="#981e32"/><rect y="5.6" width="20" height="2.8" fill="#fff"/></svg>
+              </span>
+              <span>Latviešu</span>
+            </button>
+            <button class="lang-opt" data-lang="en">
+              <span class="flag-icon">
+                <svg width="18" height="12" viewBox="0 0 60 30"><clipPath id="s_en"><path d="M0,0 v30 h60 v-30 z"/></clipPath><clipPath id="t_en"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><g clip-path="url(#s_en)"><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#t_en)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></g></svg>
+              </span>
+              <span>English</span>
+            </button>
+            <button class="lang-opt" data-lang="de">
+              <span class="flag-icon">
+                <svg width="18" height="12" viewBox="0 0 5 3"><rect width="5" height="1" y="0" fill="#000"/><rect width="5" height="1" y="1" fill="#DD0000"/><rect width="5" height="1" y="2" fill="#FFCE00"/></svg>
+              </span>
+              <span>Deutsch</span>
+            </button>
           </div>
         </div>
 
@@ -582,7 +612,7 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
       </div>
     </div>
 
-    <!-- 2. LĪMENIS: SADAĻU NAVIGĀCIJAS POGAS -->
+    <!-- 2. LĪMENIS: SADAĻU NAVIGĀCIJAS POGAS (LĪDZINĀTAS PA KREISI) -->
     <div class="header-row-nav">
       <nav id="nav"></nav>
     </div>
@@ -592,35 +622,66 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
 
 <main class="wrap" id="app"></main>
 
-<!-- PAR MUMS MODĀLAIS LOGS -->
+<!-- PAR MUMS + BUJ (FAQ) MODĀLAIS LOGS -->
 <div id="modal-about" class="modal-overlay">
   <div class="modal-box">
     <button class="modal-close" data-close-modal>&times;</button>
-    <h2 style="margin:0 0 12px; font-size:20px;">Par Hockey Equipment Radar</h2>
-    <p style="color:var(--muted); font-size:14px; line-height:1.6; margin-bottom:14px;">
-      <b>HOCKEY EQUIPMENT RADAR (HER)</b> ir neatkarīgs Latvijas hokeja entuziastu izstrādāts rīks, kura galvenais uzdevums ir nodrošināt caurspīdīgu, ērtu un automatizētu inventāra cenu salīdzināšanu.
+    <h2 style="margin:0 0 10px; font-size:20px;">Par Hockey Equipment Radar</h2>
+    <p style="color:var(--muted); font-size:13px; line-height:1.6; margin-bottom:18px;">
+      <b>HOCKEY EQUIPMENT RADAR (HER)</b> ir neatkarīgs rīks hokejistiem un vecākiem, kas reāllaikā apkopo un analizē jaunākā hokeja inventāra cenas un noliktavas atlikumus lielākajos Latvijas un Baltijas veikalos.
     </p>
-    <p style="color:var(--muted); font-size:14px; line-height:1.6; margin-bottom:14px;">
-      Mēs ik dienu sinhronizējam datus no vadošajiem reģiona veikaliem (Hokeja Pasaule, Hokejam.lv, Sportega), pārbaudot noliktavas krājumus, izmēru pieejamību un labākās akcijas, lai spēlētāji vienmēr izdarītu izdevīgāko izvēli.
-    </p>
+
+    <h3 style="font-size:15px; margin-bottom:10px; color:var(--text);">Biežāk uzdotie jautājumi (BUJ)</h3>
+
+    <div class="faq-item">
+      <div class="faq-q">Cik bieži tiek atjaunotas cenas?</div>
+      <div class="faq-a">Radars veic automātisku datu skenēšanu katru dienu. Katras kartītes laukā <i>Pēdējā pārbaude</i> var redzēt konkrētās preces datu atbilstību.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Vai cenā ir iekļauta piegāde?</div>
+      <div class="faq-a">Kartītēs ir skaidri nodalīta pašas preces cena un standarta piegādes maksa uz pakomātu vai ar kurjeru. Laukā <i>Kopā</i> tiek aprēķināts reālais kopējais pirkuma grozs.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Kāpēc atsevišķi modeļi rādās kā "Nav atrasts"?</div>
+      <div class="faq-a">Tas nozīmē, ka konkrētajā veikalā šis modelis pašlaik nav pieejams pieaugušo (Senior) izmērā vai preces lapa veikalā ir īslaicīgi neaktīva.</div>
+    </div>
   </div>
 </div>
 
-<!-- KONTAKTI MODĀLAIS LOGS -->
+<!-- KONTAKTI + ATSAUKSMJU / KĻŪDU FORMA -->
 <div id="modal-contact" class="modal-overlay">
   <div class="modal-box">
     <button class="modal-close" data-close-modal>&times;</button>
-    <h2 style="margin:0 0 12px; font-size:20px;">Kontakti un Sadarbība</h2>
-    <p style="color:var(--muted); font-size:14px; line-height:1.6; margin-bottom:16px;">
-      Priecāsimies par jebkuru atgriezenisko saiti, pamanītām kļūdām cenu datos vai ieteikumiem jaunu funkciju ieviešanai!
+    <h2 style="margin:0 0 10px; font-size:20px;">Kontakti un Ziņojumi</h2>
+    <p style="color:var(--muted); font-size:13px; line-height:1.5; margin-bottom:16px;">
+      Pamanīji neprecīzu cenu vai vēlies ieteikt jaunu veikalu vai nūju/slidu modeli? Nosūti mums ziņu:
     </p>
-    <div style="background:var(--input-bg); border:1px solid var(--line); border-radius:10px; padding:14px; margin-bottom:14px;">
-      <small style="color:var(--muted); display:block; text-transform:uppercase; font-size:11px; font-weight:700;">Oficiālais e-pasts</small>
-      <a href="mailto:heradar@gmail.com" style="color:var(--red); font-size:16px; font-weight:700; text-decoration:none;">heradar@gmail.com</a>
+
+    <form id="contact-quick-form" style="display:flex; flex-direction:column; gap:12px; margin-bottom:16px;">
+      <div class="form-group">
+        <label for="msg-subject" style="font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase;">Tēma</label>
+        <select id="msg-subject" style="background:var(--input-bg); color:var(--text); border:1px solid var(--line); border-radius:8px; padding:9px 12px; font:inherit;">
+          <option value="Neprecīza cena vai noliktavas statuss">Neprecīza cena vai noliktavas statuss</option>
+          <option value="Ieteikums jaunam veikalam / modelim">Ieteikums jaunam veikalam / modelim</option>
+          <option value="Vispārējs jautājums vai sadarbība">Vispārējs jautājums vai sadarbība</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="msg-body" style="font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase;">Ziņas teksts</label>
+        <textarea id="msg-body" rows="4" placeholder="Apraksti situāciju vai iekopē saiti..." style="background:var(--input-bg); color:var(--text); border:1px solid var(--line); border-radius:8px; padding:9px 12px; font:inherit; resize:vertical;"></textarea>
+      </div>
+
+      <button type="submit" class="btn-save-profile" style="margin-top:4px; padding:10px 18px; font-size:14px; text-align:center;">
+        Sagatavot un nosūtīt e-pastu ✉️
+      </button>
+    </form>
+
+    <div style="background:var(--input-bg); border:1px solid var(--line); border-radius:10px; padding:12px 14px; font-size:13px; color:var(--muted);">
+      Tiešais e-pasts: <a href="mailto:hockeyeqradar@gmail.com" style="color:var(--red); font-weight:700; text-decoration:none;">hockeyeqradar@gmail.com</a>
     </div>
-    <p style="color:var(--muted); font-size:13px; line-height:1.5; margin:0;">
-      Aicinām sazināties arī veikalu pārstāvjus un inventāra izplatītājus datu integrāciju jautājumos.
-    </p>
   </div>
 </div>
 
@@ -644,7 +705,7 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
           Neatkarīgs hokeja ekipējuma cenu un pieejamības agregators. Mēs uzraugām vadošo Latvijas un Eiropas tirdzniecības vietu piedāvājumu, lai palīdzētu spēlētājiem atrast piemērotāko inventāru par labāko cenu.
         </p>
         <p style="margin-top:10px; font-size:12px; color:var(--muted); line-height:1.5;">
-          Reportot kļūdas vai iesniegt ieteikumus var, sūtot ziņu uz e-pastu: <a href="mailto:heradar@gmail.com" style="color:var(--red); font-weight:700; text-decoration:none;">heradar@gmail.com</a>
+          Reportot kļūdas vai iesniegt ieteikumus var, sūtot ziņu uz e-pastu: <a href="mailto:hockeyeqradar@gmail.com" style="color:var(--red); font-weight:700; text-decoration:none;">hockeyeqradar@gmail.com</a>
         </p>
       </div>
       
@@ -677,7 +738,13 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
 </footer>
 
 <script>
-/* 1. VALODU RESURSI (I18N) */
+/* 1. VALODU RESURSI (I18N) UN KARODZIŅI */
+const FLAG_SVGS = {
+  lv: `<svg width="18" height="12" viewBox="0 0 20 14"><rect width="20" height="14" fill="#981e32"/><rect y="5.6" width="20" height="2.8" fill="#fff"/></svg>`,
+  en: `<svg width="18" height="12" viewBox="0 0 60 30"><clipPath id="s_btn"><path d="M0,0 v30 h60 v-30 z"/></clipPath><clipPath id="t_btn"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><g clip-path="url(#s_btn)"><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#t_btn)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></g></svg>`,
+  de: `<svg width="18" height="12" viewBox="0 0 5 3"><rect width="5" height="1" y="0" fill="#000"/><rect width="5" height="1" y="1" fill="#DD0000"/><rect width="5" height="1" y="2" fill="#FFCE00"/></svg>`
+};
+
 const TRANSLATIONS = {
   lv: {
     tabNew: 'Jaunas slidas LV',
@@ -811,11 +878,11 @@ const t = (k, params = {}) => {
 function getUiTimestamp() {
   try {
     const d = new Date(document.lastModified);
-    if (isNaN(d.getTime())) return '28.10.2026 21:50';
+    if (isNaN(d.getTime())) return '28.10.2026 22:15';
     const pad = n => ('0' + n).slice(-2);
     return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
   } catch(e) {
-    return '28.10.2026 21:50';
+    return '28.10.2026 22:15';
   }
 }
 
@@ -1084,7 +1151,6 @@ function viewNew() {
 
   const rKeys = Object.keys(RETAILERS);
 
-  // Meklēšanas un kārtošanas filtrs
   let filteredModels = [...MODELS];
   if (S.searchQuery.trim()) {
     const q = S.searchQuery.toLowerCase();
@@ -1263,17 +1329,14 @@ function updateHeaderNav() {
 }
 
 function updateStaticI18n() {
-  const flags = { lv: '🇱🇻', en: '🇬🇧', de: '🇩🇪' };
-  document.getElementById('current-lang-flag').textContent = flags[CURR_LANG] || '🇱🇻';
+  document.getElementById('current-lang-flag').innerHTML = FLAG_SVGS[CURR_LANG] || FLAG_SVGS['lv'];
   document.getElementById('current-lang-code').textContent = CURR_LANG.toUpperCase();
   document.getElementById('site-search').placeholder = t('searchPh');
 
-  // Izkrītošās izvēlnes aktīvā valoda
   document.querySelectorAll('.lang-opt').forEach(b => {
     b.classList.toggle('active', b.dataset.lang === CURR_LANG);
   });
 
-  // Kājenes teksti
   document.getElementById('ui-last-modified').textContent = getUiTimestamp();
 }
 
@@ -1469,6 +1532,16 @@ document.addEventListener('input', e => {
     S.searchQuery = e.target.value;
     if (S.tab !== 'new') S.tab = 'new';
     render();
+  }
+});
+
+// Ātrā ziņojuma nosūtīšana uz e-pastu
+document.addEventListener('submit', e => {
+  if (e.target.id === 'contact-quick-form') {
+    e.preventDefault();
+    const subject = encodeURIComponent('[HER Ziņojums] ' + document.getElementById('msg-subject').value);
+    const body = encodeURIComponent(document.getElementById('msg-body').value);
+    window.location.href = `mailto:hockeyeqradar@gmail.com?subject=${subject}&body=${body}`;
   }
 });
 
