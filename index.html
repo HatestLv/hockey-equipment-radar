@@ -2324,30 +2324,33 @@ function openLightbox(modelId) {
   document.getElementById('modal-lightbox').classList.add('open');
 }
 
-/* IZMĒRU TABULU MODĀLAIS LOGS */
+/* IZMĒRU TABULU MODĀLAIS LOGS (AUTOMĀTISKI DER GAN .JPG, GAN .PNG) */
 function openChartModal(type) {
   const modal = document.getElementById('modal-chart');
   const title = document.getElementById('modal-chart-title');
   const img = document.getElementById('modal-chart-img');
+  const baseName = type === 'skates' ? 'skate-size-chart' : 'stick-size-chart';
 
-  if (type === 'skates') {
-    title.textContent = 'Bauer Slidu Izmēru Tabula';
-    img.src = 'img/skate-size-chart.png';
-    img.onerror = function() {
-      if (this.src.indexOf('img/tables/') === -1) {
-        this.src = 'img/tables/skate-size-chart.png';
-      }
-    };
-  } else {
-    title.textContent = 'Bauer Nūju Izmēru Tabula';
-    img.src = 'img/stick-size-chart.png';
-    img.onerror = function() {
-      if (this.src.indexOf('img/tables/') === -1) {
-        this.src = 'img/tables/stick-size-chart.png';
-      }
-    };
-  }
+  title.textContent = type === 'skates' ? 'Bauer Slidu Izmēru Tabula' : 'Bauer Nūju Izmēru Tabula';
 
+  // Iespējamo faila ceļu prioritāšu saraksts
+  const sources = [
+    `img/${baseName}.jpg`,
+    `img/${baseName}.png`,
+    `img/tables/${baseName}.jpg`,
+    `img/tables/${baseName}.png`,
+    `img/${baseName}.jpeg`
+  ];
+
+  let attempt = 0;
+  img.onerror = function() {
+    attempt++;
+    if (attempt < sources.length) {
+      this.src = sources[attempt];
+    }
+  };
+
+  img.src = sources[0];
   modal.classList.add('open');
 }
 
