@@ -569,7 +569,7 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
   filter:drop-shadow(0 0 14px rgba(237,32,39,.55));
 }
 
-/* PREČU KARTĪTES */
+/* PREČU KARTĪTES UN VIENOTS AUGSTUMS */
 .card{
   background:var(--card);
   border:1px solid var(--line);
@@ -709,7 +709,7 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
   pointer-events:none;
 }
 
-/* PROFILA BLOKS */
+/* PROFILA BLOKS — IZMĒRU TABULAS POGA & REŽĢIS */
 .profile-tabs-bar{
   display:flex;
   justify-content:space-between;
@@ -785,6 +785,7 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
 }
 .form-group label{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
 
+/* BUDŽETA INPUTI */
 .form-input-box{
   width:100%;
   height:34px;
@@ -880,6 +881,7 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
 }
 .modal-close:hover{color:var(--red)}
 
+/* IZMĒRU TABULAS MODĀLIS */
 .chart-modal-overlay{
   backdrop-filter:blur(14px) !important;
   -webkit-backdrop-filter:blur(14px) !important;
@@ -937,7 +939,7 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
 .faq-q{font-weight:700;font-size:13px;color:var(--text);margin-bottom:4px}
 .faq-a{font-size:12px;color:var(--muted);line-height:1.5}
 
-/* LIGHTBOX */
+/* LIGHTBOX (PREČU BILŽU LOGS) */
 .lightbox-content{
   position:relative;
   max-width:980px;
@@ -1344,6 +1346,10 @@ const SKATE_MODELS = [
     match: { forward: 72, defense: 90 },
     profileBadge: 'Power / Stabilitāte',
     note: 'Supreme jaunākā paaudze (S26). Anatomisks atbalsts potītei un stabilitāte divcīņās.',
+    
+    // UZMANĪBU: Bērniem šis modelis nerādīsies, tas atfiltrēts caur allowed_categories!
+    allowed_categories: ['Senior', 'Intermediate', 'Junior'], 
+
     images: [
       'img/skates/bauer-supreme-f40/1.png',
       'img/skates/bauer-supreme-f40/2.png',
@@ -1436,38 +1442,11 @@ const RETAILER_CAT_URLS = {
   }
 };
 
-let OFFERS = [
-  // --- SENIOR SLIDAS ---
-  { type: 'skate', category: 'Senior', model: 'bauer-vapor-fly40', retailer: 'hp', price: 535, shipping: 3.5, sizes: ['7','7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://hokejapasaule.lv/lv_lv/bauer-vapor-s25-fly40-senior-hokeja-slidas', status: 'VERIFIED' },
-  { type: 'skate', category: 'Senior', model: 'bauer-vapor-fly40', retailer: 'hj', price: null, shipping: 0, sizes: ['7.5','8'], fits: ['FIT 2'], stock: false, checked: null, url: 'https://www.hokejam.lv/lv/meklesana?search=FLY40', status: 'DEMO' },
-  { type: 'skate', category: 'Senior', model: 'bauer-vapor-fly40', retailer: 'sp', price: 535, shipping: 4, sizes: ['7','7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-senior/d1502757', status: 'VERIFIED' },
-  { type: 'skate', category: 'Senior', model: 'bauer-supreme-f40', retailer: 'hp', price: 535, shipping: 3.5, sizes: ['7','7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://hokejapasaule.lv/lv_lv/bauer-supreme-s26-f40-senior-hokeja-slidas', status: 'VERIFIED' },
-  { type: 'skate', category: 'Senior', model: 'bauer-supreme-f40', retailer: 'hj', price: 475.99, shipping: 0, sizes: ['7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://www.hokejam.lv/lv/pieauguso-hokeja-slidas/5455-bauer-supreme-f40-s26-pieauguso-hokeja-slidas', status: 'VERIFIED' },
-  { type: 'skate', category: 'Senior', model: 'bauer-supreme-f40', retailer: 'sp', price: 535, shipping: 4, sizes: ['7','7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://www.sportega.lv/hokeja-slidas-bauer-supreme-f40-senior/d1583973', status: 'VERIFIED' },
-  { type: 'skate', category: 'Senior', model: 'bauer-supreme-m40', retailer: 'hp', price: 349, shipping: 3.5, sizes: ['7','7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://hokejapasaule.lv/lv_lv/bauer-supreme-s24-m40-senior-hokeja-slidas', status: 'VERIFIED' },
-  { type: 'skate', category: 'Senior', model: 'bauer-supreme-m40', retailer: 'hj', price: 416.49, shipping: 0, sizes: ['7','7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://www.hokejam.lv/lv/pieauguso-hokeja-slidas/4507-bauer-supreme-m40-pieauguso-hokeja-slidas', status: 'VERIFIED' },
-  { type: 'skate', category: 'Senior', model: 'bauer-supreme-m40', retailer: 'sp', price: 349.99, shipping: 4, sizes: ['7','7.5','8'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-senior/d1438036', status: 'VERIFIED' },
+// Sākumā saraksts ir tukšs (bez fiktīviem datiem). 
+// Tiek rādīts TIKAI tas, ko ģenerē skrāperis.
+let OFFERS = [];
 
-  // --- YOUTH (BĒRNU) SLIDAS ---
-  { type: 'skate', category: 'Youth', model: 'bauer-vapor-fly40', retailer: 'hp', price: 115.00, shipping: 3.5, sizes: ['Yth 8', 'Yth 9', 'Yth 10', 'Yth 11', 'Yth 12', 'Yth 13'], fits: ['FIT 2', 'Regular'], stock: true, checked: '2026-10-28', url: 'https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-berniem', status: 'VERIFIED' },
-  { type: 'skate', category: 'Youth', model: 'bauer-vapor-fly40', retailer: 'hj', price: 109.99, shipping: 0, sizes: ['Yth 9', 'Yth 10', 'Yth 11', 'Yth 12'], fits: ['FIT 2', 'Regular'], stock: true, checked: '2026-10-28', url: 'https://www.hokejam.lv/lv/51-bernu-hokeja-slidas', status: 'VERIFIED' },
-  { type: 'skate', category: 'Youth', model: 'bauer-vapor-fly40', retailer: 'sp', price: 119.00, shipping: 4, sizes: ['Yth 8', 'Yth 9', 'Yth 10', 'Yth 11', 'Yth 12', 'Yth 13'], fits: ['FIT 2', 'Regular'], stock: true, checked: '2026-10-28', url: 'https://www.sportega.lv/hokeja-ekipejums/berns-youth/c233', status: 'VERIFIED' },
-  
-  { type: 'skate', category: 'Youth', model: 'bauer-supreme-f40', retailer: 'hp', price: 115.00, shipping: 3.5, sizes: ['Yth 8', 'Yth 9', 'Yth 10', 'Yth 11', 'Yth 12'], fits: ['FIT 2', 'Regular'], stock: true, checked: '2026-10-28', url: 'https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-berniem', status: 'VERIFIED' },
-  { type: 'skate', category: 'Youth', model: 'bauer-supreme-f40', retailer: 'hj', price: 105.00, shipping: 0, sizes: ['Yth 10', 'Yth 11', 'Yth 12'], fits: ['FIT 2', 'Regular'], stock: true, checked: '2026-10-28', url: 'https://www.hokejam.lv/lv/51-bernu-hokeja-slidas', status: 'VERIFIED' },
-  { type: 'skate', category: 'Youth', model: 'bauer-supreme-f40', retailer: 'sp', price: 112.50, shipping: 4, sizes: ['Yth 8', 'Yth 9', 'Yth 10', 'Yth 11', 'Yth 12'], fits: ['FIT 2', 'Regular'], stock: true, checked: '2026-10-28', url: 'https://www.sportega.lv/hokeja-ekipejums/berns-youth/c233', status: 'VERIFIED' },
-
-  { type: 'skate', category: 'Youth', model: 'bauer-supreme-m40', retailer: 'hp', price: 95.00, shipping: 3.5, sizes: ['Yth 8', 'Yth 9', 'Yth 10', 'Yth 11'], fits: ['FIT 2', 'Regular'], stock: true, checked: '2026-10-28', url: 'https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-berniem', status: 'VERIFIED' },
-  { type: 'skate', category: 'Youth', model: 'bauer-supreme-m40', retailer: 'hj', price: 89.99, shipping: 0, sizes: ['Yth 8', 'Yth 9', 'Yth 10'], fits: ['FIT 2', 'Regular'], stock: true, checked: '2026-10-28', url: 'https://www.hokejam.lv/lv/51-bernu-hokeja-slidas', status: 'VERIFIED' },
-  { type: 'skate', category: 'Youth', model: 'bauer-supreme-m40', retailer: 'sp', price: 94.00, shipping: 4, sizes: ['Yth 8', 'Yth 9', 'Yth 10', 'Yth 11', 'Yth 12'], fits: ['FIT 2', 'Regular'], stock: true, checked: '2026-10-28', url: 'https://www.sportega.lv/hokeja-ekipejums/berns-youth/c233', status: 'VERIFIED' },
-
-  // --- NŪJAS ---
-  { type: 'stick', category: 'Senior', model: 'bauer-supreme-fuse-s26', retailer: 'hp', price: 169.00, shipping: 3.5, hands: ['Left','Right'], curves: ['P92','P28'], flexes: ['77','87'], stock: true, checked: '2026-10-28', url: 'https://hokejapasaule.lv/lv_lv/bauer-supreme-s26-fuse-grip-senior-hokeja-nuja', status: 'VERIFIED' },
-  { type: 'stick', category: 'Senior', model: 'bauer-supreme-fuse-s26', retailer: 'hj', price: 159.99, shipping: 0.0, hands: ['Left','Right'], curves: ['P92'], flexes: ['77'], stock: true, checked: '2026-10-28', url: 'https://www.hokejam.lv/lv/pieauguso-kompozitu-hokeja-nujas/5726-20674-bauer-supreme-fuse-s26-senior-composite-hockey-stick#/27-virsma-grip/31-puse-kreisa_puse/43-liekums-p92/58-cietiba-65', status: 'VERIFIED' },
-  { type: 'stick', category: 'Senior', model: 'bauer-supreme-fuse-s26', retailer: 'sp', price: 164.99, shipping: 4.0, hands: ['Left','Right'], curves: ['P92','P28'], flexes: ['77','87'], stock: true, checked: '2026-10-28', url: 'https://www.sportega.lv/kompozitmateriala-hokeja-nuja-bauer-supreme-fuse-senior/d1585348', status: 'VERIFIED' }
-];
-
-let DATA_SYNC_SOURCE = 'LOKĀLIE DATI';
+let DATA_SYNC_SOURCE = 'TIEK GAIDĪTI DATI...';
 
 const USED_SOURCES = [
   { name: 'SS.lv', url: 'https://www.ss.lv/lv/sports/skating/hockey-skates/' },
@@ -1717,7 +1696,6 @@ function renderCard(m, rKey) {
   const specLabel1 = m.type === 'skate' ? t('sizes') : 'Satvēriens';
   const specLabel2 = m.type === 'skate' ? t('fit') : 'Flex / Liekums';
   
-  // Ja konkrēta saite nav atrasta, poga ved uz veikala atbilstošo kategorijas lapu
   const categoryFallbackUrl = RETAILER_CAT_URLS[currentCat]?.[rKey] || r.url;
   const targetUrl = (o && o.url) || categoryFallbackUrl;
   
@@ -1817,7 +1795,11 @@ function filtersBar(type) {
         </button>
         <div class="ui-dropdown-menu">
           <button type="button" class="ui-dropdown-opt ${S.sort === 'default' ? 'active' : ''}" data-val="default">${t('sortDef')}</button>
-          ${models.map(m => `<button type="button" class="ui-dropdown-opt ${S.sort === m.id ? 'active' : ''}" data-val="${m.id}">${getModelName(m)}</button>`).join('')}
+          ${models.map(m => {
+            // Filtrē modeļus, ja tie nav pieejami noteiktā kategorijā (piemēram, F40 bērniem)
+            if (m.allowed_categories && !m.allowed_categories.includes(catVal)) return '';
+            return `<button type="button" class="ui-dropdown-opt ${S.sort === m.id ? 'active' : ''}" data-val="${m.id}">${getModelName(m)}</button>`;
+          }).join('')}
         </div>
       </div>
     </div>
@@ -1909,19 +1891,22 @@ function viewHome() {
 
 function viewCategory(type) {
   const isSkate = type === 'skate';
-  const models = isSkate ? SKATE_MODELS : STICK_MODELS;
-  const title = isSkate ? t('tabSkates') : t('tabSticks');
   const roleName = (ROLES[CURR_LANG] && ROLES[CURR_LANG][PROFILE.role]) || ROLES['lv'][PROFILE.role];
 
   const skateCatFull = PROFILE.skateCat || 'Senior';
   const stickCatFull = PROFILE.stickCat || 'Senior';
+  const currentCat = isSkate ? skateCatFull : stickCatFull;
+  
+  // Atfiltrē modeļus, kuri konkrētajā vecuma grupā nemaz neeksistē
+  let models = isSkate ? SKATE_MODELS : STICK_MODELS;
+  models = models.filter(m => !m.allowed_categories || m.allowed_categories.includes(currentCat));
 
+  const title = isSkate ? t('tabSkates') : t('tabSticks');
   const sub = isSkate 
     ? t('subTitleSkates', { role: `<b>${roleName}</b>`, cat: `<b>${skateCatFull}</b>`, size: `<b>${PROFILE.size}</b>`, fit: `<b>${PROFILE.fit}</b>` })
     : t('subTitleSticks', { hand: `<b>${PROFILE.hand}</b>`, flex: `<b>${PROFILE.flex}</b>`, curve: `<b>${PROFILE.curve}</b>`, cat: `<b>${stickCatFull}</b>` });
 
   const rKeys = Object.keys(RETAILERS);
-  const currentCat = isSkate ? skateCatFull : stickCatFull;
   
   // Atlasa tikai konkrētās vecuma grupas piedāvājumus
   const offersList = OFFERS.filter(o => o.type === type && (o.category ? o.category === currentCat : true));
