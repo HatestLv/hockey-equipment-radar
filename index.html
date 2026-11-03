@@ -371,7 +371,7 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
 .profile-pill-tag{color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;margin-left:2px}
 .filters-bar .divider{width:1px;height:24px;background:var(--line);margin:0 2px;flex-shrink:0}
 
-/* UNIVERSĀLS PIELĀGOTAIS DROPDOWN — VIENMĒRĪGI IEROBEŽOTS, BULTIŅA NEIZIET ĀRĀ */
+/* UNIVERSĀLS PIELĀGOTAIS DROPDOWN */
 .ui-dropdown{position:relative;display:block;width:100%;min-width:0}
 .ui-dropdown-btn{
   background:var(--switch-bg);
@@ -765,7 +765,7 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
   display:flex;
   flex-direction:column;
   gap:8px;
-  min-width:0; /* Novērš kolonnas izplešanos */
+  min-width:0;
 }
 .form-group label{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
 
@@ -860,6 +860,60 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
   transition:color .2s;
 }
 .modal-close:hover{color:var(--red)}
+
+/* IZMĒRU TABULAS MODĀLIS — PILNĪBĀ BEZ RĀMJA AR BLUR FONU */
+.chart-modal-overlay{
+  backdrop-filter:blur(14px) !important;
+  -webkit-backdrop-filter:blur(14px) !important;
+  background:rgba(0,0,0,0.85) !important;
+  padding:20px;
+  cursor:zoom-out;
+}
+.chart-content-wrap{
+  position:relative;
+  max-width:95vw;
+  max-height:92vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:default;
+}
+.chart-content-wrap img{
+  max-width:92vw;
+  max-height:88vh;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  display:block;
+  border-radius:8px;
+  box-shadow:0 16px 48px rgba(0,0,0,0.7);
+  user-select:none;
+}
+.chart-close-btn{
+  position:absolute;
+  top:-14px;
+  right:-14px;
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  background:#181a21;
+  border:1px solid var(--line);
+  color:#f2f4f8;
+  font-size:20px;
+  line-height:1;
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  box-shadow:0 4px 14px rgba(0,0,0,0.6);
+  transition:all .2s ease;
+  z-index:10;
+}
+.chart-close-btn:hover{
+  background:var(--red);
+  border-color:var(--red);
+  color:#fff;
+  transform:scale(1.08);
+}
 
 .faq-item{margin-bottom:12px;border:1px solid var(--line);border-radius:8px;padding:10px 14px;background:var(--input-bg)}
 .faq-q{font-weight:700;font-size:13px;color:var(--text);margin-bottom:4px}
@@ -1029,14 +1083,11 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
 
 <main class="wrap" id="app"></main>
 
-<!-- IZMĒRU TABULU MODĀLAIS LOGS (LIELS UN SKAIDRS) -->
-<div id="modal-chart" class="modal-overlay">
-  <div class="modal-box" style="max-width:920px; width:95%; max-height:92vh; padding:22px 26px;">
-    <button class="modal-close" data-close-modal>&times;</button>
-    <h2 id="modal-chart-title" style="margin:0 0 16px; font-size:18px; font-weight:800; color:var(--text);">Izmēru tabula</h2>
-    <div style="background:#fff; border-radius:12px; padding:16px; overflow-x:auto; max-height:76vh; display:flex; justify-content:center; align-items:center;">
-      <img id="modal-chart-img" src="" alt="Izmēru tabula" style="max-width:100%; max-height:calc(76vh - 36px); width:auto; height:auto; object-fit:contain; display:block;">
-    </div>
+<!-- IZMĒRU TABULU MODĀLAIS LOGS (TIKAI BILDE AR BLUR FONU BEZ RĀMJA) -->
+<div id="modal-chart" class="modal-overlay chart-modal-overlay">
+  <div class="chart-content-wrap">
+    <button class="chart-close-btn" data-close-modal aria-label="Aizvērt">&times;</button>
+    <img id="modal-chart-img" src="" alt="Izmēru tabula">
   </div>
 </div>
 
@@ -2324,16 +2375,13 @@ function openLightbox(modelId) {
   document.getElementById('modal-lightbox').classList.add('open');
 }
 
-/* IZMĒRU TABULU MODĀLAIS LOGS (AUTOMĀTISKI DER GAN .JPG, GAN .PNG) */
+/* IZMĒRU TABULU MODĀLAIS LOGS (TIKAI BILDE AR BLUR FONU BEZ RĀMJA) */
 function openChartModal(type) {
   const modal = document.getElementById('modal-chart');
-  const title = document.getElementById('modal-chart-title');
   const img = document.getElementById('modal-chart-img');
   const baseName = type === 'skates' ? 'skate-size-chart' : 'stick-size-chart';
 
-  title.textContent = type === 'skates' ? 'Bauer Slidu Izmēru Tabula' : 'Bauer Nūju Izmēru Tabula';
-
-  // Iespējamo faila ceļu prioritāšu saraksts
+  // Pārbauda gan JPG, gan PNG failus gan img/ mapē, gan img/tables/
   const sources = [
     `img/${baseName}.jpg`,
     `img/${baseName}.png`,
@@ -2486,7 +2534,8 @@ document.addEventListener('click', e => {
     return;
   }
 
-  if (e.target.hasAttribute('data-close-modal') || e.target.classList.contains('modal-overlay')) {
+  // Aizvēršana modālajiem logiem (ieskaitot izmēru tabulu klikšķinot ārpus tās)
+  if (e.target.hasAttribute('data-close-modal') || e.target.classList.contains('modal-overlay') || (e.target.closest('#modal-chart') && !e.target.closest('#modal-chart-img'))) {
     document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
     return;
   }
