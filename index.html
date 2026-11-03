@@ -543,7 +543,7 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
 .store-col{display:flex;flex-direction:column;gap:16px}
 .store-cards{display:flex;flex-direction:column;gap:16px;flex:1}
 
-/* VEIKALU LOGO UN KATEGORIJU SAITES */
+/* VEIKALU LOGO */
 .store-header{
   display:flex;
   flex-direction:column;
@@ -1189,7 +1189,7 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
   </div>
 </div>
 
-<!-- LIGHTBOX -->
+<!-- LIGHTBOX (PREČU BILŽU LOGS) -->
 <div id="modal-lightbox" class="modal-overlay">
   <div class="lightbox-content">
     <button class="modal-close" data-close-modal>&times;</button>
@@ -1330,6 +1330,7 @@ const SKATE_MODELS = [
     match: { forward: 92, defense: 64 },
     profileBadge: 'Agility / Ātrums',
     note: 'Vapor ģeometrija ar PowerFly holderi un Curv kompozītu. Izteikts uzsvars uz eksplozīvu startu.',
+    allowed_categories: ['Senior', 'Intermediate', 'Junior', 'Youth'],
     images: [
       'img/skates/bauer-vapor-fly40/1.png',
       'img/skates/bauer-vapor-fly40/2.png',
@@ -1346,10 +1347,7 @@ const SKATE_MODELS = [
     match: { forward: 72, defense: 90 },
     profileBadge: 'Power / Stabilitāte',
     note: 'Supreme jaunākā paaudze (S26). Anatomisks atbalsts potītei un stabilitāte divcīņās.',
-    
-    // UZMANĪBU: Bērniem šis modelis nerādīsies, tas atfiltrēts caur allowed_categories!
-    allowed_categories: ['Senior', 'Intermediate', 'Junior'], 
-
+    allowed_categories: ['Senior', 'Intermediate', 'Junior'], // Bērniem nav!
     images: [
       'img/skates/bauer-supreme-f40/1.png',
       'img/skates/bauer-supreme-f40/2.png',
@@ -1366,6 +1364,7 @@ const SKATE_MODELS = [
     match: { forward: 68, defense: 86 },
     profileBadge: 'Power / Izturība',
     note: 'Supreme sērijas pārbaudīta platforma par pieejamāku budžeta cenu.',
+    allowed_categories: ['Senior', 'Intermediate', 'Junior', 'Youth'],
     images: [
       'img/skates/bauer-supreme-m40/1.png',
       'img/skates/bauer-supreme-m40/2.png',
@@ -1395,30 +1394,11 @@ const STICK_MODELS = [
 ];
 
 const RETAILERS = {
-  hj: {
-    id: 'hj',
-    name: 'Hokejam.lv',
-    logoDark: 'img/logo/hokejam-lv.png',
-    logoLight: 'img/logo/hokejam-lv-dark.png',
-    url: 'https://www.hokejam.lv/'
-  },
-  hp: {
-    id: 'hp',
-    name: 'Hokeja Pasaule',
-    logoDark: 'img/logo/hokeja-pasaule.png',
-    logoLight: 'img/logo/hokeja-pasaule_dark.png',
-    url: 'https://hokejapasaule.lv/'
-  },
-  sp: {
-    id: 'sp',
-    name: 'Sportega',
-    logoDark: 'img/logo/sportega.png',
-    logoLight: 'img/logo/sportega-dark.png',
-    url: 'https://www.sportega.lv/'
-  }
+  hj: { id: 'hj', name: 'Hokejam.lv', logoDark: 'img/logo/hokejam-lv.png', logoLight: 'img/logo/hokejam-lv-dark.png', url: 'https://www.hokejam.lv/' },
+  hp: { id: 'hp', name: 'Hokeja Pasaule', logoDark: 'img/logo/hokeja-pasaule.png', logoLight: 'img/logo/hokeja-pasaule_dark.png', url: 'https://hokejapasaule.lv/' },
+  sp: { id: 'sp', name: 'Sportega', logoDark: 'img/logo/sportega.png', logoLight: 'img/logo/sportega-dark.png', url: 'https://www.sportega.lv/' }
 };
 
-/* KATEGORIJU TIEŠĀS SAITES VEIKALOS */
 const RETAILER_CAT_URLS = {
   Youth: {
     hp: 'https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-berniem',
@@ -1428,11 +1408,11 @@ const RETAILER_CAT_URLS = {
   Junior: {
     hp: 'https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-junioriem',
     hj: 'https://www.hokejam.lv/lv/50-junioru-hokeja-slidas',
-    sp: 'https://www.sportega.lv/hokeja-ekipejums/juniors/c232'
+    sp: 'https://www.sportega.lv/hokeja-ekipejums/juniors/c2559'
   },
   Intermediate: {
     hp: 'https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas',
-    hj: 'https://www.hokejam.lv/lv/48-pieauguso-hokeja-slidas',
+    hj: 'https://www.hokejam.lv/lv/241-pusaudzu-hokeja-slidas',
     sp: 'https://www.sportega.lv/hokeja-slidas/c354'
   },
   Senior: {
@@ -1442,11 +1422,8 @@ const RETAILER_CAT_URLS = {
   }
 };
 
-// Sākumā saraksts ir tukšs (bez fiktīviem datiem). 
-// Tiek rādīts TIKAI tas, ko ģenerē skrāperis.
 let OFFERS = [];
-
-let DATA_SYNC_SOURCE = 'TIEK GAIDĪTI DATI...';
+let DATA_SYNC_SOURCE = 'LOKĀLIE DATI';
 
 const USED_SOURCES = [
   { name: 'SS.lv', url: 'https://www.ss.lv/lv/sports/skating/hockey-skates/' },
@@ -1502,7 +1479,7 @@ const BAUER_SIZE_TABLES = {
     { val: 'Yth 12.5', label: 'Yth 12.5 (EUR 32 · 20.2 cm)' },
     { val: 'Yth 13', label: 'Yth 13 (EUR 32.5 · 20.5 cm)' },
     { val: 'Yth 13.5', label: 'Yth 13.5 (EUR 33 · 21.0 cm)' },
-    { val: 'all', label: 'Visi Youth (Bērnu) izmēri' }
+    { val: 'all', label: 'Visi Youth izmēri' }
   ]
 };
 
@@ -1549,7 +1526,7 @@ const DEFAULT_PROFILE = {
   size: '7.5',
   fit: 'FIT 2',
   skateFreq: '2-3',
-  minSkate: 300,
+  minSkate: 50,
   maxSkate: 650,
   stickBrand: 'Bauer',
   stickCat: 'Senior',
@@ -1557,18 +1534,14 @@ const DEFAULT_PROFILE = {
   hand: 'Left',
   curve: 'P92',
   flex: '77',
-  minStick: 100,
+  minStick: 50,
   maxStick: 250
 };
 
 function loadProfile() {
   try {
     const raw = localStorage.getItem('hsr_user_profile');
-    if (raw) {
-      const p = JSON.parse(raw);
-      if (p.size === 'pref') p.size = '7.5';
-      return { ...DEFAULT_PROFILE, ...p };
-    }
+    if (raw) return { ...DEFAULT_PROFILE, ...JSON.parse(raw) };
   } catch(e) {}
   return { ...DEFAULT_PROFILE };
 }
@@ -1576,7 +1549,7 @@ function loadProfile() {
 let PROFILE = loadProfile();
 
 const S = {
-  tab: 'home',
+  tab: 'skates',
   view: 'cards',
   stock: true,
   sort: 'default',
@@ -1586,14 +1559,13 @@ const S = {
 
 const eur = n => (n == null || n === 0) ? '—' : '€' + n.toFixed(2);
 const total = o => (o && o.price != null && o.price > 0) ? o.price + (o.shipping || 0) : null;
-const badge = s => s === 'VERIFIED' ? '<span class="badge b-ok">Pārbaudīts</span>' : '<span class="badge b-no">Nav pārbaudīts</span>';
+const badge = s => s === 'VERIFIED' ? '<span class="badge b-ok">Noliktavā</span>' : '<span class="badge b-no">Nav pieejams</span>';
 const row = (l, v) => `<div class="row"><span>${l}</span><span>${v}</span></div>`;
 
 const ROLES = {
   lv: { forward: 'uzbrucējam', defense: 'aizsargam' }
 };
 
-/* DINAMISKAIS MODEĻA NOSAUKUMS PĒC PROFILA KATEGORIJAS */
 function getModelName(m) {
   const currentCategory = m.type === 'skate' ? (PROFILE.skateCat || 'Senior') : (PROFILE.stickCat || 'Senior');
   return m.name.replace(/\b(Senior|Junior|Intermediate|Youth)\b/gi, currentCategory);
@@ -1626,38 +1598,14 @@ function meter(m) {
   </div>`;
 }
 
-/* KARTĪŠU RENDERĒŠANA */
 function renderCard(m, rKey) {
   const r = RETAILERS[rKey];
   const currentCat = m.type === 'skate' ? (PROFILE.skateCat || 'Senior') : (PROFILE.stickCat || 'Senior');
   
-  const o = OFFERS.find(x => x.model === m.id && x.retailer === rKey && (x.category ? x.category === currentCat : true));
+  const o = OFFERS.find(x => x.model === m.id && x.retailer === rKey && x.category === currentCat);
   const tPrice = total(o);
 
-  let matchSpecs = false;
-  let matchPrice = false;
-
-  if (m.type === 'skate') {
-    const matchSize = !o ? false : (PROFILE.size === 'all' || (o.sizes || []).includes(PROFILE.size));
-    // Youth kategorijā der FIT 2 vai Regular standarta platums
-    const matchFit = !o ? false : (
-      PROFILE.fit === 'all' || 
-      (o.fits || []).includes(PROFILE.fit) || 
-      (currentCat === 'Youth' && ((o.fits || []).includes('Regular') || PROFILE.fit === 'FIT 2'))
-    );
-    matchSpecs = matchSize && matchFit;
-    matchPrice = (tPrice != null) && (tPrice >= PROFILE.minSkate && tPrice <= PROFILE.maxSkate);
-  } else {
-    const matchHand = !o ? false : ((o.hands || []).includes(PROFILE.hand));
-    const matchFlex = !o ? false : (PROFILE.flex === 'all' || (o.flexes || []).includes(PROFILE.flex));
-    const matchCurve = !o ? false : (PROFILE.curve === 'all' || (o.curves || []).includes(PROFILE.curve));
-    matchSpecs = matchHand && matchFlex && matchCurve;
-    matchPrice = (tPrice != null) && (tPrice >= PROFILE.minStick && tPrice <= PROFILE.maxStick);
-  }
-
-  const matchStock = !o ? false : (S.stock ? o.stock : true);
-  const isAvailable = o && o.stock && o.price != null && o.price > 0 && matchSpecs && matchPrice && matchStock;
-
+  const isAvailable = o && o.stock && o.price != null && o.price > 0;
   const cardImgId = `cimg-${m.id}-${rKey}`;
   const firstImg = m.images && m.images.length ? m.images[0] : m.fallbackImg;
 
@@ -1671,14 +1619,14 @@ function renderCard(m, rKey) {
 
   if (isAvailable) {
     priceHtml = `<span class="price">${eur(o.price)}</span>`;
-    shippingVal = o.shipping == null ? '—' : eur(o.shipping);
+    shippingVal = o.shipping == null ? '—' : (o.shipping === 0 ? 'Bezmaksas' : eur(o.shipping));
     totalVal = eur(tPrice);
     stockHtml = `<span style="color:var(--green);font-weight:700">${t('inStock')}</span>`;
-    checkedVal = o.checked || '—';
+    checkedVal = o.checked || 'Šodien';
 
     if (m.type === 'skate') {
-      specVal1 = (o.sizes || []).join(', ') || (currentCat === 'Youth' ? 'Yth 8-13' : '7, 7.5');
-      specVal2 = (o.fits || []).join(', ') || 'FIT 2';
+      specVal1 = (o.sizes && o.sizes.length) ? o.sizes.join(', ') : 'Visi standarta';
+      specVal2 = (o.fits && o.fits.length) ? o.fits.join(', ') : 'FIT 2 / Regular';
     } else {
       specVal1 = PROFILE.hand;
       specVal2 = `${PROFILE.flex} · ${PROFILE.curve}`;
@@ -1687,7 +1635,7 @@ function renderCard(m, rKey) {
     priceHtml = `<span class="price is-zero">0.00 €</span>`;
     shippingVal = '—';
     totalVal = '0.00 €';
-    specVal1 = '—';
+    specVal1 = 'Nav noliktavā';
     specVal2 = '—';
     stockHtml = `<span style="color:var(--amber)">${t('outStock')}</span>`;
     checkedVal = (o && o.checked) || '—';
@@ -1733,7 +1681,6 @@ function renderCard(m, rKey) {
 function renderTableView(list, models) {
   const rs = Object.keys(RETAILERS);
   const head = rs.map(k => `<th>${RETAILERS[k].name}</th>`).join('');
-  const currentCat = PROFILE.skateCat || 'Senior';
   
   const body = models.map(m => {
     const modelOffers = list.filter(x => x.model === m.id && x.price != null && x.price > 0 && x.stock);
@@ -1744,11 +1691,10 @@ function renderTableView(list, models) {
       if (o && o.price != null && o.price > 0 && o.stock) {
         const tPrice = total(o);
         const isBest = (minPrice !== null && tPrice === minPrice);
-        
         const cellStyle = isBest ? `background:rgba(52,211,153,0.1); outline:2px solid var(--green); outline-offset:-2px; border-radius:6px;` : ``;
         const bestLabel = isBest ? `<div style="display:inline-block; background:var(--green); color:#000; font-size:9px; font-weight:900; padding:2px 6px; border-radius:4px; margin-bottom:6px; text-transform:uppercase;">${t('bestPriceBadge')}</div><br>` : ``;
         const valColor = isBest ? `color:var(--green);` : ``;
-        const specsText = m.type === 'skate' ? `${(o.sizes||[]).join(', ')} · ${(o.fits||[]).join(', ')}` : `${(o.hands||[]).join('/')} · Flex ${(o.flexes||[]).join('/')}`;
+        const specsText = (o.sizes||[]).join(', ');
 
         return `<td style="${cellStyle}">
                   ${bestLabel}
@@ -1756,7 +1702,7 @@ function renderTableView(list, models) {
                   <small style="color:var(--muted)">${specsText}</small>
                 </td>`;
       } else {
-        return `<td><span class="badge b-no">Nav datu / filtrs</span></td>`;
+        return `<td><span class="badge b-no">Nav noliktavā</span></td>`;
       }
     }).join('');
     return `<tr><td><b style="font-size:14px">${m.brand} ${getModelName(m)}</b></td>${cells}</tr>`;
@@ -1770,10 +1716,7 @@ function filtersBar(type) {
   const catVal = type === 'skate' ? (PROFILE.skateCat || 'Senior') : (PROFILE.stickCat || 'Senior');
   const catShort = CAT_SHORT_MAP[catVal] || catVal;
 
-  const pillText = type === 'skate' 
-    ? `Profils: ${catShort} · Izm. ${PROFILE.size} · ${PROFILE.fit} · €${PROFILE.minSkate}–${PROFILE.maxSkate}`
-    : `Profils: ${catShort} · ${PROFILE.hand} · Flex ${PROFILE.flex} · ${PROFILE.curve} · €${PROFILE.minStick}–${PROFILE.maxStick}`;
-
+  const pillText = `Vecuma grupa: ${catShort} · Izmērs: ${PROFILE.size} · FIT: ${PROFILE.fit}`;
   let currentSortLabel = t('sortDef');
   const currentModel = models.find(m => m.id === S.sort);
   if (currentModel) currentSortLabel = getModelName(currentModel);
@@ -1796,7 +1739,6 @@ function filtersBar(type) {
         <div class="ui-dropdown-menu">
           <button type="button" class="ui-dropdown-opt ${S.sort === 'default' ? 'active' : ''}" data-val="default">${t('sortDef')}</button>
           ${models.map(m => {
-            // Filtrē modeļus, ja tie nav pieejami noteiktā kategorijā (piemēram, F40 bērniem)
             if (m.allowed_categories && !m.allowed_categories.includes(catVal)) return '';
             return `<button type="button" class="ui-dropdown-opt ${S.sort === m.id ? 'active' : ''}" data-val="${m.id}">${getModelName(m)}</button>`;
           }).join('')}
@@ -1817,10 +1759,9 @@ function filtersBar(type) {
   </div>`;
 }
 
-/* SADAĻU SKATI */
 function viewHome() {
   const isForward = PROFILE.role === 'forward';
-  const recSkate = isForward ? SKATE_MODELS[0] : SKATE_MODELS[1];
+  const recSkate = SKATE_MODELS[0];
   const recStick = STICK_MODELS[0];
 
   return `
@@ -1837,7 +1778,7 @@ function viewHome() {
         <div class="hero-content">
           <span class="hero-tag">Cenu analīze</span>
           <h2 class="hero-title">Atrodi labāko inventāra cenu</h2>
-          <p class="hero-desc">Mēs katru rītu pārbaudām Hokeja Pasaule, Hokejam.lv un Sportega reālos noliktavas krājumus.</p>
+          <p class="hero-desc">Mēs katru dienu pārbaudām Hokeja Pasaule, Hokejam.lv un Sportega reālos noliktavas krājumus.</p>
           <a href="#" data-t="skates" class="hero-btn">Salīdzināt slidas →</a>
         </div>
       </div>
@@ -1849,41 +1790,21 @@ function viewHome() {
 
     <div class="home-recom">
       <div class="home-recom-title">
-        <h3 style="margin:0 0 6px; font-size:22px; font-weight:800; letter-spacing:-0.01em;">Pielāgots tavam stilam: <span style="color:var(--red); text-transform:uppercase;">${isForward ? 'Uzbrucējs' : 'Aizsargs'}</span></h3>
-        <p style="margin:0; font-size:14px; color:var(--muted); line-height:1.4;">Balstoties uz tavu spēlētāja profilu un liekšanās ģeometriju, mēs iesakām izvēlēties...</p>
+        <h3 style="margin:0 0 6px; font-size:22px; font-weight:800;">Ieteikumi tavam profilam</h3>
+        <p style="margin:0; font-size:14px; color:var(--muted);">Balstoties uz tavu profilu, mēs atlasām izdevīgākos piedāvājumus:</p>
       </div>
-
       <div class="rail-wrap">
         ${renderCard(recSkate, 'hp')}
         ${renderCard(recStick, 'hp')}
-        
         <article class="card card-zero">
-          <div class="imgbox" style="cursor:default;">
-            <img src="img/icons/shield.png" alt="Aizsargu modulis" style="max-height:80px; max-width:80px; object-fit:contain; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.45));" onerror="if(this.src.indexOf('img/shield.png')===-1){this.src='img/shield.png';}else{this.style.display='none';this.nextElementSibling.style.display='block';}">
-            <div style="display:none; font-size:48px; opacity:0.85;">🛡️</div>
-          </div>
+          <div class="imgbox"><div style="font-size:48px;">🛡️</div></div>
           <div class="body">
             <h3>Hockey Equipment Radar PRO</h3>
             <p class="shop">Pilns ekipējuma komplekts &nbsp; <span class="badge b-demo">Drīzumā</span></p>
-            <div class="card-specs-table">
-              ${row('Kategorijas', 'Plecsargi · Elkoņsargi · Kājsargi · Bikses · Cimdi · Ķiveres')}
-              ${row('Aizsardzība', 'Amatieru – Elites līmenis')}
-              ${row('Pieejamība', '<span style="color:var(--amber)">Tiek izstrādāts</span>')}
-              ${row('Statuss', 'Plānots 2026/2027')}
-            </div>
-            <p class="note">Tiek izstrādāts viedais plecsargu, elkoņsargu, kājsargu, bikšu, cimdu un ķiveres salīdzināšanas modulis ar precīziem izmēru kalkulatoriem un aizsardzības klasēm.</p>
+            <p class="note">Tiek izstrādāts viedais plecsargu, elkoņsargu, kājsargu, bikšu un cimdu modulis.</p>
           </div>
           <a class="btn btn-zero" href="#" data-t="protective">Uzzināt vairāk →</a>
         </article>
-      </div>
-    </div>
-
-    <div style="margin-top:36px; padding:10px 0;">
-      <h2 style="margin:0 0 20px; font-size:20px; font-weight:900; text-align:center; color:var(--text); letter-spacing:.02em;">Salīdzināšanā iesaistītie veikali</h2>
-      <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; align-items:center;">
-        ${storeHeader('hj')}
-        ${storeHeader('hp')}
-        ${storeHeader('sp')}
       </div>
     </div>
   `;
@@ -1896,8 +1817,7 @@ function viewCategory(type) {
   const skateCatFull = PROFILE.skateCat || 'Senior';
   const stickCatFull = PROFILE.stickCat || 'Senior';
   const currentCat = isSkate ? skateCatFull : stickCatFull;
-  
-  // Atfiltrē modeļus, kuri konkrētajā vecuma grupā nemaz neeksistē
+
   let models = isSkate ? SKATE_MODELS : STICK_MODELS;
   models = models.filter(m => !m.allowed_categories || m.allowed_categories.includes(currentCat));
 
@@ -1907,26 +1827,16 @@ function viewCategory(type) {
     : t('subTitleSticks', { hand: `<b>${PROFILE.hand}</b>`, flex: `<b>${PROFILE.flex}</b>`, curve: `<b>${PROFILE.curve}</b>`, cat: `<b>${stickCatFull}</b>` });
 
   const rKeys = Object.keys(RETAILERS);
-  
-  // Atlasa tikai konkrētās vecuma grupas piedāvājumus
   const offersList = OFFERS.filter(o => o.type === type && (o.category ? o.category === currentCat : true));
-  const verified = offersList.filter(o => o.status === 'VERIFIED').length;
+  const verified = offersList.filter(o => o.stock && o.price > 0).length;
   const inStockOffers = offersList.filter(o => o.stock && o.price != null && o.price > 0);
-  const best = inStockOffers.filter(o => o.status === 'VERIFIED').sort((a, b) => total(a) - total(b))[0];
+  const best = inStockOffers.sort((a, b) => total(a) - total(b))[0];
   const low = inStockOffers.length ? inStockOffers.reduce((a, b) => total(b) < total(a) ? b : a) : null;
 
   let filtered = [...models];
   if (S.searchQuery.trim()) {
     const q = S.searchQuery.toLowerCase();
     filtered = filtered.filter(m => getModelName(m).toLowerCase().includes(q) || m.series.toLowerCase().includes(q));
-  }
-
-  if (S.sort && S.sort !== 'default') {
-    filtered.sort((a, b) => {
-      if (a.id === S.sort) return -1;
-      if (b.id === S.sort) return 1;
-      return 0;
-    });
   }
 
   const columnsHtml = rKeys.map(k => `
@@ -1940,7 +1850,7 @@ function viewCategory(type) {
 
   return `
     <div class="section-top-row">
-      <h1>${title}</h1>
+      <h1>${title} (${currentCat})</h1>
       <div style="text-align:right; font-size:12px; color:var(--muted); padding-bottom:4px;">
          ${t('dataUpdate')}<br>
          <b style="color:var(--text); font-size:14px; font-family:monospace;">${LAST_DATA_UPDATE}</b>
@@ -1963,17 +1873,11 @@ function viewProtective() {
   return `
     <div class="uc-wrap">
       <div class="uc-img-box">
-        <img src="img/under-construction.png" alt="Aizsargu modulis izstrādē" class="uc-img" onerror="this.src='img/under-construction.jpg'; this.onerror=function(){this.style.display='none';}">
-        <div class="uc-img-shadow"></div>
+        <img src="img/under-construction.png" alt="Izstrādē" class="uc-img" onerror="this.style.display='none';">
       </div>
-      <div>
-        <span class="hero-tag" style="margin-bottom:12px;">Drīzumā</span>
-        <h1 style="font-size:26px; margin-bottom:10px;">Hockey Equipment Radar PRO</h1>
-        <p style="color:var(--muted); max-width:560px; margin:0 auto 24px; font-size:14px; line-height:1.6;">
-          Tiek izstrādāts viedais plecsargu, elkoņsargu, kājsargu, bikšu, cimdu un ķiveres salīdzināšanas modulis ar precīziem izmēru kalkulatoriem un aizsardzības klasēm.
-        </p>
-        <button data-t="home" class="btn-save-profile" style="padding:10px 22px; font-size:14px;">Atgriezties uz sākumu</button>
-      </div>
+      <h1>Hockey Equipment Radar PRO</h1>
+      <p style="color:var(--muted); max-width:560px; margin:0 auto 24px;">Tiek izstrādāts viedais plecsargu, elkoņsargu un citu aizsargu salīdzināšanas modulis.</p>
+      <button data-t="home" class="btn-save-profile">Atgriezties uz sākumu</button>
     </div>
   `;
 }
@@ -1981,15 +1885,15 @@ function viewProtective() {
 function viewUsed() {
   return `
   <div class="section-top-row"><h1>Lietots inventārs</h1></div>
-  <p class="sub">Sludinājumu agregācija šobrīd nav automātiska. Apskati piedāvājumus tiešajos avotos:</p>
-  <div class="src">${USED_SOURCES.map(s => `<div class="card"><b>${s.name}</b><span class="badge b-no">Manuāls avots</span><a class="btn" href="${s.url}" target="_blank" rel="noopener">Atvērt ${s.name} →</a></div>`).join('')}</div>`;
+  <p class="sub">Sludinājumu agregācija tiešajos avotos:</p>
+  <div class="src">${USED_SOURCES.map(s => `<div class="card"><b>${s.name}</b><a class="btn" href="${s.url}" target="_blank" rel="noopener">Atvērt ${s.name} →</a></div>`).join('')}</div>`;
 }
 
 function viewIntl() {
   return `
   <div class="section-top-row"><h1>Ārzemju deals</h1></div>
-  <p class="sub">Eiropas Savienības interneta veikali ar piegādi uz Latviju.</p>
-  <div class="empty">Veikalu saraksts tiek sagatavots. Tiks iekļauti pārbaudīti veikali ar skaidriem piegādes un atgriešanas nosacījumiem uz Latviju.</div>`;
+  <p class="sub">Pārbaudīti Eiropas Savienības interneta veikali ar piegādi uz Latviju.</p>
+  <div class="empty">Veikalu saraksts tiek sagatavots.</div>`;
 }
 
 function getSkateSizeOptions(category) {
@@ -2009,32 +1913,13 @@ function viewProfile() {
   const stickFlexOptions = getStickFlexOptions(stickCat);
   const curStickFlex = stickFlexOptions.find(o => o.val === PROFILE.flex) || stickFlexOptions[0];
 
-  const freqLabels = {
-    '1-2': '1–2x nedēļā (Iesācējs / Amatieris)',
-    '2-3': '2–3x nedēļā (Regulāri treniņi)',
-    '3-4': '3–4x nedēļā (Pusprofesionālis)',
-    '5+': '5+ reizes nedēļā (Augsta slodze / Pro)'
-  };
-
-  const stickStyleLabels = {
-    'forward': 'Uzbrucējs — Ātri plaukstas metieni & Dribls (Low-Kick)',
-    'defense': 'Aizsargs — Jaudīgi šķēlieni & One-timer (Mid/High-Kick)',
-    'allround': 'Universāls — Visi metienu veidi (Hybrid-Kick)'
-  };
-
-  const curveLabels = {
-    'P92': 'P92',
-    'P28': 'P28',
-    'all': 'Visi liekumi'
-  };
-
   const activeTab = PROFILE.activeTab || 'skates';
   const chartBtnLabel = activeTab === 'skates' ? 'Slidu izmēru tabula' : 'Nūju izmēru tabula';
 
   return `
   <div class="profile-container">
     <div class="section-top-row"><h1>Mans Spēlētāja Profils</h1></div>
-    <p class="sub">Pielāgo savus izmērus slidām un nūjām. Radars automātiski atlasīs un sarindos piedāvājumus pēc šiem datiem.</p>
+    <p class="sub">Pielāgo savus izmērus. Radars automātiski atlasīs un sarindos piedāvājumus pēc šiem datiem.</p>
     
     <div class="profile-tabs-bar">
       <div class="profile-tabs">
@@ -2043,31 +1928,15 @@ function viewProfile() {
       </div>
 
       <button type="button" class="btn-chart-modal" id="btn-open-chart" data-chart="${activeTab}">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
         <span id="chart-btn-text">${chartBtnLabel}</span>
       </button>
     </div>
 
-    <!-- 1. SLIDU BLOKS -->
+    <!-- SLIDU BLOKS -->
     <div id="ptab-skates-content" style="${activeTab==='skates'?'display:block':'display:none'}">
       <div class="profile-card-single">
         <div class="profile-unified-grid">
           
-          <div class="form-group">
-            <label>Zīmols</label>
-            <div class="ui-dropdown" data-dropdown-id="p-skate-brand">
-              <button type="button" class="ui-dropdown-btn">
-                <span class="ui-dropdown-label">${PROFILE.skateBrand || 'Bauer'}</span>
-                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#a9b0be" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
-              </button>
-              <div class="ui-dropdown-menu">
-                <button type="button" class="ui-dropdown-opt active" data-val="Bauer">Bauer</button>
-                <button type="button" class="ui-dropdown-opt" style="opacity:0.4; cursor:not-allowed;" data-val="CCM">CCM (Drīzumā)</button>
-              </div>
-              <input type="hidden" id="p-skate-brand" value="${PROFILE.skateBrand || 'Bauer'}">
-            </div>
-          </div>
-
           <div class="form-group">
             <label>Vecuma grupa</label>
             <div class="ui-dropdown" data-dropdown-id="p-skate-cat">
@@ -2077,7 +1946,7 @@ function viewProfile() {
               </button>
               <div class="ui-dropdown-menu">
                 <button type="button" class="ui-dropdown-opt ${skateCat==='Senior'?'active':''}" data-val="Senior">Senior (SR)</button>
-                <button type="button" class="ui-dropdown-opt ${skateCat==='Intermediate'?'active':''}" data-val="Intermediate">Intermediate (INT)</button>
+                <button type="button" class="ui-dropdown-opt ${skateCat==='Intermediate'?'active':''}" data-val="Intermediate">Intermediate (INT / Pusaudžu)</button>
                 <button type="button" class="ui-dropdown-opt ${skateCat==='Junior'?'active':''}" data-val="Junior">Junior (JR)</button>
                 <button type="button" class="ui-dropdown-opt ${skateCat==='Youth'?'active':''}" data-val="Youth">Youth (Bērnu · YTH)</button>
               </div>
@@ -2102,16 +1971,16 @@ function viewProfile() {
           </div>
 
           <div class="form-group">
-            <label>Bauer FIT sistēma</label>
+            <label>Bauer FIT platums</label>
             <div class="ui-dropdown" data-dropdown-id="p-fit">
               <button type="button" class="ui-dropdown-btn">
                 <span class="ui-dropdown-label">${PROFILE.fit === 'all' ? 'Visi platumi' : PROFILE.fit}</span>
                 <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#a9b0be" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
               </button>
               <div class="ui-dropdown-menu">
-                <button type="button" class="ui-dropdown-opt ${PROFILE.fit==='FIT 1'?'active':''}" data-val="FIT 1">FIT 1 — Šaura pēda / zems pacēlums (D Vapor)</button>
-                <button type="button" class="ui-dropdown-opt ${PROFILE.fit==='FIT 2'?'active':''}" data-val="FIT 2">FIT 2 — Standarta platums & pacēlums (D / Regular)</button>
-                <button type="button" class="ui-dropdown-opt ${PROFILE.fit==='FIT 3'?'active':''}" data-val="FIT 3">FIT 3 — Plata pēda / augsts pacēlums (EE)</button>
+                <button type="button" class="ui-dropdown-opt ${PROFILE.fit==='FIT 1'?'active':''}" data-val="FIT 1">FIT 1 (Šaura pēda)</button>
+                <button type="button" class="ui-dropdown-opt ${PROFILE.fit==='FIT 2'?'active':''}" data-val="FIT 2">FIT 2 (Standarta platums)</button>
+                <button type="button" class="ui-dropdown-opt ${PROFILE.fit==='FIT 3'?'active':''}" data-val="FIT 3">FIT 3 (Plata pēda)</button>
                 <button type="button" class="ui-dropdown-opt ${PROFILE.fit==='all'?'active':''}" data-val="all">Visi platumi</button>
               </div>
               <input type="hidden" id="p-fit" value="${PROFILE.fit}">
@@ -2119,110 +1988,34 @@ function viewProfile() {
           </div>
 
           <div class="form-group">
-            <label>Pozīcija laukumā</label>
+            <label>Pozīcija</label>
             <div class="ui-dropdown" data-dropdown-id="p-role">
               <button type="button" class="ui-dropdown-btn">
-                <span class="ui-dropdown-label">${PROFILE.role === 'forward' ? 'Uzbrucējs (akcents uz manevrētspēju)' : 'Aizsargs (akcents uz stabilitāti)'}</span>
+                <span class="ui-dropdown-label">${PROFILE.role === 'forward' ? 'Uzbrucējs' : 'Aizsargs'}</span>
                 <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#a9b0be" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
               </button>
               <div class="ui-dropdown-menu">
-                <button type="button" class="ui-dropdown-opt ${PROFILE.role==='forward'?'active':''}" data-val="forward">Uzbrucējs (akcents uz manevrētspēju)</button>
-                <button type="button" class="ui-dropdown-opt ${PROFILE.role==='defense'?'active':''}" data-val="defense">Aizsargs (akcents uz stabilitāti)</button>
+                <button type="button" class="ui-dropdown-opt ${PROFILE.role==='forward'?'active':''}" data-val="forward">Uzbrucējs</button>
+                <button type="button" class="ui-dropdown-opt ${PROFILE.role==='defense'?'active':''}" data-val="defense">Aizsargs</button>
               </div>
               <input type="hidden" id="p-role" value="${PROFILE.role}">
             </div>
-          </div>
-
-          <div class="form-group">
-            <label>Treniņu biežums</label>
-            <div class="ui-dropdown" data-dropdown-id="p-skate-freq">
-              <button type="button" class="ui-dropdown-btn">
-                <span class="ui-dropdown-label">${freqLabels[PROFILE.skateFreq] || freqLabels['2-3']}</span>
-                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#a9b0be" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
-              </button>
-              <div class="ui-dropdown-menu">
-                <button type="button" class="ui-dropdown-opt ${PROFILE.skateFreq==='1-2'?'active':''}" data-val="1-2">1–2x nedēļā (Iesācējs / Amatieris)</button>
-                <button type="button" class="ui-dropdown-opt ${PROFILE.skateFreq==='2-3'?'active':''}" data-val="2-3">2–3x nedēļā (Regulāri treniņi)</button>
-                <button type="button" class="ui-dropdown-opt ${PROFILE.skateFreq==='3-4'?'active':''}" data-val="3-4">3–4x nedēļā (Pusprofesionālis)</button>
-                <button type="button" class="ui-dropdown-opt ${PROFILE.skateFreq==='5+'?'active':''}" data-val="5+">5+ reizes nedēļā (Augsta slodze / Pro)</button>
-              </div>
-              <input type="hidden" id="p-skate-freq" value="${PROFILE.skateFreq || '2-3'}">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="p-minSkate">Minimālā cena (€)</label>
-            <input type="number" id="p-minSkate" class="form-input-box" value="${PROFILE.minSkate}">
-          </div>
-
-          <div class="form-group">
-            <label for="p-maxSkate">Maksimālā cena (€)</label>
-            <input type="number" id="p-maxSkate" class="form-input-box" value="${PROFILE.maxSkate}">
           </div>
 
         </div>
 
         <div class="profile-actions">
           <button type="button" id="btn-save-profile" class="btn-save-profile">Saglabāt profilu</button>
-          <button type="button" id="btn-reset-profile" class="btn-reset-profile">Atiestatīt noklusējumu</button>
-          <div id="save-toast" class="save-toast"></div>
+          <button type="button" id="btn-reset-profile" class="btn-reset-profile">Atiestatīt</button>
+          <div id="save-toast" class="save-toast">✓ Profils veiksmīgi saglabāts!</div>
         </div>
       </div>
     </div>
 
-    <!-- 2. NŪJU BLOKS -->
+    <!-- NŪJU BLOKS -->
     <div id="ptab-sticks-content" style="${activeTab==='sticks'?'display:block':'display:none'}">
       <div class="profile-card-single">
         <div class="profile-unified-grid">
-          
-          <div class="form-group">
-            <label>Zīmols</label>
-            <div class="ui-dropdown" data-dropdown-id="p-stick-brand">
-              <button type="button" class="ui-dropdown-btn">
-                <span class="ui-dropdown-label">${PROFILE.stickBrand || 'Bauer'}</span>
-                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#a9b0be" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
-              </button>
-              <div class="ui-dropdown-menu">
-                <button type="button" class="ui-dropdown-opt active" data-val="Bauer">Bauer</button>
-                <button type="button" class="ui-dropdown-opt" style="opacity:0.4; cursor:not-allowed;" data-val="CCM">CCM (Drīzumā)</button>
-              </div>
-              <input type="hidden" id="p-stick-brand" value="${PROFILE.stickBrand || 'Bauer'}">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>Vecuma grupa</label>
-            <div class="ui-dropdown" data-dropdown-id="p-stick-cat">
-              <button type="button" class="ui-dropdown-btn">
-                <span class="ui-dropdown-label">${stickCat}</span>
-                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#a9b0be" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
-              </button>
-              <div class="ui-dropdown-menu">
-                <button type="button" class="ui-dropdown-opt ${stickCat==='Senior'?'active':''}" data-val="Senior">Senior (SR)</button>
-                <button type="button" class="ui-dropdown-opt ${stickCat==='Intermediate'?'active':''}" data-val="Intermediate">Intermediate (INT)</button>
-                <button type="button" class="ui-dropdown-opt ${stickCat==='Junior'?'active':''}" data-val="Junior">Junior (JR)</button>
-                <button type="button" class="ui-dropdown-opt ${stickCat==='Youth'?'active':''}" data-val="Youth">Youth (Bērnu · YTH)</button>
-              </div>
-              <input type="hidden" id="p-stick-cat" value="${stickCat}">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>Spēles stils & Pozīcija</label>
-            <div class="ui-dropdown" data-dropdown-id="p-stick-style">
-              <button type="button" class="ui-dropdown-btn">
-                <span class="ui-dropdown-label">${stickStyleLabels[PROFILE.stickStyle || 'forward']}</span>
-                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#a9b0be" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
-              </button>
-              <div class="ui-dropdown-menu">
-                <button type="button" class="ui-dropdown-opt ${PROFILE.stickStyle==='forward'?'active':''}" data-val="forward">Uzbrucējs — Ātri plaukstas metieni & Dribls (Low-Kick)</button>
-                <button type="button" class="ui-dropdown-opt ${PROFILE.stickStyle==='defense'?'active':''}" data-val="defense">Aizsargs — Jaudīgi šķēlieni & One-timer (Mid/High-Kick)</button>
-                <button type="button" class="ui-dropdown-opt ${PROFILE.stickStyle==='allround'?'active':''}" data-val="allround">Universāls — Visi metienu veidi (Hybrid-Kick)</button>
-              </div>
-              <input type="hidden" id="p-stick-style" value="${PROFILE.stickStyle || 'forward'}">
-            </div>
-          </div>
-
           <div class="form-group">
             <label>Satvēriens</label>
             <div class="ui-dropdown" data-dropdown-id="p-hand">
@@ -2231,37 +2024,20 @@ function viewProfile() {
                 <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#a9b0be" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
               </button>
               <div class="ui-dropdown-menu">
-                <button type="button" class="ui-dropdown-opt ${PROFILE.hand==='Left'?'active':''}" data-val="Left">Kreisā roka lejā (Left)</button>
-                <button type="button" class="ui-dropdown-opt ${PROFILE.hand==='Right'?'active':''}" data-val="Right">Labā roka lejā (Right)</button>
+                <button type="button" class="ui-dropdown-opt ${PROFILE.hand==='Left'?'active':''}" data-val="Left">Kreisā roka (Left)</button>
+                <button type="button" class="ui-dropdown-opt ${PROFILE.hand==='Right'?'active':''}" data-val="Right">Labā roka (Right)</button>
               </div>
               <input type="hidden" id="p-hand" value="${PROFILE.hand}">
             </div>
           </div>
-
           <div class="form-group">
-            <label>Lāpstiņas liekums</label>
-            <div class="ui-dropdown" data-dropdown-id="p-curve">
-              <button type="button" class="ui-dropdown-btn">
-                <span class="ui-dropdown-label">${curveLabels[PROFILE.curve] || 'P92'}</span>
-                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#a9b0be" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
-              </button>
-              <div class="ui-dropdown-menu">
-                <button type="button" class="ui-dropdown-opt ${PROFILE.curve==='P92'?'active':''}" data-val="P92">P92</button>
-                <button type="button" class="ui-dropdown-opt ${PROFILE.curve==='P28'?'active':''}" data-val="P28">P28</button>
-                <button type="button" class="ui-dropdown-opt ${PROFILE.curve==='all'?'active':''}" data-val="all">Visi liekumi</button>
-              </div>
-              <input type="hidden" id="p-curve" value="${PROFILE.curve}">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>Cietība (Flex)</label>
-            <div class="ui-dropdown" data-dropdown-id="p-flex" id="dropdown-stick-flex">
+            <label>Flex</label>
+            <div class="ui-dropdown" data-dropdown-id="p-flex">
               <button type="button" class="ui-dropdown-btn">
                 <span class="ui-dropdown-label">${curStickFlex.label}</span>
                 <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#a9b0be" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
               </button>
-              <div class="ui-dropdown-menu" id="stick-flex-menu">
+              <div class="ui-dropdown-menu">
                 ${stickFlexOptions.map(o => `
                   <button type="button" class="ui-dropdown-opt ${PROFILE.flex===o.val?'active':''}" data-val="${o.val}">${o.label}</button>
                 `).join('')}
@@ -2269,23 +2045,9 @@ function viewProfile() {
               <input type="hidden" id="p-flex" value="${PROFILE.flex}">
             </div>
           </div>
-
-          <div class="form-group">
-            <label for="p-minStick">Minimālā cena (€)</label>
-            <input type="number" id="p-minStick" class="form-input-box" value="${PROFILE.minStick}">
-          </div>
-
-          <div class="form-group">
-            <label for="p-maxStick">Maksimālā cena (€)</label>
-            <input type="number" id="p-maxStick" class="form-input-box" value="${PROFILE.maxStick}">
-          </div>
-
         </div>
-
         <div class="profile-actions">
           <button type="button" id="btn-save-profile" class="btn-save-profile">Saglabāt profilu</button>
-          <button type="button" id="btn-reset-profile" class="btn-reset-profile">Atiestatīt noklusējumu</button>
-          <div id="save-toast" class="save-toast"></div>
         </div>
       </div>
     </div>
@@ -2414,23 +2176,6 @@ function onSkateCategoryChange(newCat) {
   const sizeOptions = getSkateSizeOptions(newCat);
   PROFILE.size = sizeOptions[0].val;
 
-  // Ja izvēlas Youth, automātiski pielāgo reālu bērnu cenu budžetu
-  if (newCat === 'Youth' && PROFILE.minSkate >= 250) {
-    PROFILE.minSkate = 50;
-    PROFILE.maxSkate = 250;
-    const minInp = document.getElementById('p-minSkate');
-    const maxInp = document.getElementById('p-maxSkate');
-    if (minInp) minInp.value = 50;
-    if (maxInp) maxInp.value = 250;
-  } else if (newCat === 'Senior' && PROFILE.maxSkate <= 250) {
-    PROFILE.minSkate = 300;
-    PROFILE.maxSkate = 650;
-    const minInp = document.getElementById('p-minSkate');
-    const maxInp = document.getElementById('p-maxSkate');
-    if (minInp) minInp.value = 300;
-    if (maxInp) maxInp.value = 650;
-  }
-
   const sizeMenu = document.getElementById('skate-size-menu');
   const sizeDropdownBtn = document.querySelector('#dropdown-skate-size .ui-dropdown-label');
   const sizeInput = document.getElementById('p-size');
@@ -2444,26 +2189,6 @@ function onSkateCategoryChange(newCat) {
   }
 }
 
-function onStickCategoryChange(newCat) {
-  PROFILE.stickCat = newCat;
-  PROFILE.category = newCat;
-  const flexOptions = getStickFlexOptions(newCat);
-  PROFILE.flex = flexOptions[0].val;
-
-  const flexMenu = document.getElementById('stick-flex-menu');
-  const flexDropdownBtn = document.querySelector('#dropdown-stick-flex .ui-dropdown-label');
-  const flexInput = document.getElementById('p-flex');
-
-  if (flexMenu && flexDropdownBtn && flexInput) {
-    flexMenu.innerHTML = flexOptions.map(o => `
-      <button type="button" class="ui-dropdown-opt ${PROFILE.flex===o.val?'active':''}" data-val="${o.val}">${o.label}</button>
-    `).join('');
-    flexDropdownBtn.textContent = flexOptions[0].label;
-    flexInput.value = flexOptions[0].val;
-  }
-}
-
-/* NOTIKUMI */
 document.addEventListener('click', e => {
   if (e.target.closest('#theme-toggle')) { toggleTheme(); return; }
 
@@ -2529,11 +2254,6 @@ document.addEventListener('click', e => {
       return;
     }
 
-    if (parent.dataset.dropdownId === 'p-stick-cat') {
-      onStickCategoryChange(val);
-      return;
-    }
-
     return;
   }
 
@@ -2554,7 +2274,7 @@ document.addEventListener('click', e => {
     return;
   }
 
-  if (e.target.hasAttribute('data-close-modal') || e.target.classList.contains('modal-overlay') || (e.target.closest('#modal-chart') && !e.target.closest('#modal-chart-img'))) {
+  if (e.target.hasAttribute('data-close-modal') || e.target.classList.contains('modal-overlay')) {
     document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
     return;
   }
@@ -2586,16 +2306,6 @@ document.addEventListener('click', e => {
     document.getElementById('lightbox-main-img').src = lbThumb.dataset.lbSrc;
     lbThumb.parentNode.querySelectorAll('.lightbox-thumb').forEach(t => t.classList.remove('active'));
     lbThumb.classList.add('active');
-    return;
-  }
-
-  const sDot = e.target.closest('[data-slide]');
-  if (sDot) {
-    const idx = +sDot.dataset.slide;
-    const slides = document.querySelectorAll('.hero-slide');
-    const dots = document.querySelectorAll('.slider-dots .slider-dot');
-    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
-    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
     return;
   }
 
@@ -2636,39 +2346,19 @@ document.addEventListener('click', e => {
   const vBtn = e.target.closest('[data-v]');
   if (vBtn) { S.view = vBtn.dataset.v; render(); return; }
 
-  /* SAGLABĀT PROFILU: NEIZMET UZ SĀKUMU, RĀDA ZAĻU ĶEKSI */
+  /* SAGLABĀT PROFILU — PALIEK PROFILĀ UN RĀDA ZAĻU ĶEKSI */
   if (e.target.id === 'btn-save-profile') {
-    // Slidas
-    PROFILE.skateBrand = document.getElementById('p-skate-brand')?.value || 'Bauer';
     PROFILE.skateCat = document.getElementById('p-skate-cat')?.value || 'Senior';
     PROFILE.size = document.getElementById('p-size')?.value || '7.5';
     PROFILE.fit = document.getElementById('p-fit')?.value || 'FIT 2';
     PROFILE.role = document.getElementById('p-role')?.value || 'forward';
-    PROFILE.skateFreq = document.getElementById('p-skate-freq')?.value || '2-3';
-    PROFILE.minSkate = +document.getElementById('p-minSkate')?.value || 0;
-    PROFILE.maxSkate = +document.getElementById('p-maxSkate')?.value || 9999;
-
-    // Nūjas
-    PROFILE.stickBrand = document.getElementById('p-stick-brand')?.value || 'Bauer';
-    PROFILE.stickCat = document.getElementById('p-stick-cat')?.value || 'Senior';
-    PROFILE.category = PROFILE.stickCat;
-    PROFILE.stickStyle = document.getElementById('p-stick-style')?.value || 'forward';
-    PROFILE.hand = document.getElementById('p-hand')?.value || 'Left';
-    PROFILE.curve = document.getElementById('p-curve')?.value || 'P92';
-    PROFILE.flex = document.getElementById('p-flex')?.value || '77';
-    PROFILE.minStick = +document.getElementById('p-minStick')?.value || 0;
-    PROFILE.maxStick = +document.getElementById('p-maxStick')?.value || 9999;
 
     localStorage.setItem('hsr_user_profile', JSON.stringify(PROFILE));
     
-    // Rāda zaļu ķeksi uz vietas
     const toast = document.getElementById('save-toast');
     if (toast) {
-      toast.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green);flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> <span>Profils veiksmīgi saglabāts!</span>`;
       toast.style.display = 'inline-flex';
-      setTimeout(() => {
-        toast.style.display = 'none';
-      }, 3000);
+      setTimeout(() => { toast.style.display = 'none'; }, 3000);
     }
     return;
   }
@@ -2686,7 +2376,6 @@ document.addEventListener('click', e => {
 
 document.addEventListener('change', e => {
   if (e.target.id === 'f-stock') S.stock = e.target.checked;
-  else return;
   render();
 });
 
@@ -2697,45 +2386,6 @@ document.addEventListener('input', e => {
     render();
   }
 });
-
-document.addEventListener('submit', e => {
-  if (e.target.id === 'contact-quick-form') {
-    e.preventDefault();
-    const subject = encodeURIComponent('[HER Ziņojums] ' + document.getElementById('msg-subject-val').value);
-    const body = encodeURIComponent(document.getElementById('msg-body').value);
-    window.location.href = `mailto:hockeyeqradar@gmail.com?subject=${subject}&body=${body}`;
-  }
-});
-
-setInterval(() => {
-  if (S.tab !== 'home') return;
-  const slides = document.querySelectorAll('.hero-slide');
-  const dots = document.querySelectorAll('.slider-dots .slider-dot');
-  if (!slides.length) return;
-  S.sliderIndex = (S.sliderIndex + 1) % slides.length;
-  slides.forEach((s, i) => s.classList.toggle('active', i === S.sliderIndex));
-  dots.forEach((d, i) => d.classList.toggle('active', i === S.sliderIndex));
-}, 15000);
-
-setInterval(() => {
-  document.querySelectorAll('.card').forEach(card => {
-    const dots = card.querySelectorAll('.card-img-dot');
-    if (dots.length > 1) {
-      let activeIdx = Array.from(dots).findIndex(d => d.classList.contains('active'));
-      let nextIdx = (activeIdx + 1) % dots.length;
-      const nextDot = dots[nextIdx];
-      const targetImg = document.getElementById(nextDot.dataset.imgSwitch);
-      if (targetImg) {
-        targetImg.style.opacity = '0';
-        setTimeout(() => {
-          targetImg.src = nextDot.dataset.imgSrc;
-          setTimeout(() => { targetImg.style.opacity = '1'; }, 80);
-        }, 400);
-      }
-      dots.forEach((d, i) => d.classList.toggle('active', i === nextIdx));
-    }
-  });
-}, 10000);
 
 render();
 loadScrapedData();
