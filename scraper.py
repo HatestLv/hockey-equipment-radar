@@ -131,7 +131,7 @@ TARGET_STICKS = [
 ]
 
 def extract_price(html, soup):
-    # 1. JSON-LD meklēšana
+    # 1. JSON-LD strukturētie dati
     for s in re.finditer(r'<script[^>]*type=["\']application/ld\+json["\'][^>]*>(.*?)</script>', html, re.DOTALL | re.IGNORECASE):
         try:
             raw = json.loads(s.group(1).strip())
@@ -143,62 +143,123 @@ def extract_price(html, soup):
                 elif isinstance(obj, dict):
                     if '@graph' in obj:
                         return find_p(obj['@graph'])
-                    if obj.get('@type') == 'Product' or 'offers' in obj:
+                    if obj.get('@type') in ['Product', 'IndividualProduct'] or 'offers' in obj:
                         offs = obj.get('offers', {})
                         if isinstance(offs, list) and offs: offs = offs[0]
                         if isinstance(offs, dict):
                             p = offs.get('price') or offs.get('lowPrice')
-                            if p: return float(str(p).replace(',', '.'))
+                            if p:
+                                try:
+                                    return float(str(p).replace(',', '.'))
+                                except:
+                                    pass
                 return None
             res = find_p(raw)
-            if res and 50 <= res <= 2500: return res
-        except: continue
+            if res and 40 <= res <= 3000:
+                return res
+        except:
+            continue
 
-    # 2. Meta tagi
-    meta = re.search(r'<meta[^>]+(?:itemprop=["\']price["\']|property=["\']product:price:amount["\'])[^>]+content=["\']([\d.,]+)["\']', html, re.IGNORECASE)
-    if not meta:
-        meta = re.search(r'<meta[^>]+content=["\']([\d.,]+)["\'][^>]+(?:itemprop=["\']price["\']|property=["\']product:price:amount["\'])', html, re.IGNORECASE)
-    if meta:
-        v = float(meta.group(1).replace(',', '.'))
-        if 50 <= v <= 2500: return v
+    # 2. Meta tagi (OpenGraph / Schema)
+    for attr in [
+        {'property': 'product:price:amount'},
+        {'itemprop': 'price'},
+        {'name': 'twitter:data1'},
+        {'property': 'og:price:amount'}
+    ]:
+        meta = soup.find('meta', attrs=attr)
+        if meta and meta.get('content'):
+            cleaned = re.sub(r'[^\d.,]', '', meta['content']).replace(',', '.')
+            try:
+                val = float(cleaned)
+                if 40 <= val <= 3000:
+                    return val
+            except:
+                pass
 
-    # 3. HTML Cenu klases
-    p_el = soup.select_one('[data-price-amount], .c-price__current, .price-wrapper .price, .product-price, .price-final_price .price')
-    if p_el:
-        if p_el.has_attr('data-price-amount'):
-            v = float(p_el['data-price-amount'])
-        else:
-            d = re.findall(r'\d+(?:[.,]\d+)?', p_el.text)
-            v = float(d[0].replace(',', '.')) if d else 0
-        if 50 <= v <= 2500: return v
+    # 3. Specifiskie veikalu HTML selektori
+    price_selectors = [
+        '[data-price-amount]',
+        '.c-price__current',
+        '.price-wrapper .price',
+        '.current-price-value',
+        '.current-price [itemprop="price"]',
+        '.product-price',
+        '.price-final_price .price',
+        'span.price'
+    ]
 
-    # 4. Fallback Regex
+    for sel in price_selectors:
+        p_el = soup.select_one(sel)
+        if p_el:
+            if p_el.has_attr('data-price-amount'):
+                try:
+                    val = float(p_el['data-price-amount'])
+                    if 40 <= val <= 3000: return val
+                except:
+                    pass
+            txt = p_el.get_text()
+            nums = re.findall(r'\d+(?:[.,]\d{2})?', txt)
+            if nums:
+                try:
+                    val = float(nums[0].replace(',', '.'))
+                    if 40 <= val <= 3000: return val
+                except:
+                    pass
+
+    # 4. Fallback Regex meklēšana
     p_matches = re.findall(r'(\d{2,4}(?:[.,]\d{2})?)\s*(?:€|EUR)', html)
-    valid = [float(p.replace(' ', '').replace(',', '.')) for p in p_matches if 50 <= float(p.replace(' ', '').replace(',', '.')) <= 2500]
-    if valid: return min(valid)
+    valid = []
+    for p in p_matches:
+        try:
+            v = float(p.replace(' ', '').replace(',', '.'))
+            if 40 <= v <= 3000:
+                valid.append(v)
+        except:
+            pass
+    if valid:
+        return min(valid)
+
     return None
 
 def check_stock(html, soup):
+    # Pārbauda konkrētās groza pogas esamību un statusu
+    btn = soup.select_one('#product-addtocart-button, .add-to-cart, button[data-button-action="add-to-cart"], .btn-cart, .add_to_cart_button')
+    if btn:
+        if btn.has_attr('disabled') or 'disabled' in btn.get('class', []):
+            return False
+        return True
+
+    # Pārbauda mikrodatu pieejamību
+    avail_el = soup.select_one('[itemprop="availability"], .product-availability, .stock.available, .stock.unavailable')
+    if avail_el:
+        txt = (avail_el.get('href', '') + ' ' + avail_el.get_text()).lower()
+        if 'instock' in txt or 'in_stock' in txt or 'ir noliktavā' in txt or 'pieejams' in txt:
+            return True
+        if 'outofstock' in txt or 'out_of_stock' in txt or 'nav noliktavā' in txt or 'izpārdots' in txt:
+            return False
+
+    # Fallback teksts preces blokā
     html_low = html.lower()
-    if 'izpārdots' in html_low or 'out of stock' in html_low:
+    if 'prece nav pieejama' in html_low or 'prece ir izpārdota' in html_low:
         return False
-    btn = soup.select_one('#product-addtocart-button, .add-to-cart, .stock.available, button[data-button-action="add-to-cart"]')
-    if btn and not btn.has_attr('disabled'):
+    if 'ir noliktavā' in html_low or 'pieejams veikalā' in html_low:
         return True
-    if re.search(r'ir noliktavā|ielikt grozā|noliktavā|preorder|instock', html_low):
-        return True
+
     return False
 
 def scrape_url(url, session):
     try:
         resp = session.get(url, timeout=12)
-        if resp.status_code != 200: return None, False
+        if resp.status_code != 200:
+            return None, False
         html = resp.text
         soup = BeautifulSoup(html, 'html.parser')
         price = extract_price(html, soup)
-        stock = check_stock(html, soup) if price else False
+        stock = check_stock(html, soup) if (price and price > 0) else False
         return price, stock
-    except:
+    except Exception as e:
+        print(f"Kļūda skenējot {url}: {e}")
         return None, False
 
 def scrape_all():
@@ -221,16 +282,15 @@ def scrape_all():
             "type": t["type"],
             "model": t["model"],
             "retailer": t["retailer"],
-            "price": price if price else 0.0,
+            "price": float(price) if price else 0.0,
             "oldPrice": None,
             "shipping": t["shipping"],
-            "stock": stock,
+            "stock": bool(stock),
             "checked": datetime.now().strftime("%Y-%m-%d"),
             "url": t["url"],
             "status": status
         }
 
-        # Saglabājam kategorijai specifiskos datus
         if t["type"] == "skate":
             offer["sizes"] = t.get("default_sizes", [])
             offer["fits"] = t.get("default_fits", [])
@@ -249,7 +309,7 @@ def scrape_all():
     with open('scraped_data.json', 'w', encoding='utf-8') as f:
         json.dump(payload, f, indent=2, ensure_ascii=False)
 
-    print("Skenēšana pabeigta un scraped_data.json atjaunināts.")
+    print("Skenēšana pabeigta un scraped_data.json atjaunināts ar reālajiem datiem.")
 
 if __name__ == '__main__':
     scrape_all()
