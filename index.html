@@ -372,7 +372,7 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
 .profile-pill-tag{color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;margin-left:2px}
 .filters-bar .divider{width:1px;height:24px;background:var(--line);margin:0 2px;flex-shrink:0}
 
-/* UNIVERSĀLS PIELĀGOTAIS DROPDOWN (IMAGE_DA009C STILĀ) */
+/* UNIVERSĀLS PIELĀGOTAIS DROPDOWN — VIENĀ LĪNIJĀ BEZ TEKSTA LŪŠANAS */
 .ui-dropdown{position:relative;display:inline-block;width:100%}
 .ui-dropdown-btn{
   background:var(--switch-bg);
@@ -391,6 +391,7 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
   width:100%;
   transition:all .2s ease;
   outline:none;
+  white-space:nowrap;
 }
 .ui-dropdown-btn:hover, .ui-dropdown-btn.active{border-color:var(--red);transform:scale(1.01)}
 .ui-dropdown-btn svg{color:var(--muted);transition:transform .2s ease;flex-shrink:0}
@@ -400,9 +401,9 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
   position:absolute;
   top:calc(100% + 6px);
   left:0;
-  width:100%;
-  min-width:180px;
-  max-height:260px;
+  width:max-content;
+  min-width:100%;
+  max-height:280px;
   overflow-y:auto;
   background:var(--card);
   border:1px solid var(--line);
@@ -429,6 +430,7 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
   border:none;
   cursor:pointer;
   transition:all .15s ease;
+  white-space:nowrap; /* Vienā līnijā bez teksta sadalīšanas */
 }
 .ui-dropdown-opt:hover{background:var(--card-hover);color:var(--red)}
 .ui-dropdown-opt.active{background:rgba(237,32,39,.12);color:var(--red)}
@@ -682,7 +684,7 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
   pointer-events:none;
 }
 
-/* PROFILA BLOKS — VIENOTA KARTĪTE AR ELEGANTU GRIDU */
+/* PROFILA BLOKS — VIENOTA KARTĪTE */
 .profile-tabs{display:flex;gap:8px;margin-bottom:20px;border-bottom:1px solid var(--line);padding-bottom:12px}
 .profile-tab-btn{
   background:var(--switch-bg);
@@ -722,7 +724,7 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
 .form-group{display:flex;flex-direction:column;gap:8px}
 .form-group label{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
 
-/* BUDŽETA INPUTI (IMAGE_DA04DE STILĀ) */
+/* BUDŽETA INPUTI */
 .form-input-box{
   width:100%;
   height:34px;
@@ -1231,11 +1233,11 @@ const t = (k, params = {}) => {
 function getUiTimestamp() {
   try {
     const d = new Date(document.lastModified);
-    if (isNaN(d.getTime())) return '03.11.2026 16:40';
+    if (isNaN(d.getTime())) return '03.11.2026 17:15';
     const pad = n => ('0' + n).slice(-2);
     return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
   } catch(e) {
-    return '03.11.2026 16:40';
+    return '03.11.2026 17:15';
   }
 }
 
@@ -1363,10 +1365,9 @@ const USED_SOURCES = [
   { name: 'Andelemandele.lv', url: 'https://www.andelemandele.lv/' }
 ];
 
-/* 4. OFICIĀLĀS BAUER IZMĒRU TABULAS (ATTĒLI IMAGE_DA6A38, IMAGE_DA6924, IMAGE_DA65E1) */
+/* 4. OFICIĀLĀS IZMĒRU UN FLEX TABULAS */
 const BAUER_SIZE_TABLES = {
   Senior: [
-    { val: 'pref', label: '7 un 7.5 Senior (EUR 42–42.5)' },
     { val: '7', label: '7 (EUR 42 · 26.0 cm)' },
     { val: '7.5', label: '7.5 (EUR 42.5 · 26.5 cm)' },
     { val: '8', label: '8 (EUR 43 · 27.0 cm)' },
@@ -1415,6 +1416,33 @@ const BAUER_SIZE_TABLES = {
   ]
 };
 
+const BAUER_STICK_TABLES = {
+  Senior: [
+    { val: '70', label: '70 flex (52–88 kg · 149–160 cm)' },
+    { val: '77', label: '77 flex (63–100 kg · 149–160 cm)' },
+    { val: '87', label: '87 flex (68–113 kg · 149–160 cm)' },
+    { val: '95', label: '95 flex (86–113 kg · 149–160 cm)' },
+    { val: '102', label: '102 flex (93–113 kg · 149–160 cm)' },
+    { val: 'all', label: 'Visi Senior Flex' }
+  ],
+  Intermediate: [
+    { val: '55', label: '55 flex (34–70 kg · 137–147 cm)' },
+    { val: '65', label: '65 flex (50–75 kg · 137–147 cm)' },
+    { val: 'all', label: 'Visi Intermediate Flex' }
+  ],
+  Junior: [
+    { val: '30', label: '30 flex (23–41 kg · 116–137 cm)' },
+    { val: '40', label: '40 flex (25–50 kg · 116–137 cm)' },
+    { val: '50', label: '50 flex (29–54 kg · 116–137 cm)' },
+    { val: 'all', label: 'Visi Junior Flex' }
+  ],
+  Youth: [
+    { val: '10', label: '10 flex (18–25 kg · 96–116 cm)' },
+    { val: '20', label: '20 flex (18–29 kg · 96–116 cm)' },
+    { val: 'all', label: 'Visi Youth Flex' }
+  ]
+};
+
 /* 5. LIETOTĀJA PROFILS */
 const DEFAULT_PROFILE = {
   activeTab: 'skates',
@@ -1422,16 +1450,17 @@ const DEFAULT_PROFILE = {
   // Slidas
   skateBrand: 'Bauer',
   skateCat: 'Senior',
-  size: 'pref',
+  size: '7.5',
   fit: 'FIT 2',
   skateFreq: '2-3',
   minSkate: 300,
   maxSkate: 650,
   // Nūjas
+  stickBrand: 'Bauer',
+  stickCat: 'Senior',
   hand: 'Left',
-  flex: '77',
   curve: 'P92',
-  category: 'Senior',
+  flex: '77',
   minStick: 100,
   maxStick: 250
 };
@@ -1439,7 +1468,11 @@ const DEFAULT_PROFILE = {
 function loadProfile() {
   try {
     const raw = localStorage.getItem('hsr_user_profile');
-    if (raw) return { ...DEFAULT_PROFILE, ...JSON.parse(raw) };
+    if (raw) {
+      const p = JSON.parse(raw);
+      if (p.size === 'pref') p.size = '7.5';
+      return { ...DEFAULT_PROFILE, ...p };
+    }
   } catch(e) {}
   return { ...DEFAULT_PROFILE };
 }
@@ -1499,14 +1532,15 @@ function renderCard(m, rKey) {
   let matchPrice = false;
 
   if (m.type === 'skate') {
-    const matchSize = !o ? false : (PROFILE.size === 'pref' ? (o.sizes || []).some(s => s === '7' || s === '7.5') : (PROFILE.size === 'all' || (o.sizes || []).includes(PROFILE.size)));
+    const matchSize = !o ? false : (PROFILE.size === 'all' || (o.sizes || []).includes(PROFILE.size));
     const matchFit = !o ? false : (PROFILE.fit === 'all' || (o.fits || []).includes(PROFILE.fit));
     matchSpecs = matchSize && matchFit;
     matchPrice = (tPrice != null) && (tPrice >= PROFILE.minSkate && tPrice <= PROFILE.maxSkate);
   } else {
     const matchHand = !o ? false : ((o.hands || []).includes(PROFILE.hand));
     const matchFlex = !o ? false : (PROFILE.flex === 'all' || (o.flexes || []).includes(PROFILE.flex));
-    matchSpecs = matchHand && matchFlex;
+    const matchCurve = !o ? false : (PROFILE.curve === 'all' || (o.curves || []).includes(PROFILE.curve));
+    matchSpecs = matchHand && matchFlex && matchCurve;
     matchPrice = (tPrice != null) && (tPrice >= PROFILE.minStick && tPrice <= PROFILE.maxStick);
   }
 
@@ -1620,7 +1654,7 @@ function filtersBar(type) {
   const models = type === 'skate' ? SKATE_MODELS : STICK_MODELS;
 
   const pillText = type === 'skate' 
-    ? `Profils: ${PROFILE.skateCat} · ${PROFILE.size} · ${PROFILE.fit} · €${PROFILE.minSkate}–${PROFILE.maxSkate}`
+    ? `Profils: ${PROFILE.skateCat} · Izm. ${PROFILE.size} · ${PROFILE.fit} · €${PROFILE.minSkate}–${PROFILE.maxSkate}`
     : `Profils: ${PROFILE.hand} · Flex ${PROFILE.flex} · ${PROFILE.curve} · €${PROFILE.minStick}–${PROFILE.maxStick}`;
 
   let currentSortLabel = t('sortDef');
@@ -1744,7 +1778,7 @@ function viewCategory(type) {
 
   const sub = isSkate 
     ? t('subTitleSkates', { role: `<b>${roleName}</b>`, size: `<b>${PROFILE.size}</b>`, fit: `<b>${PROFILE.fit}</b>` })
-    : t('subTitleSticks', { hand: `<b>${PROFILE.hand}</b>`, flex: `<b>${PROFILE.flex}</b>`, curve: `<b>${PROFILE.curve}</b>`, cat: `<b>${PROFILE.category}</b>` });
+    : t('subTitleSticks', { hand: `<b>${PROFILE.hand}</b>`, flex: `<b>${PROFILE.flex}</b>`, curve: `<b>${PROFILE.curve}</b>`, cat: `<b>${PROFILE.stickCat || PROFILE.category}</b>` });
 
   const rKeys = Object.keys(RETAILERS);
   const offersList = OFFERS.filter(o => o.type === type);
@@ -1822,22 +1856,37 @@ function viewIntl() {
   <div class="empty">Veikalu saraksts tiek sagatavots. Tiks iekļauti pārbaudīti veikali ar skaidriem piegādes un atgriešanas nosacījumiem uz Latviju.</div>`;
 }
 
-/* HELPER FUNKCIJA IZMĒRU VARIANTU ATRAŠANAI */
+/* HELPER FUNKCIJAS TABULU DATIEM */
 function getSkateSizeOptions(category) {
-  const list = BAUER_SIZE_TABLES[category] || BAUER_SIZE_TABLES['Senior'];
-  return list;
+  return BAUER_SIZE_TABLES[category] || BAUER_SIZE_TABLES['Senior'];
+}
+
+function getStickFlexOptions(category) {
+  return BAUER_STICK_TABLES[category] || BAUER_STICK_TABLES['Senior'];
 }
 
 function viewProfile() {
-  const currentCategory = PROFILE.skateCat || 'Senior';
-  const sizeOptions = getSkateSizeOptions(currentCategory);
-  const curSizeObj = sizeOptions.find(o => o.val === PROFILE.size) || sizeOptions[0];
+  // Slidu dati
+  const skateCat = PROFILE.skateCat || 'Senior';
+  const skateSizeOptions = getSkateSizeOptions(skateCat);
+  const curSkateSize = skateSizeOptions.find(o => o.val === PROFILE.size) || skateSizeOptions[0];
+
+  // Nūju dati
+  const stickCat = PROFILE.stickCat || PROFILE.category || 'Senior';
+  const stickFlexOptions = getStickFlexOptions(stickCat);
+  const curStickFlex = stickFlexOptions.find(o => o.val === PROFILE.flex) || stickFlexOptions[0];
 
   const freqLabels = {
     '1-2': '1–2x nedēļā (Iesācējs / Amatieris)',
     '2-3': '2–3x nedēļā (Regulāri treniņi)',
     '3-4': '3–4x nedēļā (Pusprofesionālis)',
     '5+': '5+ reizes nedēļā (Augsta slodze / Pro)'
+  };
+
+  const curveLabels = {
+    'P92': 'P92',
+    'P28': 'P28',
+    'all': 'Visi liekumi'
   };
 
   return `
@@ -1876,29 +1925,29 @@ function viewProfile() {
             <label>Vecuma grupa</label>
             <div class="ui-dropdown" data-dropdown-id="p-skate-cat">
               <button type="button" class="ui-dropdown-btn">
-                <span class="ui-dropdown-label">${currentCategory}</span>
+                <span class="ui-dropdown-label">${skateCat}</span>
                 <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#a9b0be" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
               </button>
               <div class="ui-dropdown-menu">
-                <button type="button" class="ui-dropdown-opt ${currentCategory==='Senior'?'active':''}" data-val="Senior">Senior (SR)</button>
-                <button type="button" class="ui-dropdown-opt ${currentCategory==='Intermediate'?'active':''}" data-val="Intermediate">Intermediate (INT)</button>
-                <button type="button" class="ui-dropdown-opt ${currentCategory==='Junior'?'active':''}" data-val="Junior">Junior (JR)</button>
-                <button type="button" class="ui-dropdown-opt ${currentCategory==='Youth'?'active':''}" data-val="Youth">Youth (YTH)</button>
+                <button type="button" class="ui-dropdown-opt ${skateCat==='Senior'?'active':''}" data-val="Senior">Senior (SR)</button>
+                <button type="button" class="ui-dropdown-opt ${skateCat==='Intermediate'?'active':''}" data-val="Intermediate">Intermediate (INT)</button>
+                <button type="button" class="ui-dropdown-opt ${skateCat==='Junior'?'active':''}" data-val="Junior">Junior (JR)</button>
+                <button type="button" class="ui-dropdown-opt ${skateCat==='Youth'?'active':''}" data-val="Youth">Youth (YTH)</button>
               </div>
-              <input type="hidden" id="p-skate-cat" value="${currentCategory}">
+              <input type="hidden" id="p-skate-cat" value="${skateCat}">
             </div>
           </div>
 
-          <!-- 3. Vēlamais izmērs (Dinamisks saraksts pēc Bauer tabulām) -->
+          <!-- 3. Vēlamais izmērs (Bez apvienotā 7 un 7.5 varianta) -->
           <div class="form-group">
             <label>Vēlamais izmērs</label>
             <div class="ui-dropdown" data-dropdown-id="p-size" id="dropdown-skate-size">
               <button type="button" class="ui-dropdown-btn">
-                <span class="ui-dropdown-label">${curSizeObj.label}</span>
+                <span class="ui-dropdown-label">${curSkateSize.label}</span>
                 <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#a9b0be" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
               </button>
               <div class="ui-dropdown-menu" id="skate-size-menu">
-                ${sizeOptions.map(o => `
+                ${skateSizeOptions.map(o => `
                   <button type="button" class="ui-dropdown-opt ${PROFILE.size===o.val?'active':''}" data-val="${o.val}">${o.label}</button>
                 `).join('')}
               </div>
@@ -1906,7 +1955,7 @@ function viewProfile() {
             </div>
           </div>
 
-          <!-- 4. Bauer FIT sistēma -->
+          <!-- 4. Bauer FIT sistēma (Augošā secībā: FIT 1, FIT 2, FIT 3, Visi) -->
           <div class="form-group">
             <label>Bauer FIT sistēma</label>
             <div class="ui-dropdown" data-dropdown-id="p-fit">
@@ -1915,8 +1964,8 @@ function viewProfile() {
                 <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#a9b0be" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
               </button>
               <div class="ui-dropdown-menu">
-                <button type="button" class="ui-dropdown-opt ${PROFILE.fit==='FIT 2'?'active':''}" data-val="FIT 2">FIT 2 — Standarta platums & pacēlums (D)</button>
                 <button type="button" class="ui-dropdown-opt ${PROFILE.fit==='FIT 1'?'active':''}" data-val="FIT 1">FIT 1 — Šaura pēda / zems pacēlums (D Vapor)</button>
+                <button type="button" class="ui-dropdown-opt ${PROFILE.fit==='FIT 2'?'active':''}" data-val="FIT 2">FIT 2 — Standarta platums & pacēlums (D)</button>
                 <button type="button" class="ui-dropdown-opt ${PROFILE.fit==='FIT 3'?'active':''}" data-val="FIT 3">FIT 3 — Plata pēda / augsts pacēlums (EE)</button>
                 <button type="button" class="ui-dropdown-opt ${PROFILE.fit==='all'?'active':''}" data-val="all">Visi platumi</button>
               </div>
@@ -1924,7 +1973,7 @@ function viewProfile() {
             </div>
           </div>
 
-          <!-- 5. Pozīcija laukumā (Slidām specifiska) -->
+          <!-- 5. Pozīcija laukumā (Slidām) -->
           <div class="form-group">
             <label>Pozīcija laukumā</label>
             <div class="ui-dropdown" data-dropdown-id="p-role">
@@ -1958,7 +2007,7 @@ function viewProfile() {
             </div>
           </div>
 
-          <!-- 7. Slidu budžets (Image_da04de stils) -->
+          <!-- 7. Slidu budžets -->
           <div class="form-group">
             <label for="p-minSkate">Minimālā cena (€)</label>
             <input type="number" id="p-minSkate" class="form-input-box" value="${PROFILE.minSkate}">
@@ -1979,13 +2028,48 @@ function viewProfile() {
       </div>
     </div>
 
-    <!-- 2. NŪJU BLOKS — VIENOTA KARTĪTE -->
+    <!-- 2. NŪJU BLOKS — VIENOTA KARTĪTE AR TABULAS FLEX DINAMIKU -->
     <div id="ptab-sticks-content" style="${PROFILE.activeTab==='sticks'?'display:block':'display:none'}">
       <div class="profile-card-single">
         <div class="profile-unified-grid">
           
+          <!-- 1. Nūjas Zīmols -->
           <div class="form-group">
-            <label>Satvēriens (Puse)</label>
+            <label>Zīmols</label>
+            <div class="ui-dropdown" data-dropdown-id="p-stick-brand">
+              <button type="button" class="ui-dropdown-btn">
+                <span class="ui-dropdown-label">${PROFILE.stickBrand || 'Bauer'}</span>
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#a9b0be" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
+              </button>
+              <div class="ui-dropdown-menu">
+                <button type="button" class="ui-dropdown-opt active" data-val="Bauer">Bauer</button>
+                <button type="button" class="ui-dropdown-opt" style="opacity:0.4; cursor:not-allowed;" data-val="CCM">CCM (Drīzumā)</button>
+              </div>
+              <input type="hidden" id="p-stick-brand" value="${PROFILE.stickBrand || 'Bauer'}">
+            </div>
+          </div>
+
+          <!-- 2. Vecuma grupa -->
+          <div class="form-group">
+            <label>Vecuma grupa</label>
+            <div class="ui-dropdown" data-dropdown-id="p-stick-cat">
+              <button type="button" class="ui-dropdown-btn">
+                <span class="ui-dropdown-label">${stickCat}</span>
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#a9b0be" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
+              </button>
+              <div class="ui-dropdown-menu">
+                <button type="button" class="ui-dropdown-opt ${stickCat==='Senior'?'active':''}" data-val="Senior">Senior (SR)</button>
+                <button type="button" class="ui-dropdown-opt ${stickCat==='Intermediate'?'active':''}" data-val="Intermediate">Intermediate (INT)</button>
+                <button type="button" class="ui-dropdown-opt ${stickCat==='Junior'?'active':''}" data-val="Junior">Junior (JR)</button>
+                <button type="button" class="ui-dropdown-opt ${stickCat==='Youth'?'active':''}" data-val="Youth">Youth (YTH)</button>
+              </div>
+              <input type="hidden" id="p-stick-cat" value="${stickCat}">
+            </div>
+          </div>
+
+          <!-- 3. Satvēriens -->
+          <div class="form-group">
+            <label>Satvēriens</label>
             <div class="ui-dropdown" data-dropdown-id="p-hand">
               <button type="button" class="ui-dropdown-btn">
                 <span class="ui-dropdown-label">${PROFILE.hand === 'Left' ? 'Kreisā roka lejā (Left)' : 'Labā roka lejā (Right)'}</span>
@@ -1999,63 +2083,47 @@ function viewProfile() {
             </div>
           </div>
 
-          <div class="form-group">
-            <label>Cietība (Flex)</label>
-            <div class="ui-dropdown" data-dropdown-id="p-flex">
-              <button type="button" class="ui-dropdown-btn">
-                <span class="ui-dropdown-label">${PROFILE.flex === 'all' ? 'Visi Flex' : PROFILE.flex + ' Flex'}</span>
-                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#a9b0be" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
-              </button>
-              <div class="ui-dropdown-menu">
-                <button type="button" class="ui-dropdown-opt ${PROFILE.flex==='77'?'active':''}" data-val="77">77 Flex (Standarta pieaugušo)</button>
-                <button type="button" class="ui-dropdown-opt ${PROFILE.flex==='87'?'active':''}" data-val="87">87 Flex (Stingrāks)</button>
-                <button type="button" class="ui-dropdown-opt ${PROFILE.flex==='70'?'active':''}" data-val="70">70 Flex (Mīksts)</button>
-                <button type="button" class="ui-dropdown-opt ${PROFILE.flex==='65'?'active':''}" data-val="65">65 Flex (Junior/Intermediate)</button>
-                <button type="button" class="ui-dropdown-opt ${PROFILE.flex==='all'?'active':''}" data-val="all">Visi Flex</button>
-              </div>
-              <input type="hidden" id="p-flex" value="${PROFILE.flex}">
-            </div>
-          </div>
-
+          <!-- 4. Lāpstiņas liekums (P92, P28, Visi liekumi — bez iekavām) -->
           <div class="form-group">
             <label>Lāpstiņas liekums</label>
             <div class="ui-dropdown" data-dropdown-id="p-curve">
               <button type="button" class="ui-dropdown-btn">
-                <span class="ui-dropdown-label">${PROFILE.curve === 'all' ? 'Visi liekumi' : PROFILE.curve}</span>
+                <span class="ui-dropdown-label">${curveLabels[PROFILE.curve] || 'P92'}</span>
                 <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#a9b0be" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
               </button>
               <div class="ui-dropdown-menu">
-                <button type="button" class="ui-dropdown-opt ${PROFILE.curve==='P92'?'active':''}" data-val="P92">P92 (Universāls Matthews/Crosby)</button>
-                <button type="button" class="ui-dropdown-opt ${PROFILE.curve==='P28'?'active':''}" data-val="P28">P28 (Agresīvs pirkstgals McDavid)</button>
+                <button type="button" class="ui-dropdown-opt ${PROFILE.curve==='P92'?'active':''}" data-val="P92">P92</button>
+                <button type="button" class="ui-dropdown-opt ${PROFILE.curve==='P28'?'active':''}" data-val="P28">P28</button>
                 <button type="button" class="ui-dropdown-opt ${PROFILE.curve==='all'?'active':''}" data-val="all">Visi liekumi</button>
               </div>
               <input type="hidden" id="p-curve" value="${PROFILE.curve}">
             </div>
           </div>
 
+          <!-- 5. Cietība (Flex) pēc Bauer tabulas -->
           <div class="form-group">
-            <label>Vecuma grupa</label>
-            <div class="ui-dropdown" data-dropdown-id="p-category">
+            <label>Cietība (Flex)</label>
+            <div class="ui-dropdown" data-dropdown-id="p-flex" id="dropdown-stick-flex">
               <button type="button" class="ui-dropdown-btn">
-                <span class="ui-dropdown-label">${PROFILE.category}</span>
+                <span class="ui-dropdown-label">${curStickFlex.label}</span>
                 <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#a9b0be" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
               </button>
-              <div class="ui-dropdown-menu">
-                <button type="button" class="ui-dropdown-opt ${PROFILE.category==='Senior'?'active':''}" data-val="Senior">Senior (SR)</button>
-                <button type="button" class="ui-dropdown-opt ${PROFILE.category==='Intermediate'?'active':''}" data-val="Intermediate">Intermediate (INT)</button>
-                <button type="button" class="ui-dropdown-opt ${PROFILE.category==='Junior'?'active':''}" data-val="Junior">Junior (JR)</button>
-                <button type="button" class="ui-dropdown-opt ${PROFILE.category==='Youth'?'active':''}" data-val="Youth">Youth (YTH)</button>
+              <div class="ui-dropdown-menu" id="stick-flex-menu">
+                ${stickFlexOptions.map(o => `
+                  <button type="button" class="ui-dropdown-opt ${PROFILE.flex===o.val?'active':''}" data-val="${o.val}">${o.label}</button>
+                `).join('')}
               </div>
-              <input type="hidden" id="p-category" value="${PROFILE.category}">
+              <input type="hidden" id="p-flex" value="${PROFILE.flex}">
             </div>
           </div>
 
+          <!-- 6. Nūjas budžets -->
           <div class="form-group">
             <label for="p-minStick">Minimālā cena (€)</label>
             <input type="number" id="p-minStick" class="form-input-box" value="${PROFILE.minStick}">
           </div>
 
-          <div class="form-group">
+          <div class="form-group" style="grid-column: 2 / 3;">
             <label for="p-maxStick">Maksimālā cena (€)</label>
             <input type="number" id="p-maxStick" class="form-input-box" value="${PROFILE.maxStick}">
           </div>
@@ -2163,11 +2231,11 @@ function openLightbox(modelId) {
   document.getElementById('modal-lightbox').classList.add('open');
 }
 
-/* DINAMISKA IZMĒRU PĀRRĒĶINĀŠANA PĒC VECUMA GRUPAS MAIŅAS */
+/* DINAMISKA SLIDU IZMĒRU PĀRRĒĶINĀŠANA PĒC VECUMA GRUPAS MAIŅAS */
 function onSkateCategoryChange(newCat) {
   PROFILE.skateCat = newCat;
   const sizeOptions = getSkateSizeOptions(newCat);
-  PROFILE.size = sizeOptions[0].val; // Uzliekam pirmo atbilstošo izmēru kā noklusējumu
+  PROFILE.size = sizeOptions[0].val;
 
   const sizeMenu = document.getElementById('skate-size-menu');
   const sizeDropdownBtn = document.querySelector('#dropdown-skate-size .ui-dropdown-label');
@@ -2179,6 +2247,26 @@ function onSkateCategoryChange(newCat) {
     `).join('');
     sizeDropdownBtn.textContent = sizeOptions[0].label;
     sizeInput.value = sizeOptions[0].val;
+  }
+}
+
+/* DINAMISKA NŪJU FLEX PĀRRĒĶINĀŠANA PĒC VECUMA GRUPAS MAIŅAS */
+function onStickCategoryChange(newCat) {
+  PROFILE.stickCat = newCat;
+  PROFILE.category = newCat;
+  const flexOptions = getStickFlexOptions(newCat);
+  PROFILE.flex = flexOptions[0].val;
+
+  const flexMenu = document.getElementById('stick-flex-menu');
+  const flexDropdownBtn = document.querySelector('#dropdown-stick-flex .ui-dropdown-label');
+  const flexInput = document.getElementById('p-flex');
+
+  if (flexMenu && flexDropdownBtn && flexInput) {
+    flexMenu.innerHTML = flexOptions.map(o => `
+      <button type="button" class="ui-dropdown-opt ${PROFILE.flex===o.val?'active':''}" data-val="${o.val}">${o.label}</button>
+    `).join('');
+    flexDropdownBtn.textContent = flexOptions[0].label;
+    flexInput.value = flexOptions[0].val;
   }
 }
 
@@ -2205,7 +2293,6 @@ document.addEventListener('click', e => {
     const menu = parent.querySelector('.ui-dropdown-menu');
     const isOpen = menu.classList.contains('open');
 
-    // Aizveram visus citus atvērtos dropdownus
     document.querySelectorAll('.ui-dropdown-menu').forEach(m => m.classList.remove('open'));
     document.querySelectorAll('.ui-dropdown-btn').forEach(b => b.classList.remove('active'));
 
@@ -2225,7 +2312,6 @@ document.addEventListener('click', e => {
     const hiddenInput = parent.querySelector('input[type="hidden"]');
     const val = dropOpt.dataset.val;
 
-    // Uzstādām aktīvo vērtību
     parent.querySelectorAll('.ui-dropdown-opt').forEach(o => o.classList.remove('active'));
     dropOpt.classList.add('active');
     label.textContent = dropOpt.textContent;
@@ -2234,23 +2320,25 @@ document.addEventListener('click', e => {
     menu.classList.remove('open');
     btn.classList.remove('active');
 
-    // Ja mainījās filtru kārtošana
     if (parent.dataset.dropdownId === 'f-sort') {
       S.sort = val;
       render();
       return;
     }
 
-    // Ja mainījās slidu vecuma grupa profilā
     if (parent.dataset.dropdownId === 'p-skate-cat') {
       onSkateCategoryChange(val);
+      return;
+    }
+
+    if (parent.dataset.dropdownId === 'p-stick-cat') {
+      onStickCategoryChange(val);
       return;
     }
 
     return;
   }
 
-  // Aizveram visus dropdownus, ja noklikšķina ārpusē
   if (!e.target.closest('.ui-dropdown')) {
     document.querySelectorAll('.ui-dropdown-menu').forEach(m => m.classList.remove('open'));
     document.querySelectorAll('.ui-dropdown-btn').forEach(b => b.classList.remove('active'));
@@ -2353,7 +2441,7 @@ document.addEventListener('click', e => {
     // Slidas
     PROFILE.skateBrand = document.getElementById('p-skate-brand')?.value || 'Bauer';
     PROFILE.skateCat = document.getElementById('p-skate-cat')?.value || 'Senior';
-    PROFILE.size = document.getElementById('p-size')?.value || 'pref';
+    PROFILE.size = document.getElementById('p-size')?.value || '7.5';
     PROFILE.fit = document.getElementById('p-fit')?.value || 'FIT 2';
     PROFILE.role = document.getElementById('p-role')?.value || 'forward';
     PROFILE.skateFreq = document.getElementById('p-skate-freq')?.value || '2-3';
@@ -2361,10 +2449,12 @@ document.addEventListener('click', e => {
     PROFILE.maxSkate = +document.getElementById('p-maxSkate')?.value || 9999;
 
     // Nūjas
+    PROFILE.stickBrand = document.getElementById('p-stick-brand')?.value || 'Bauer';
+    PROFILE.stickCat = document.getElementById('p-stick-cat')?.value || 'Senior';
+    PROFILE.category = PROFILE.stickCat;
     PROFILE.hand = document.getElementById('p-hand')?.value || 'Left';
-    PROFILE.flex = document.getElementById('p-flex')?.value || '77';
     PROFILE.curve = document.getElementById('p-curve')?.value || 'P92';
-    PROFILE.category = document.getElementById('p-category')?.value || 'Senior';
+    PROFILE.flex = document.getElementById('p-flex')?.value || '77';
     PROFILE.minStick = +document.getElementById('p-minStick')?.value || 0;
     PROFILE.maxStick = +document.getElementById('p-maxStick')?.value || 9999;
 
@@ -2435,8 +2525,8 @@ setInterval(() => {
         targetImg.style.opacity = '0';
         setTimeout(() => {
           targetImg.src = nextDot.dataset.imgSrc;
-          setTimeout(() => { targetImg.style.opacity = '1'; }, 80);
-        }, 400);
+          setTimeout(() => { targetImg.style.opacity = '1'; }, 50);
+        }, 300);
       }
       dots.forEach((d, i) => d.classList.toggle('active', i === nextIdx));
     }
