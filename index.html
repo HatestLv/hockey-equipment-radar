@@ -430,7 +430,7 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
   border:none;
   cursor:pointer;
   transition:all .15s ease;
-  white-space:nowrap; /* Vienā līnijā bez teksta sadalīšanas */
+  white-space:nowrap;
 }
 .ui-dropdown-opt:hover{background:var(--card-hover);color:var(--red)}
 .ui-dropdown-opt.active{background:rgba(237,32,39,.12);color:var(--red)}
@@ -1233,11 +1233,11 @@ const t = (k, params = {}) => {
 function getUiTimestamp() {
   try {
     const d = new Date(document.lastModified);
-    if (isNaN(d.getTime())) return '03.11.2026 17:15';
+    if (isNaN(d.getTime())) return '03.11.2026 17:45';
     const pad = n => ('0' + n).slice(-2);
     return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
   } catch(e) {
-    return '03.11.2026 17:15';
+    return '03.11.2026 17:45';
   }
 }
 
@@ -1302,7 +1302,7 @@ const STICK_MODELS = [
     brand: 'Bauer',
     name: 'Supreme S26 FUSE Composite Senior',
     series: 'Supreme High-Kick',
-    match: { forward: 70, defense: 92 },
+    match: { forward: 70, defense: 92, allround: 85 },
     profileBadge: 'Power / Šķēlieni',
     note: 'Supreme liekšanās punkts (Mid/High Kick) maksimālai šāviena jaudai un one-timer metieniem.',
     images: [
@@ -1458,6 +1458,7 @@ const DEFAULT_PROFILE = {
   // Nūjas
   stickBrand: 'Bauer',
   stickCat: 'Senior',
+  stickStyle: 'forward',
   hand: 'Left',
   curve: 'P92',
   flex: '77',
@@ -1510,7 +1511,8 @@ function storeHeader(rKey) {
 }
 
 function meter(m) {
-  const v = m.match && m.match[PROFILE.role];
+  const styleKey = m.type === 'stick' ? (PROFILE.stickStyle || PROFILE.role) : PROFILE.role;
+  const v = m.match && (m.match[styleKey] || m.match[PROFILE.role]);
   if (v == null) return '';
   const currentRoleName = (ROLES[CURR_LANG] && ROLES[CURR_LANG][PROFILE.role]) || ROLES['lv'][PROFILE.role];
   return `<div class="meterbox">
@@ -1778,7 +1780,7 @@ function viewCategory(type) {
 
   const sub = isSkate 
     ? t('subTitleSkates', { role: `<b>${roleName}</b>`, size: `<b>${PROFILE.size}</b>`, fit: `<b>${PROFILE.fit}</b>` })
-    : t('subTitleSticks', { hand: `<b>${PROFILE.hand}</b>`, flex: `<b>${PROFILE.flex}</b>`, curve: `<b>${PROFILE.curve}</b>`, cat: `<b>${PROFILE.stickCat || PROFILE.category}</b>` });
+    : t('subTitleSticks', { hand: `<b>${PROFILE.hand}</b>`, flex: `<b>${PROFILE.flex}</b>`, curve: `<b>${PROFILE.curve}</b>`, cat: `<b>${PROFILE.stickCat || 'Senior'}</b>` });
 
   const rKeys = Object.keys(RETAILERS);
   const offersList = OFFERS.filter(o => o.type === type);
@@ -1866,13 +1868,11 @@ function getStickFlexOptions(category) {
 }
 
 function viewProfile() {
-  // Slidu dati
   const skateCat = PROFILE.skateCat || 'Senior';
   const skateSizeOptions = getSkateSizeOptions(skateCat);
   const curSkateSize = skateSizeOptions.find(o => o.val === PROFILE.size) || skateSizeOptions[0];
 
-  // Nūju dati
-  const stickCat = PROFILE.stickCat || PROFILE.category || 'Senior';
+  const stickCat = PROFILE.stickCat || 'Senior';
   const stickFlexOptions = getStickFlexOptions(stickCat);
   const curStickFlex = stickFlexOptions.find(o => o.val === PROFILE.flex) || stickFlexOptions[0];
 
@@ -1881,6 +1881,12 @@ function viewProfile() {
     '2-3': '2–3x nedēļā (Regulāri treniņi)',
     '3-4': '3–4x nedēļā (Pusprofesionālis)',
     '5+': '5+ reizes nedēļā (Augsta slodze / Pro)'
+  };
+
+  const stickStyleLabels = {
+    'forward': 'Uzbrucējs — Ātri plaukstas metieni & Dribls (Low-Kick)',
+    'defense': 'Aizsargs — Jaudīgi šķēlieni & One-timer (Mid/High-Kick)',
+    'allround': 'Universāls — Visi metienu veidi (Hybrid-Kick)'
   };
 
   const curveLabels = {
@@ -1899,12 +1905,12 @@ function viewProfile() {
       <button class="profile-tab-btn ${PROFILE.activeTab==='sticks'?'active':''}" data-ptab="sticks">Nūju profils</button>
     </div>
 
-    <!-- 1. SLIDU BLOKS — VIENOTA KARTĪTE -->
+    <!-- 1. SLIDU BLOKS -->
     <div id="ptab-skates-content" style="${PROFILE.activeTab==='skates'?'display:block':'display:none'}">
       <div class="profile-card-single">
         <div class="profile-unified-grid">
           
-          <!-- 1. Modelis / Zīmols -->
+          <!-- Zīmols -->
           <div class="form-group">
             <label>Zīmols</label>
             <div class="ui-dropdown" data-dropdown-id="p-skate-brand">
@@ -1920,7 +1926,7 @@ function viewProfile() {
             </div>
           </div>
 
-          <!-- 2. Vecuma grupa -->
+          <!-- Vecuma grupa -->
           <div class="form-group">
             <label>Vecuma grupa</label>
             <div class="ui-dropdown" data-dropdown-id="p-skate-cat">
@@ -1938,7 +1944,7 @@ function viewProfile() {
             </div>
           </div>
 
-          <!-- 3. Vēlamais izmērs (Bez apvienotā 7 un 7.5 varianta) -->
+          <!-- Vēlamais izmērs -->
           <div class="form-group">
             <label>Vēlamais izmērs</label>
             <div class="ui-dropdown" data-dropdown-id="p-size" id="dropdown-skate-size">
@@ -1955,7 +1961,7 @@ function viewProfile() {
             </div>
           </div>
 
-          <!-- 4. Bauer FIT sistēma (Augošā secībā: FIT 1, FIT 2, FIT 3, Visi) -->
+          <!-- Bauer FIT sistēma (FIT 1, FIT 2, FIT 3, Visi platumi) -->
           <div class="form-group">
             <label>Bauer FIT sistēma</label>
             <div class="ui-dropdown" data-dropdown-id="p-fit">
@@ -1973,7 +1979,7 @@ function viewProfile() {
             </div>
           </div>
 
-          <!-- 5. Pozīcija laukumā (Slidām) -->
+          <!-- Pozīcija laukumā -->
           <div class="form-group">
             <label>Pozīcija laukumā</label>
             <div class="ui-dropdown" data-dropdown-id="p-role">
@@ -1989,7 +1995,7 @@ function viewProfile() {
             </div>
           </div>
 
-          <!-- 6. Treniņu biežums -->
+          <!-- Treniņu biežums -->
           <div class="form-group">
             <label>Treniņu biežums</label>
             <div class="ui-dropdown" data-dropdown-id="p-skate-freq">
@@ -2007,7 +2013,7 @@ function viewProfile() {
             </div>
           </div>
 
-          <!-- 7. Slidu budžets -->
+          <!-- Slidu budžets -->
           <div class="form-group">
             <label for="p-minSkate">Minimālā cena (€)</label>
             <input type="number" id="p-minSkate" class="form-input-box" value="${PROFILE.minSkate}">
@@ -2028,12 +2034,12 @@ function viewProfile() {
       </div>
     </div>
 
-    <!-- 2. NŪJU BLOKS — VIENOTA KARTĪTE AR TABULAS FLEX DINAMIKU -->
+    <!-- 2. NŪJU BLOKS (PILNAIS IESTATĪJUMS AR SPĒLES STILU UN BAUER TABULAS FLEX) -->
     <div id="ptab-sticks-content" style="${PROFILE.activeTab==='sticks'?'display:block':'display:none'}">
       <div class="profile-card-single">
         <div class="profile-unified-grid">
           
-          <!-- 1. Nūjas Zīmols -->
+          <!-- 1. Zīmols -->
           <div class="form-group">
             <label>Zīmols</label>
             <div class="ui-dropdown" data-dropdown-id="p-stick-brand">
@@ -2067,7 +2073,24 @@ function viewProfile() {
             </div>
           </div>
 
-          <!-- 3. Satvēriens -->
+          <!-- 3. Spēles stils & Pozīcija (PIRMS Satvēriena) -->
+          <div class="form-group">
+            <label>Spēles stils & Pozīcija</label>
+            <div class="ui-dropdown" data-dropdown-id="p-stick-style">
+              <button type="button" class="ui-dropdown-btn">
+                <span class="ui-dropdown-label">${stickStyleLabels[PROFILE.stickStyle || 'forward']}</span>
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#a9b0be" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
+              </button>
+              <div class="ui-dropdown-menu">
+                <button type="button" class="ui-dropdown-opt ${PROFILE.stickStyle==='forward'?'active':''}" data-val="forward">Uzbrucējs — Ātri plaukstas metieni & Dribls (Low-Kick)</button>
+                <button type="button" class="ui-dropdown-opt ${PROFILE.stickStyle==='defense'?'active':''}" data-val="defense">Aizsargs — Jaudīgi šķēlieni & One-timer (Mid/High-Kick)</button>
+                <button type="button" class="ui-dropdown-opt ${PROFILE.stickStyle==='allround'?'active':''}" data-val="allround">Universāls — Visi metienu veidi (Hybrid-Kick)</button>
+              </div>
+              <input type="hidden" id="p-stick-style" value="${PROFILE.stickStyle || 'forward'}">
+            </div>
+          </div>
+
+          <!-- 4. Satvēriens (Puse) -->
           <div class="form-group">
             <label>Satvēriens</label>
             <div class="ui-dropdown" data-dropdown-id="p-hand">
@@ -2083,7 +2106,7 @@ function viewProfile() {
             </div>
           </div>
 
-          <!-- 4. Lāpstiņas liekums (P92, P28, Visi liekumi — bez iekavām) -->
+          <!-- 5. Lāpstiņas liekums (P92, P28, Visi liekumi) -->
           <div class="form-group">
             <label>Lāpstiņas liekums</label>
             <div class="ui-dropdown" data-dropdown-id="p-curve">
@@ -2100,7 +2123,7 @@ function viewProfile() {
             </div>
           </div>
 
-          <!-- 5. Cietība (Flex) pēc Bauer tabulas -->
+          <!-- 6. Cietība (Flex) pēc Bauer tabulas -->
           <div class="form-group">
             <label>Cietība (Flex)</label>
             <div class="ui-dropdown" data-dropdown-id="p-flex" id="dropdown-stick-flex">
@@ -2117,13 +2140,14 @@ function viewProfile() {
             </div>
           </div>
 
-          <!-- 6. Nūjas budžets -->
+          <!-- 7. Nūjas minimālā cena -->
           <div class="form-group">
             <label for="p-minStick">Minimālā cena (€)</label>
             <input type="number" id="p-minStick" class="form-input-box" value="${PROFILE.minStick}">
           </div>
 
-          <div class="form-group" style="grid-column: 2 / 3;">
+          <!-- 8. Nūjas maksimālā cena -->
+          <div class="form-group">
             <label for="p-maxStick">Maksimālā cena (€)</label>
             <input type="number" id="p-maxStick" class="form-input-box" value="${PROFILE.maxStick}">
           </div>
@@ -2253,7 +2277,6 @@ function onSkateCategoryChange(newCat) {
 /* DINAMISKA NŪJU FLEX PĀRRĒĶINĀŠANA PĒC VECUMA GRUPAS MAIŅAS */
 function onStickCategoryChange(newCat) {
   PROFILE.stickCat = newCat;
-  PROFILE.category = newCat;
   const flexOptions = getStickFlexOptions(newCat);
   PROFILE.flex = flexOptions[0].val;
 
@@ -2451,7 +2474,7 @@ document.addEventListener('click', e => {
     // Nūjas
     PROFILE.stickBrand = document.getElementById('p-stick-brand')?.value || 'Bauer';
     PROFILE.stickCat = document.getElementById('p-stick-cat')?.value || 'Senior';
-    PROFILE.category = PROFILE.stickCat;
+    PROFILE.stickStyle = document.getElementById('p-stick-style')?.value || 'forward';
     PROFILE.hand = document.getElementById('p-hand')?.value || 'Left';
     PROFILE.curve = document.getElementById('p-curve')?.value || 'P92';
     PROFILE.flex = document.getElementById('p-flex')?.value || '77';
@@ -2525,8 +2548,8 @@ setInterval(() => {
         targetImg.style.opacity = '0';
         setTimeout(() => {
           targetImg.src = nextDot.dataset.imgSrc;
-          setTimeout(() => { targetImg.style.opacity = '1'; }, 50);
-        }, 300);
+          setTimeout(() => { targetImg.style.opacity = '1'; }, 80);
+        }, 400);
       }
       dots.forEach((d, i) => d.classList.toggle('active', i === nextIdx));
     }
