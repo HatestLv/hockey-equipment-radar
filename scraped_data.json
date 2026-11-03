@@ -1,6 +1,110 @@
 {
-  "updatedAt": "2026-11-03T15:36:44.877726",
+  "updatedAt": "2026-11-03T16:00:21.862119",
   "offers": [
+    {
+      "type": "skate",
+      "category": "Senior",
+      "model": "bauer-supreme-m40",
+      "retailer": "hj",
+      "price": 0.0,
+      "shipping": 0.0,
+      "sizes": [
+        "7.5"
+      ],
+      "fits": [
+        "FIT 2",
+        "Regular"
+      ],
+      "stock": true,
+      "checked": "2026-11-03",
+      "url": "https://www.hokejam.lv/lv/pieauguso-hokeja-slidas/4507-bauer-supreme-m40-pieauguso-hokeja-slidas",
+      "status": "UNVERIFIED"
+    },
+    {
+      "type": "skate",
+      "category": "Senior",
+      "model": "bauer-supreme-m40",
+      "retailer": "hp",
+      "price": 0.0,
+      "shipping": 3.5,
+      "sizes": [],
+      "fits": [
+        "FIT 2",
+        "Regular"
+      ],
+      "stock": false,
+      "checked": "2026-11-03",
+      "url": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s24-m40-senior-hokeja-slidas",
+      "status": "UNVERIFIED"
+    },
+    {
+      "type": "skate",
+      "category": "Senior",
+      "model": "bauer-supreme-m40",
+      "retailer": "sp",
+      "price": 0.0,
+      "shipping": 4.0,
+      "sizes": [],
+      "fits": [
+        "FIT 2",
+        "Regular"
+      ],
+      "stock": false,
+      "checked": "2026-11-03",
+      "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-senior/d1438036",
+      "status": "UNVERIFIED"
+    },
+    {
+      "type": "skate",
+      "category": "Intermediate",
+      "model": "bauer-supreme-m40",
+      "retailer": "hj",
+      "price": 0.0,
+      "shipping": 0.0,
+      "sizes": [],
+      "fits": [
+        "FIT 2",
+        "Regular"
+      ],
+      "stock": false,
+      "checked": "2026-11-03",
+      "url": "https://www.hokejam.lv/lv/48-pieauguso-hokeja-slidas",
+      "status": "UNVERIFIED"
+    },
+    {
+      "type": "skate",
+      "category": "Intermediate",
+      "model": "bauer-supreme-m40",
+      "retailer": "hp",
+      "price": 0.0,
+      "shipping": 3.5,
+      "sizes": [],
+      "fits": [
+        "FIT 2",
+        "Regular"
+      ],
+      "stock": false,
+      "checked": "2026-11-03",
+      "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas",
+      "status": "UNVERIFIED"
+    },
+    {
+      "type": "skate",
+      "category": "Intermediate",
+      "model": "bauer-supreme-m40",
+      "retailer": "sp",
+      "price": 0.0,
+      "shipping": 4.0,
+      "sizes": [],
+      "fits": [
+        "FIT 2",
+        "Regular"
+      ],
+      "stock": false,
+      "checked": "2026-11-03",
+      "url": "https://www.sportega.lv/hokeja-slidas/c354",
+      "status": "UNVERIFIED"
+    },
     {
       "type": "skate",
       "category": "Youth",
@@ -67,6 +171,108 @@
     },
     {
       "type": "skate",
+      "category": "Senior",
+      "model": "bauer-vapor-fly40",
+      "retailer": "hj",
+      "price": 0.0,
+      "shipping": 0.0,
+      "sizes": [],
+      "fits": [
+        "FIT 2",
+        "Regular"
+      ],
+      "stock": false,
+      "checked": "2026-11-03",
+      "url": "https://www.hokejam.lv/",
+      "status": "UNVERIFIED"
+    },
+    {
+      "type": "skate",
+      "category": "Senior",
+      "model": "bauer-vapor-fly40",
+      "retailer": "hp",
+      "price": 0.0,
+      "shipping": 3.5,
+      "sizes": [],
+      "fits": [
+        "FIT 2",
+        "Regular"
+      ],
+      "stock": false,
+      "checked": "2026-11-03",
+      "url": "https://hokejapasaule.lv/lv_lv/bauer-vapor-s25-fly40-senior-hokeja-slidas",
+      "status": "UNVERIFIED"
+    },
+    {
+      "type": "skate",
+      "category": "Senior",
+      "model": "bauer-vapor-fly40",
+      "retailer": "sp",
+      "price": 0.0,
+      "shipping": 4.0,
+      "sizes": [],
+      "fits": [
+        "FIT 2",
+        "Regular"
+      ],
+      "stock": false,
+      "checked": "2026-11-03",
+      "url": "https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-senior/d1502757",
+      "status": "UNVERIFIED"
+    },
+    {
+      "type": "skate",
+      "category": "Intermediate",
+      "model": "bauer-vapor-fly40",
+      "retailer": "hj",
+      "price": 0.0,
+      "shipping": 0.0,
+      "sizes": [],
+      "fits": [
+        "FIT 2",
+        "Regular"
+      ],
+      "stock": false,
+      "checked": "2026-11-03",
+      "url": "https://www.hokejam.lv/lv/48-pieauguso-hokeja-slidas",
+      "status": "UNVERIFIED"
+    },
+    {
+      "type": "skate",
+      "category": "Intermediate",
+      "model": "bauer-vapor-fly40",
+      "retailer": "hp",
+      "price": 0.0,
+      "shipping": 3.5,
+      "sizes": [],
+      "fits": [
+        "FIT 2",
+        "Regular"
+      ],
+      "stock": false,
+      "checked": "2026-11-03",
+      "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas",
+      "status": "UNVERIFIED"
+    },
+    {
+      "type": "skate",
+      "category": "Intermediate",
+      "model": "bauer-vapor-fly40",
+      "retailer": "sp",
+      "price": 0.0,
+      "shipping": 4.0,
+      "sizes": [],
+      "fits": [
+        "FIT 2",
+        "Regular"
+      ],
+      "stock": false,
+      "checked": "2026-11-03",
+      "url": "https://www.sportega.lv/hokeja-slidas/c354",
+      "status": "UNVERIFIED"
+    },
+    {
+      "type": "skate",
       "category": "Youth",
       "model": "bauer-vapor-fly40",
       "retailer": "hj",
@@ -129,35 +335,20 @@
     {
       "type": "skate",
       "category": "Senior",
-      "model": "bauer-vapor-fly40",
-      "retailer": "hp",
+      "model": "bauer-supreme-f40",
+      "retailer": "hj",
       "price": 0.0,
-      "shipping": 3.5,
-      "sizes": [],
+      "shipping": 0.0,
+      "sizes": [
+        "8"
+      ],
       "fits": [
         "FIT 2",
         "Regular"
       ],
-      "stock": false,
+      "stock": true,
       "checked": "2026-11-03",
-      "url": "https://hokejapasaule.lv/lv_lv/bauer-vapor-s25-fly40-senior-hokeja-slidas",
-      "status": "UNVERIFIED"
-    },
-    {
-      "type": "skate",
-      "category": "Senior",
-      "model": "bauer-vapor-fly40",
-      "retailer": "sp",
-      "price": 0.0,
-      "shipping": 4.0,
-      "sizes": [],
-      "fits": [
-        "FIT 2",
-        "Regular"
-      ],
-      "stock": false,
-      "checked": "2026-11-03",
-      "url": "https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-senior/d1502757",
+      "url": "https://www.hokejam.lv/lv/pieauguso-hokeja-slidas/5455-bauer-supreme-f40-s26-pieauguso-hokeja-slidas",
       "status": "UNVERIFIED"
     },
     {
@@ -181,25 +372,6 @@
       "type": "skate",
       "category": "Senior",
       "model": "bauer-supreme-f40",
-      "retailer": "hj",
-      "price": 0.0,
-      "shipping": 0.0,
-      "sizes": [
-        "8"
-      ],
-      "fits": [
-        "FIT 2",
-        "Regular"
-      ],
-      "stock": true,
-      "checked": "2026-11-03",
-      "url": "https://www.hokejam.lv/lv/pieauguso-hokeja-slidas/5455-bauer-supreme-f40-s26-pieauguso-hokeja-slidas",
-      "status": "UNVERIFIED"
-    },
-    {
-      "type": "skate",
-      "category": "Senior",
-      "model": "bauer-supreme-f40",
       "retailer": "sp",
       "price": 0.0,
       "shipping": 4.0,
@@ -215,8 +387,25 @@
     },
     {
       "type": "skate",
-      "category": "Senior",
-      "model": "bauer-supreme-m40",
+      "category": "Intermediate",
+      "model": "bauer-supreme-f40",
+      "retailer": "hj",
+      "price": 0.0,
+      "shipping": 0.0,
+      "sizes": [],
+      "fits": [
+        "FIT 2",
+        "Regular"
+      ],
+      "stock": false,
+      "checked": "2026-11-03",
+      "url": "https://www.hokejam.lv/lv/48-pieauguso-hokeja-slidas",
+      "status": "UNVERIFIED"
+    },
+    {
+      "type": "skate",
+      "category": "Intermediate",
+      "model": "bauer-supreme-f40",
       "retailer": "hp",
       "price": 0.0,
       "shipping": 3.5,
@@ -227,32 +416,13 @@
       ],
       "stock": false,
       "checked": "2026-11-03",
-      "url": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s24-m40-senior-hokeja-slidas",
+      "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas",
       "status": "UNVERIFIED"
     },
     {
       "type": "skate",
-      "category": "Senior",
-      "model": "bauer-supreme-m40",
-      "retailer": "hj",
-      "price": 0.0,
-      "shipping": 0.0,
-      "sizes": [
-        "7.5"
-      ],
-      "fits": [
-        "FIT 2",
-        "Regular"
-      ],
-      "stock": true,
-      "checked": "2026-11-03",
-      "url": "https://www.hokejam.lv/lv/pieauguso-hokeja-slidas/4507-bauer-supreme-m40-pieauguso-hokeja-slidas",
-      "status": "UNVERIFIED"
-    },
-    {
-      "type": "skate",
-      "category": "Senior",
-      "model": "bauer-supreme-m40",
+      "category": "Intermediate",
+      "model": "bauer-supreme-f40",
       "retailer": "sp",
       "price": 0.0,
       "shipping": 4.0,
@@ -263,7 +433,7 @@
       ],
       "stock": false,
       "checked": "2026-11-03",
-      "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-senior/d1438036",
+      "url": "https://www.sportega.lv/hokeja-slidas/c354",
       "status": "UNVERIFIED"
     }
   ]
