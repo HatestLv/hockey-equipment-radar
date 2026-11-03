@@ -350,23 +350,61 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
 .sum small{display:block;color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 .sum b{font-size:18px;font-weight:800}
 
-/* CUSTOM FILTER ELEMENTS — BULTIŅA PELĒKĀ TONĪ KĀ MEKLĒTĀJAM UN VALODAI */
-.custom-select{
-  appearance:none;
-  background:var(--switch-bg) url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23a9b0be%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E") no-repeat right 8px center;
-  background-size:14px;
-  color:var(--text);
+/* PIELĀGOTS KĀRTOŠANAS DROPDOWN (STILIZĒTS KĀ 3 SVĪTRIŅU DROPDOWN) */
+.sort-box{position:relative;display:flex;align-items:center;gap:8px}
+.sort-btn{
+  background:var(--switch-bg);
   border:1px solid var(--switch-border);
-  border-radius:10px;
-  padding:0 28px 0 12px;
+  color:var(--text);
   height:32px;
+  padding:0 12px;
+  border-radius:10px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
   font-size:13px;
   font-weight:600;
-  outline:none;
-  cursor:pointer;
   transition:all .2s ease;
+  outline:none;
 }
-.custom-select:hover, .custom-select:focus{border-color:var(--red)}
+.sort-btn:hover, .sort-btn.active{border-color:var(--red);transform:scale(1.02)}
+.sort-btn svg{color:var(--muted);transition:transform .2s ease}
+.sort-btn.active svg{transform:rotate(180deg)}
+.sort-menu{
+  position:absolute;
+  top:calc(100% + 8px);
+  left:0;
+  min-width:210px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:12px;
+  box-shadow:0 12px 32px rgba(0,0,0,.35);
+  padding:6px;
+  z-index:100;
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(-6px);
+  transition:all .2s cubic-bezier(.16,1,.3,1);
+}
+.sort-menu.open{opacity:1;visibility:visible;transform:translateY(0)}
+.sort-opt{
+  display:block;
+  width:100%;
+  padding:8px 12px;
+  border-radius:8px;
+  color:var(--text);
+  text-decoration:none;
+  font-size:13px;
+  font-weight:600;
+  text-align:left;
+  background:transparent;
+  border:none;
+  cursor:pointer;
+  transition:all .15s ease;
+}
+.sort-opt:hover{background:var(--card-hover);color:var(--red)}
+.sort-opt.active{background:rgba(237,32,39,.12);color:var(--red)}
 
 .custom-chk-label{
   display:flex;
@@ -417,7 +455,6 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
 .profile-pill-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);flex-shrink:0}
 .profile-pill-tag{color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;margin-left:2px}
 .filters-bar .divider{width:1px;height:24px;background:var(--line);margin:0 2px;flex-shrink:0}
-.filters-bar label{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);flex-shrink:0;white-space:nowrap}
 
 /* SKATU POGAS */
 .views{margin-left:auto;display:flex;gap:6px;flex-shrink:0}
@@ -504,7 +541,15 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
 
 .imgbox{position:relative;height:185px;display:grid;place-items:center;background:var(--img-grad);cursor:zoom-in}
 .imgbox::after{content:"";position:absolute;bottom:15px;left:20%;width:60%;height:14px;background:radial-gradient(ellipse,rgba(0,0,0,.45),transparent 70%);filter:blur(4px);pointer-events:none}
-.imgbox img{position:relative;z-index:2;max-height:150px;max-width:85%;object-fit:contain;filter:drop-shadow(0 8px 8px rgba(0,0,0,.35));transition:opacity 0.4s ease-in-out}
+.imgbox img{
+  position:relative;
+  z-index:2;
+  max-height:150px;
+  max-width:85%;
+  object-fit:contain;
+  filter:drop-shadow(0 8px 8px rgba(0,0,0,.35));
+  transition:opacity 0.6s ease-in-out, transform 0.4s ease;
+}
 
 .card-img-dots{position:absolute;bottom:8px;right:12px;z-index:3;display:flex;gap:4px}
 .card-img-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;transition:all .15s}
@@ -1111,11 +1156,11 @@ const t = (k, params = {}) => {
 function getUiTimestamp() {
   try {
     const d = new Date(document.lastModified);
-    if (isNaN(d.getTime())) return '03.11.2026 01:15';
+    if (isNaN(d.getTime())) return '03.11.2026 01:45';
     const pad = n => ('0' + n).slice(-2);
     return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
   } catch(e) {
-    return '03.11.2026 01:15';
+    return '03.11.2026 01:45';
   }
 }
 
@@ -1323,7 +1368,7 @@ function meter(m) {
   </div>`;
 }
 
-/* UNIFICĒTA KARTĪŠU RENDERĒŠANA AR IDENTISKU RINDIRU SKAITU UN AUGSTUMU */
+/* UNIFICĒTA KARTĪŠU RENDERĒŠANA */
 function renderCard(m, rKey) {
   const r = RETAILERS[rKey];
   const o = OFFERS.find(x => x.model === m.id && x.retailer === rKey);
@@ -1356,7 +1401,6 @@ function renderCard(m, rKey) {
     </div>
   ` : '';
 
-  // Datu rindu vērtības — identiskas visiem veikaliem
   let priceHtml, shippingVal, totalVal, specVal1, specVal2, stockHtml, checkedVal;
 
   if (isAvailable) {
@@ -1452,12 +1496,15 @@ function renderTableView(list, models) {
 }
 
 function filtersBar(type) {
-  const sel = (id, opts, v) => `<select id="${id}" class="custom-select">${opts.map(([k, t]) => `<option value="${k}"${k === v ? ' selected' : ''}>${t}</option>`).join('')}</select>`;
   const models = type === 'skate' ? SKATE_MODELS : STICK_MODELS;
 
   const pillText = type === 'skate' 
     ? `Profils: ${SIZE_LABELS[PROFILE.size] || PROFILE.size} · ${PROFILE.fit} · €${PROFILE.minSkate}–${PROFILE.maxSkate}`
     : `Profils: ${PROFILE.hand} · Flex ${PROFILE.flex} · ${PROFILE.curve} · €${PROFILE.minStick}–${PROFILE.maxStick}`;
+
+  let currentSortLabel = t('sortDef');
+  const currentModel = models.find(m => m.id === S.sort);
+  if (currentModel) currentSortLabel = currentModel.name;
 
   return `<div class="filters-bar">
     <button type="button" class="profile-pill-link" data-open="profile" title="Pielāgot profilu">
@@ -1466,7 +1513,19 @@ function filtersBar(type) {
       <span class="profile-pill-tag">MAINĪT ⚙️</span>
     </button>
     <div class="divider"></div>
-    <label>${t('sortLbl')} ${sel('f-sort', [['default', t('sortDef')], ...models.map(m => [m.id, m.name])], S.sort)}</label>
+    
+    <!-- PIELĀGOTAIS KĀRTOŠANAS DROPDOWN (STILS KĀ 3 SVĪTRU DROPDOWN) -->
+    <div class="sort-box">
+      <span style="font-size:13px; color:var(--muted);">${t('sortLbl')}</span>
+      <button id="sort-btn" class="sort-btn" type="button" aria-label="Kārtot">
+        <span id="sort-current-label">${currentSortLabel}</span>
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
+      </button>
+      <div id="sort-menu" class="sort-menu">
+        <button class="sort-opt ${S.sort === 'default' ? 'active' : ''}" data-sort="default">${t('sortDef')}</button>
+        ${models.map(m => `<button class="sort-opt ${S.sort === m.id ? 'active' : ''}" data-sort="${m.id}">${m.name}</button>`).join('')}
+      </div>
+    </div>
     
     <label class="custom-chk-label">
       <input type="checkbox" id="f-stock"${S.stock ? ' checked' : ''}>
@@ -1870,6 +1929,36 @@ document.addEventListener('click', e => {
     return;
   }
 
+  // Kārtošanas dropdown atvēršana / aizvēršana
+  const sb = e.target.closest('#sort-btn');
+  if (sb) {
+    const sm = document.getElementById('sort-menu');
+    if (sm) {
+      sm.classList.toggle('open');
+      sb.classList.toggle('active');
+    }
+    return;
+  }
+
+  // Kārtošanas izvēle
+  const so = e.target.closest('.sort-opt');
+  if (so) {
+    S.sort = so.dataset.sort;
+    const sm = document.getElementById('sort-menu');
+    const sb = document.getElementById('sort-btn');
+    if (sm) sm.classList.remove('open');
+    if (sb) sb.classList.remove('active');
+    render();
+    return;
+  }
+
+  if (!e.target.closest('.sort-box')) {
+    const sm = document.getElementById('sort-menu');
+    const sb = document.getElementById('sort-btn');
+    if (sm) sm.classList.remove('open');
+    if (sb) sb.classList.remove('active');
+  }
+
   const mb = e.target.closest('#menu-btn');
   if (mb) { document.getElementById('menu-dropdown').classList.toggle('open'); return; }
 
@@ -1896,8 +1985,8 @@ document.addEventListener('click', e => {
       targetImg.style.opacity = '0';
       setTimeout(() => {
         targetImg.src = imgDot.dataset.imgSrc;
-        targetImg.style.opacity = '1';
-      }, 150);
+        setTimeout(() => { targetImg.style.opacity = '1'; }, 50);
+      }, 300);
     }
     imgDot.parentNode.querySelectorAll('.card-img-dot').forEach(d => d.classList.remove('active'));
     imgDot.classList.add('active');
@@ -1996,8 +2085,7 @@ document.addEventListener('click', e => {
 });
 
 document.addEventListener('change', e => {
-  if (e.target.id === 'f-sort') S.sort = e.target.value;
-  else if (e.target.id === 'f-stock') S.stock = e.target.checked;
+  if (e.target.id === 'f-stock') S.stock = e.target.checked;
   else return;
   render();
 });
@@ -2019,7 +2107,7 @@ document.addEventListener('submit', e => {
   }
 });
 
-// Sākumlapas slīdņa rotācija
+// Sākumlapas slīdņa rotācija (5s)
 setInterval(() => {
   if (S.tab !== 'home') return;
   const slides = document.querySelectorAll('.hero-slide');
@@ -2030,7 +2118,7 @@ setInterval(() => {
   dots.forEach((d, i) => d.classList.toggle('active', i === S.sliderIndex));
 }, 5000);
 
-// Mazo bilžu vienmērīgais auto-slaideris kartītēs
+// Mazo bilžu auto-slaideris kartītēs (5 sekunžu intervāls, plūstošs crossfade kā baneriem)
 setInterval(() => {
   document.querySelectorAll('.card').forEach(card => {
     const dots = card.querySelectorAll('.card-img-dot');
@@ -2043,13 +2131,13 @@ setInterval(() => {
         targetImg.style.opacity = '0';
         setTimeout(() => {
           targetImg.src = nextDot.dataset.imgSrc;
-          targetImg.style.opacity = '1';
-        }, 200);
+          setTimeout(() => { targetImg.style.opacity = '1'; }, 60);
+        }, 350);
       }
       dots.forEach((d, i) => d.classList.toggle('active', i === nextIdx));
     }
   });
-}, 3500);
+}, 5000);
 
 render();
 loadScrapedData();
