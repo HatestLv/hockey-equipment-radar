@@ -31,45 +31,88 @@ CATEGORY_URLS = {
     },
     "Intermediate": {
         "hj": "https://www.hokejam.lv/lv/241-pusaudzu-hokeja-slidas",
-        "hp": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas",
-        "sp": "https://www.sportega.lv/hokeja-slidas/c354"
+        "hp": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-jauniesiem",
+        "sp": "https://www.sportega.lv/hokeja-ekipejums/jauniesi/c2558"
     },
     "Senior": {
         "hj": "https://www.hokejam.lv/lv/48-pieauguso-hokeja-slidas",
-        "hp": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas",
+        "hp": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-pieaugusajiem",
         "sp": "https://www.sportega.lv/hokeja-slidas/c354"
     }
 }
 
 SHIPPING_RATES = {"hj": 0.0, "hp": 3.5, "sp": 4.0}
 
-# Modeļi un to meklēšanas atslēgvārdi
+# Modeļu saraksts
 MODELS = [
     {
         "id": "bauer-supreme-m40",
         "type": "skate",
         "brand": "Bauer",
         "keywords": ["m40"],
-        "categories": ["Senior", "Intermediate", "Junior", "Youth"]
+        "categories": ["Senior", "Intermediate", "Junior", "Youth"],
+        "direct_urls": {
+            "Youth": {
+                "hj": "https://www.hokejam.lv/lv/bernu-hokeja-slidas/5729-bauer-supreme-m40-s24-bernu-hokeja-slidas",
+                "hp": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s24-m40-youth-hokeja-slidas",
+                "sp": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-youth-d-standarta-kaja-eur-26/d1438563"
+            },
+            "Senior": {
+                "hj": "https://www.hokejam.lv/lv/pieauguso-hokeja-slidas/4507-bauer-supreme-m40-pieauguso-hokeja-slidas",
+                "hp": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s24-m40-senior-hokeja-slidas",
+                "sp": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-senior/d1438036"
+            }
+        }
     },
     {
         "id": "bauer-vapor-fly40",
         "type": "skate",
         "brand": "Bauer",
         "keywords": ["fly40"],
-        "categories": ["Senior", "Intermediate", "Junior", "Youth"]
+        "categories": ["Senior", "Intermediate", "Junior", "Youth"],
+        "direct_urls": {
+            "Youth": {
+                "hp": "https://hokejapasaule.lv/lv_lv/bauer-vapor-s25-fly40-youth-hokeja-slidas",
+                "sp": "https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-youth-d-standarta-kaja-eur-26/d1503208"
+            },
+            "Senior": {
+                "hp": "https://hokejapasaule.lv/lv_lv/bauer-vapor-s25-fly40-senior-hokeja-slidas",
+                "sp": "https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-senior/d1502757"
+            }
+        }
     },
     {
         "id": "bauer-supreme-f40",
         "type": "skate",
         "brand": "Bauer",
         "keywords": ["f40"],
-        "categories": ["Senior", "Intermediate", "Junior"] # Bērniem netiek ražots
+        "categories": ["Senior", "Intermediate", "Junior"],
+        "direct_urls": {
+            "Senior": {
+                "hj": "https://www.hokejam.lv/lv/pieauguso-hokeja-slidas/5455-bauer-supreme-f40-s26-pieauguso-hokeja-slidas",
+                "hp": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s26-f40-senior-hokeja-slidas",
+                "sp": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-f40-senior/d1583973"
+            }
+        }
+    },
+    {
+        "id": "bauer-supreme-fuse-s26",
+        "type": "stick",
+        "brand": "Bauer",
+        "keywords": ["fuse"],
+        "categories": ["Senior"],
+        "direct_urls": {
+            "Senior": {
+                "hp": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s26-fuse-grip-senior-hokeja-nuja",
+                "hj": "https://www.hokejam.lv/lv/pieauguso-kompozitu-hokeja-nujas/5726-20674-bauer-supreme-fuse-s26-senior-composite-hockey-stick#/27-virsma-grip/31-puse-kreisa_puse/43-liekums-p92/58-cietiba-65",
+                "sp": "https://www.sportega.lv/kompozitmateriala-hokeja-nuja-bauer-supreme-fuse-senior/d1585348"
+            }
+        }
     }
 ]
 
 def crawl_category(retailer_key, cat_url, session):
-    """Nolasa visus produktus no kategorijas lapas."""
+    """Nolasa produktus no kategorijas lapas, ja tiešais links nav fiksēts."""
     products = []
     try:
         resp = session.get(cat_url, timeout=12)
@@ -117,21 +160,58 @@ def crawl_category(retailer_key, cat_url, session):
                         nums = re.findall(r'\d+(?:[.,]\d+)?', price_el.get_text().replace(' ', ''))
                         if nums: price = float(nums[0].replace(',', '.'))
                     products.append({"title": title, "url": link, "price": price})
-
     except Exception as e:
         print(f"Kļūda skenējot {retailer_key} kategoriju {cat_url}: {e}")
 
     return products
 
-def get_product_sizes(product_url, retailer_key, category, session):
-    """Atver atrasto produkta lapu un nolasa noliktavā esošos izmērus."""
+def get_product_details(product_url, retailer_key, category, session):
+    """Atver atrasto konkrēto lapu un nolasa reālo cenu un noliktavā esošos izmērus."""
     sizes = []
+    price = 0.0
+    is_in_stock = False
+
     try:
-        resp = session.get(product_url, timeout=10)
+        resp = session.get(product_url, timeout=12)
         if resp.status_code != 200:
-            return sizes
+            return 0.0, False, sizes
         soup = BeautifulSoup(resp.text, 'html.parser')
 
+        # 1. CENAS NOTEIKŠANA
+        if retailer_key == 'hj':
+            curr = soup.select_one('.current-price [itemprop="price"], .current-price-value, .product-price')
+            if curr:
+                nums = re.findall(r'\d+(?:[.,]\d+)?', curr.get_text().replace(' ', ''))
+                if nums: price = float(nums[0].replace(',', '.'))
+        elif retailer_key == 'hp':
+            spec = soup.select_one('.special-price .price, [data-price-type="finalPrice"] .price, .product-info-price .price')
+            if spec:
+                nums = re.findall(r'\d+(?:[.,]\d+)?', spec.get_text().replace(' ', ''))
+                if nums: price = float(nums[0].replace(',', '.'))
+        elif retailer_key == 'sp':
+            p_elem = soup.select_one('.c-price__current, [data-price-amount], .price-wrapper .price')
+            if p_elem:
+                if p_elem.has_attr('data-price-amount'):
+                    price = float(p_elem['data-price-amount'])
+                else:
+                    nums = re.findall(r'\d+(?:[.,]\d+)?', p_elem.get_text().replace(' ', ''))
+                    if nums: price = float(nums[0].replace(',', '.'))
+
+        if price == 0.0:
+            meta_p = soup.find('meta', attrs={'property': 'product:price:amount'}) or soup.find('meta', attrs={'itemprop': 'price'})
+            if meta_p and meta_p.get('content'):
+                try: price = float(meta_p['content'].replace(',', '.'))
+                except: pass
+
+        # 2. PIEEJAMĪBAS PĀRBAUDE
+        btn = soup.select_one('#product-addtocart-button, .add-to-cart, button[data-button-action="add-to-cart"], .c-product-detail__btn-buy')
+        is_in_stock = bool(btn and not btn.has_attr('disabled'))
+        if not btn and price > 0:
+            txt_low = resp.text.lower()
+            if 'ir noliktavā' in txt_low or 'pieejams' in txt_low:
+                is_in_stock = True
+
+        # 3. IZMĒRU NOLASĪŠANA
         if retailer_key == "hj":
             for opt in soup.select('.form-control-select option, .input-container input[type="radio"]'):
                 txt = opt.get_text().strip() if opt.name == 'option' else opt.get('title', '')
@@ -170,56 +250,56 @@ def get_product_sizes(product_url, retailer_key, category, session):
                 if y: sizes.append(f"Yth {y}")
                 elif eur in EUR_TO_YOUTH: sizes.append(EUR_TO_YOUTH[eur])
 
-    except Exception:
-        pass
-    return list(dict.fromkeys(sizes))
+    except Exception as e:
+        print(f"Kļūda lasot datus no {product_url}: {e}")
+
+    return price, is_in_stock, list(dict.fromkeys(sizes))
 
 def scrape_all():
-    print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Sākas kategoriju skenēšana...")
+    print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] Sākas hokeja inventāra skenēšana...")
     session = requests.Session()
     session.headers.update(HEADERS)
     today_str = datetime.now().strftime("%Y-%m-%d")
 
     all_offers = []
-    
-    # 1. Pārmeklē veikalu kategorijas un savāc katalogus
+
+    # 1. Ielādē veikalu kategoriju katalogus
     store_catalogs = {}
     for cat in ["Senior", "Intermediate", "Junior", "Youth"]:
         store_catalogs[cat] = {}
         for r_key in ["hj", "hp", "sp"]:
             cat_url = CATEGORY_URLS[cat][r_key]
-            print(f"Skenē katalogu: [{cat}] {r_key.upper()}...")
-            prods = crawl_category(r_key, cat_url, session)
-            store_catalogs[cat][r_key] = prods
-            time.sleep(1)
+            store_catalogs[cat][r_key] = crawl_category(r_key, cat_url, session)
+            time.sleep(0.5)
 
-    # 2. Piesaista katram modelim atbilstošo atrasto produktu
+    # 2. Apstrādā katru modeli
     for model in MODELS:
         for cat in model["categories"]:
             for r_key in ["hj", "hp", "sp"]:
-                prods = store_catalogs[cat].get(r_key, [])
-                matched_prod = None
+                print(f"Pārbauda [{cat.upper()}] {r_key.upper()} -> {model['id']}...")
 
-                # Meklē atbilstību pēc atslēgvārda
-                for p in prods:
-                    if all(k.lower() in p["title"].lower() for k in model["keywords"]):
-                        matched_prod = p
-                        break
+                # Pārbauda tiešo saiti
+                target_url = model.get("direct_urls", {}).get(cat, {}).get(r_key)
 
-                if matched_prod:
-                    print(f" -> ATRISTS: [{cat}] {r_key.upper()} -> {matched_prod['title']}")
-                    sizes = get_product_sizes(matched_prod["url"], r_key, cat, session)
-                    price = matched_prod["price"]
-                    stock = price > 0
-                    status = "VERIFIED" if stock else "UNVERIFIED"
-                    target_url = matched_prod["url"]
+                # Ja tiešās saites nav, meklē kategorijas katalogā
+                if not target_url:
+                    prods = store_catalogs[cat].get(r_key, [])
+                    for p in prods:
+                        if all(k.lower() in p["title"].lower() for k in model["keywords"]):
+                            target_url = p["url"]
+                            break
+
+                # Ja prece veikalā ir atrasta
+                if target_url:
+                    price, stock, sizes = get_product_details(target_url, r_key, cat, session)
+                    status = "VERIFIED" if (price > 0 and stock) else "UNVERIFIED"
+                    final_url = target_url
                 else:
-                    print(f" -> NAV VEIKALĀ: [{cat}] {r_key.upper()} -> {model['id']}")
-                    sizes = []
-                    price = 0.0
-                    stock = False
+                    price, stock, sizes = 0.0, False, []
                     status = "UNVERIFIED"
-                    target_url = CATEGORY_URLS[cat][r_key]
+                    final_url = CATEGORY_URLS[cat][r_key]
+
+                print(f" -> Cena = €{price}, Noliktavā = {stock}, Izmēri = {sizes}, Statuss = {status}")
 
                 all_offers.append({
                     "type": model["type"],
@@ -232,7 +312,7 @@ def scrape_all():
                     "fits": ["FIT 2", "Regular"],
                     "stock": stock,
                     "checked": today_str,
-                    "url": target_url,
+                    "url": final_url,
                     "status": status
                 })
 
