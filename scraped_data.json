@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-03T15:10:10.746227",
+  "updatedAt": "2026-11-03T15:36:44.877726",
   "offers": [
     {
       "type": "skate",
@@ -128,67 +128,6 @@
     },
     {
       "type": "skate",
-      "category": "Youth",
-      "model": "bauer-supreme-f40",
-      "retailer": "hj",
-      "price": 0.0,
-      "shipping": 0.0,
-      "sizes": [],
-      "fits": [
-        "FIT 2",
-        "Regular"
-      ],
-      "stock": false,
-      "checked": "2026-11-03",
-      "url": "https://www.hokejam.lv/lv/51-bernu-hokeja-slidas",
-      "status": "UNVERIFIED"
-    },
-    {
-      "type": "skate",
-      "category": "Youth",
-      "model": "bauer-supreme-f40",
-      "retailer": "hp",
-      "price": 0.0,
-      "shipping": 3.5,
-      "sizes": [],
-      "fits": [
-        "FIT 2",
-        "Regular"
-      ],
-      "stock": false,
-      "checked": "2026-11-03",
-      "url": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s26-fuse-youth-hokeja-slidas",
-      "status": "UNVERIFIED"
-    },
-    {
-      "type": "skate",
-      "category": "Youth",
-      "model": "bauer-supreme-f40",
-      "retailer": "sp",
-      "price": 0.0,
-      "shipping": 4.0,
-      "sizes": [
-        "Yth 12",
-        "Yth 7",
-        "Yth 8",
-        "Yth 9",
-        "Yth 10",
-        "Yth 10.5",
-        "Yth 11",
-        "Yth 12.5",
-        "Yth 13.5"
-      ],
-      "fits": [
-        "FIT 2",
-        "Regular"
-      ],
-      "stock": false,
-      "checked": "2026-11-03",
-      "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-fuse-youth-d-standarta-kaja-eur-31/d1584484",
-      "status": "UNVERIFIED"
-    },
-    {
-      "type": "skate",
       "category": "Senior",
       "model": "bauer-vapor-fly40",
       "retailer": "hp",
@@ -202,23 +141,6 @@
       "stock": false,
       "checked": "2026-11-03",
       "url": "https://hokejapasaule.lv/lv_lv/bauer-vapor-s25-fly40-senior-hokeja-slidas",
-      "status": "UNVERIFIED"
-    },
-    {
-      "type": "skate",
-      "category": "Senior",
-      "model": "bauer-vapor-fly40",
-      "retailer": "hj",
-      "price": 0.0,
-      "shipping": 0.0,
-      "sizes": [],
-      "fits": [
-        "FIT 2",
-        "Regular"
-      ],
-      "stock": false,
-      "checked": "2026-11-03",
-      "url": "https://www.hokejam.lv/lv/meklesana?search=FLY40",
       "status": "UNVERIFIED"
     },
     {
