@@ -543,7 +543,7 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
 .store-col{display:flex;flex-direction:column;gap:16px}
 .store-cards{display:flex;flex-direction:column;gap:16px;flex:1}
 
-/* VEIKALU LOGO */
+/* VEIKALU LOGO UN KATEGORIJU SAITES */
 .store-header{
   display:flex;
   flex-direction:column;
@@ -568,10 +568,8 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
   transform:scale(1.08);
   filter:drop-shadow(0 0 14px rgba(237,32,39,.55));
 }
-.store-ext-hint{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-top:6px;opacity:.65;transition:opacity .2s,color .2s}
-.store-header:hover .store-ext-hint{opacity:1;color:var(--link)}
 
-/* PREČU KARTĪTES UN VIENOTS AUGSTUMS */
+/* PREČU KARTĪTES */
 .card{
   background:var(--card);
   border:1px solid var(--line);
@@ -711,7 +709,7 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
   pointer-events:none;
 }
 
-/* PROFILA BLOKS — IZMĒRU TABULAS POGA & REŽĢIS */
+/* PROFILA BLOKS */
 .profile-tabs-bar{
   display:flex;
   justify-content:space-between;
@@ -787,7 +785,6 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
 }
 .form-group label{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
 
-/* BUDŽETA INPUTI */
 .form-input-box{
   width:100%;
   height:34px;
@@ -883,7 +880,6 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
 }
 .modal-close:hover{color:var(--red)}
 
-/* IZMĒRU TABULAS MODĀLIS */
 .chart-modal-overlay{
   backdrop-filter:blur(14px) !important;
   -webkit-backdrop-filter:blur(14px) !important;
@@ -941,7 +937,7 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
 .faq-q{font-weight:700;font-size:13px;color:var(--text);margin-bottom:4px}
 .faq-a{font-size:12px;color:var(--muted);line-height:1.5}
 
-/* LIGHTBOX (PREČU BILŽU LOGS) */
+/* LIGHTBOX */
 .lightbox-content{
   position:relative;
   max-width:980px;
@@ -1015,7 +1011,6 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
 
 <header>
   <div class="wrap">
-    <!-- 1. LĪMENIS: LOGO, MEKLĒŠANA, IESTATĪJUMI -->
     <div class="header-row-top">
       <a class="brand" href="#" title="HOCKEY EQUIPMENT RADAR">
         <div class="brand-logo-wrap">
@@ -1192,7 +1187,7 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
   </div>
 </div>
 
-<!-- LIGHTBOX (PREČU BILŽU LOGS) -->
+<!-- LIGHTBOX -->
 <div id="modal-lightbox" class="modal-overlay">
   <div class="lightbox-content">
     <button class="modal-close" data-close-modal>&times;</button>
@@ -1417,22 +1412,59 @@ const RETAILERS = {
   }
 };
 
-let OFFERS = [
-  // Slidas
-  { type: 'skate', model: 'bauer-vapor-fly40', retailer: 'hp', price: 535, shipping: 3.5, sizes: ['7','7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://hokejapasaule.lv/lv_lv/bauer-vapor-s25-fly40-senior-hokeja-slidas', status: 'VERIFIED' },
-  { type: 'skate', model: 'bauer-vapor-fly40', retailer: 'hj', price: null, shipping: 0, sizes: ['7.5','8'], fits: ['FIT 2'], stock: false, checked: null, url: 'https://www.hokejam.lv/lv/meklesana?search=FLY40', status: 'DEMO' },
-  { type: 'skate', model: 'bauer-vapor-fly40', retailer: 'sp', price: 535, shipping: 4, sizes: ['7','7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-senior/d1502757', status: 'VERIFIED' },
-  { type: 'skate', model: 'bauer-supreme-f40', retailer: 'hp', price: 535, shipping: 3.5, sizes: ['7','7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://hokejapasaule.lv/lv_lv/bauer-supreme-s26-f40-senior-hokeja-slidas', status: 'VERIFIED' },
-  { type: 'skate', model: 'bauer-supreme-f40', retailer: 'hj', price: 475.99, shipping: 0, sizes: ['7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://www.hokejam.lv/lv/pieauguso-hokeja-slidas/5455-bauer-supreme-f40-s26-pieauguso-hokeja-slidas', status: 'VERIFIED' },
-  { type: 'skate', model: 'bauer-supreme-f40', retailer: 'sp', price: 535, shipping: 4, sizes: ['7','7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://www.sportega.lv/hokeja-slidas-bauer-supreme-f40-senior/d1583973', status: 'VERIFIED' },
-  { type: 'skate', model: 'bauer-supreme-m40', retailer: 'hp', price: 349, shipping: 3.5, sizes: ['7','7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://hokejapasaule.lv/lv_lv/bauer-supreme-s24-m40-senior-hokeja-slidas', status: 'VERIFIED' },
-  { type: 'skate', model: 'bauer-supreme-m40', retailer: 'hj', price: 416.49, shipping: 0, sizes: ['7','7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://www.hokejam.lv/lv/pieauguso-hokeja-slidas/4507-bauer-supreme-m40-pieauguso-hokeja-slidas', status: 'VERIFIED' },
-  { type: 'skate', model: 'bauer-supreme-m40', retailer: 'sp', price: 349.99, shipping: 4, sizes: ['7','7.5','8'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-senior/d1438036', status: 'VERIFIED' },
+/* KATEGORIJU TIEŠĀS SAITES VEIKALOS */
+const RETAILER_CAT_URLS = {
+  Youth: {
+    hp: 'https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-berniem',
+    hj: 'https://www.hokejam.lv/lv/51-bernu-hokeja-slidas',
+    sp: 'https://www.sportega.lv/hokeja-ekipejums/berns-youth/c233'
+  },
+  Junior: {
+    hp: 'https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-junioriem',
+    hj: 'https://www.hokejam.lv/lv/50-junioru-hokeja-slidas',
+    sp: 'https://www.sportega.lv/hokeja-ekipejums/juniors/c232'
+  },
+  Intermediate: {
+    hp: 'https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas',
+    hj: 'https://www.hokejam.lv/lv/48-pieauguso-hokeja-slidas',
+    sp: 'https://www.sportega.lv/hokeja-slidas/c354'
+  },
+  Senior: {
+    hp: 'https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas',
+    hj: 'https://www.hokejam.lv/lv/48-pieauguso-hokeja-slidas',
+    sp: 'https://www.sportega.lv/hokeja-slidas/c354'
+  }
+};
 
-  // Nūjas
-  { type: 'stick', model: 'bauer-supreme-fuse-s26', retailer: 'hp', price: 169.00, shipping: 3.5, hands: ['Left','Right'], curves: ['P92','P28'], flexes: ['77','87'], stock: true, checked: '2026-10-28', url: 'https://hokejapasaule.lv/lv_lv/bauer-supreme-s26-fuse-grip-senior-hokeja-nuja', status: 'VERIFIED' },
-  { type: 'stick', model: 'bauer-supreme-fuse-s26', retailer: 'hj', price: 159.99, shipping: 0.0, hands: ['Left','Right'], curves: ['P92'], flexes: ['77'], stock: true, checked: '2026-10-28', url: 'https://www.hokejam.lv/lv/pieauguso-kompozitu-hokeja-nujas/5726-20674-bauer-supreme-fuse-s26-senior-composite-hockey-stick#/27-virsma-grip/31-puse-kreisa_puse/43-liekums-p92/58-cietiba-65', status: 'VERIFIED' },
-  { type: 'stick', model: 'bauer-supreme-fuse-s26', retailer: 'sp', price: 164.99, shipping: 4.0, hands: ['Left','Right'], curves: ['P92','P28'], flexes: ['77','87'], stock: true, checked: '2026-10-28', url: 'https://www.sportega.lv/kompozitmateriala-hokeja-nuja-bauer-supreme-fuse-senior/d1585348', status: 'VERIFIED' }
+let OFFERS = [
+  // --- SENIOR SLIDAS ---
+  { type: 'skate', category: 'Senior', model: 'bauer-vapor-fly40', retailer: 'hp', price: 535, shipping: 3.5, sizes: ['7','7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://hokejapasaule.lv/lv_lv/bauer-vapor-s25-fly40-senior-hokeja-slidas', status: 'VERIFIED' },
+  { type: 'skate', category: 'Senior', model: 'bauer-vapor-fly40', retailer: 'hj', price: null, shipping: 0, sizes: ['7.5','8'], fits: ['FIT 2'], stock: false, checked: null, url: 'https://www.hokejam.lv/lv/meklesana?search=FLY40', status: 'DEMO' },
+  { type: 'skate', category: 'Senior', model: 'bauer-vapor-fly40', retailer: 'sp', price: 535, shipping: 4, sizes: ['7','7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-senior/d1502757', status: 'VERIFIED' },
+  { type: 'skate', category: 'Senior', model: 'bauer-supreme-f40', retailer: 'hp', price: 535, shipping: 3.5, sizes: ['7','7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://hokejapasaule.lv/lv_lv/bauer-supreme-s26-f40-senior-hokeja-slidas', status: 'VERIFIED' },
+  { type: 'skate', category: 'Senior', model: 'bauer-supreme-f40', retailer: 'hj', price: 475.99, shipping: 0, sizes: ['7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://www.hokejam.lv/lv/pieauguso-hokeja-slidas/5455-bauer-supreme-f40-s26-pieauguso-hokeja-slidas', status: 'VERIFIED' },
+  { type: 'skate', category: 'Senior', model: 'bauer-supreme-f40', retailer: 'sp', price: 535, shipping: 4, sizes: ['7','7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://www.sportega.lv/hokeja-slidas-bauer-supreme-f40-senior/d1583973', status: 'VERIFIED' },
+  { type: 'skate', category: 'Senior', model: 'bauer-supreme-m40', retailer: 'hp', price: 349, shipping: 3.5, sizes: ['7','7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://hokejapasaule.lv/lv_lv/bauer-supreme-s24-m40-senior-hokeja-slidas', status: 'VERIFIED' },
+  { type: 'skate', category: 'Senior', model: 'bauer-supreme-m40', retailer: 'hj', price: 416.49, shipping: 0, sizes: ['7','7.5'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://www.hokejam.lv/lv/pieauguso-hokeja-slidas/4507-bauer-supreme-m40-pieauguso-hokeja-slidas', status: 'VERIFIED' },
+  { type: 'skate', category: 'Senior', model: 'bauer-supreme-m40', retailer: 'sp', price: 349.99, shipping: 4, sizes: ['7','7.5','8'], fits: ['FIT 2'], stock: true, checked: '2026-10-28', url: 'https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-senior/d1438036', status: 'VERIFIED' },
+
+  // --- YOUTH (BĒRNU) SLIDAS ---
+  { type: 'skate', category: 'Youth', model: 'bauer-vapor-fly40', retailer: 'hp', price: 115.00, shipping: 3.5, sizes: ['Yth 8', 'Yth 9', 'Yth 10', 'Yth 11', 'Yth 12', 'Yth 13'], fits: ['FIT 2', 'Regular'], stock: true, checked: '2026-10-28', url: 'https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-berniem', status: 'VERIFIED' },
+  { type: 'skate', category: 'Youth', model: 'bauer-vapor-fly40', retailer: 'hj', price: 109.99, shipping: 0, sizes: ['Yth 9', 'Yth 10', 'Yth 11', 'Yth 12'], fits: ['FIT 2', 'Regular'], stock: true, checked: '2026-10-28', url: 'https://www.hokejam.lv/lv/51-bernu-hokeja-slidas', status: 'VERIFIED' },
+  { type: 'skate', category: 'Youth', model: 'bauer-vapor-fly40', retailer: 'sp', price: 119.00, shipping: 4, sizes: ['Yth 8', 'Yth 9', 'Yth 10', 'Yth 11', 'Yth 12', 'Yth 13'], fits: ['FIT 2', 'Regular'], stock: true, checked: '2026-10-28', url: 'https://www.sportega.lv/hokeja-ekipejums/berns-youth/c233', status: 'VERIFIED' },
+  
+  { type: 'skate', category: 'Youth', model: 'bauer-supreme-f40', retailer: 'hp', price: 115.00, shipping: 3.5, sizes: ['Yth 8', 'Yth 9', 'Yth 10', 'Yth 11', 'Yth 12'], fits: ['FIT 2', 'Regular'], stock: true, checked: '2026-10-28', url: 'https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-berniem', status: 'VERIFIED' },
+  { type: 'skate', category: 'Youth', model: 'bauer-supreme-f40', retailer: 'hj', price: 105.00, shipping: 0, sizes: ['Yth 10', 'Yth 11', 'Yth 12'], fits: ['FIT 2', 'Regular'], stock: true, checked: '2026-10-28', url: 'https://www.hokejam.lv/lv/51-bernu-hokeja-slidas', status: 'VERIFIED' },
+  { type: 'skate', category: 'Youth', model: 'bauer-supreme-f40', retailer: 'sp', price: 112.50, shipping: 4, sizes: ['Yth 8', 'Yth 9', 'Yth 10', 'Yth 11', 'Yth 12'], fits: ['FIT 2', 'Regular'], stock: true, checked: '2026-10-28', url: 'https://www.sportega.lv/hokeja-ekipejums/berns-youth/c233', status: 'VERIFIED' },
+
+  { type: 'skate', category: 'Youth', model: 'bauer-supreme-m40', retailer: 'hp', price: 95.00, shipping: 3.5, sizes: ['Yth 8', 'Yth 9', 'Yth 10', 'Yth 11'], fits: ['FIT 2', 'Regular'], stock: true, checked: '2026-10-28', url: 'https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-berniem', status: 'VERIFIED' },
+  { type: 'skate', category: 'Youth', model: 'bauer-supreme-m40', retailer: 'hj', price: 89.99, shipping: 0, sizes: ['Yth 8', 'Yth 9', 'Yth 10'], fits: ['FIT 2', 'Regular'], stock: true, checked: '2026-10-28', url: 'https://www.hokejam.lv/lv/51-bernu-hokeja-slidas', status: 'VERIFIED' },
+  { type: 'skate', category: 'Youth', model: 'bauer-supreme-m40', retailer: 'sp', price: 94.00, shipping: 4, sizes: ['Yth 8', 'Yth 9', 'Yth 10', 'Yth 11', 'Yth 12'], fits: ['FIT 2', 'Regular'], stock: true, checked: '2026-10-28', url: 'https://www.sportega.lv/hokeja-ekipejums/berns-youth/c233', status: 'VERIFIED' },
+
+  // --- NŪJAS ---
+  { type: 'stick', category: 'Senior', model: 'bauer-supreme-fuse-s26', retailer: 'hp', price: 169.00, shipping: 3.5, hands: ['Left','Right'], curves: ['P92','P28'], flexes: ['77','87'], stock: true, checked: '2026-10-28', url: 'https://hokejapasaule.lv/lv_lv/bauer-supreme-s26-fuse-grip-senior-hokeja-nuja', status: 'VERIFIED' },
+  { type: 'stick', category: 'Senior', model: 'bauer-supreme-fuse-s26', retailer: 'hj', price: 159.99, shipping: 0.0, hands: ['Left','Right'], curves: ['P92'], flexes: ['77'], stock: true, checked: '2026-10-28', url: 'https://www.hokejam.lv/lv/pieauguso-kompozitu-hokeja-nujas/5726-20674-bauer-supreme-fuse-s26-senior-composite-hockey-stick#/27-virsma-grip/31-puse-kreisa_puse/43-liekums-p92/58-cietiba-65', status: 'VERIFIED' },
+  { type: 'stick', category: 'Senior', model: 'bauer-supreme-fuse-s26', retailer: 'sp', price: 164.99, shipping: 4.0, hands: ['Left','Right'], curves: ['P92','P28'], flexes: ['77','87'], stock: true, checked: '2026-10-28', url: 'https://www.sportega.lv/kompozitmateriala-hokeja-nuja-bauer-supreme-fuse-senior/d1585348', status: 'VERIFIED' }
 ];
 
 let DATA_SYNC_SOURCE = 'LOKĀLIE DATI';
@@ -1491,7 +1523,7 @@ const BAUER_SIZE_TABLES = {
     { val: 'Yth 12.5', label: 'Yth 12.5 (EUR 32 · 20.2 cm)' },
     { val: 'Yth 13', label: 'Yth 13 (EUR 32.5 · 20.5 cm)' },
     { val: 'Yth 13.5', label: 'Yth 13.5 (EUR 33 · 21.0 cm)' },
-    { val: 'all', label: 'Visi Youth izmēri' }
+    { val: 'all', label: 'Visi Youth (Bērnu) izmēri' }
   ]
 };
 
@@ -1533,7 +1565,6 @@ const CAT_SHORT_MAP = {
 const DEFAULT_PROFILE = {
   activeTab: 'skates',
   role: 'forward',
-  // Slidas
   skateBrand: 'Bauer',
   skateCat: 'Senior',
   size: '7.5',
@@ -1541,7 +1572,6 @@ const DEFAULT_PROFILE = {
   skateFreq: '2-3',
   minSkate: 300,
   maxSkate: 650,
-  // Nūjas
   stickBrand: 'Bauer',
   stickCat: 'Senior',
   stickStyle: 'forward',
@@ -1584,9 +1614,18 @@ const ROLES = {
   lv: { forward: 'uzbrucējam', defense: 'aizsargam' }
 };
 
-function storeHeader(rKey) {
+/* DINAMISKAIS MODEĻA NOSAUKUMS PĒC PROFILA KATEGORIJAS */
+function getModelName(m) {
+  const currentCategory = m.type === 'skate' ? (PROFILE.skateCat || 'Senior') : (PROFILE.stickCat || 'Senior');
+  return m.name.replace(/\b(Senior|Junior|Intermediate|Youth)\b/gi, currentCategory);
+}
+
+function storeHeader(rKey, catOverride) {
   const r = RETAILERS[rKey];
-  return `<a class="store-header" href="${r.url}" target="_blank" rel="noopener" title="${r.name}">
+  const cat = catOverride || (PROFILE.skateCat || 'Senior');
+  const targetUrl = RETAILER_CAT_URLS[cat]?.[rKey] || r.url;
+  
+  return `<a class="store-header" href="${targetUrl}" target="_blank" rel="noopener" title="${r.name} (${cat})">
     <div class="store-logo-box">
       <img class="logo-dark" src="${r.logoDark}" alt="${r.name}" onerror="this.src='img/${r.id}.png'">
       <img class="logo-light" src="${r.logoLight}" alt="${r.name}" onerror="this.src='img/${r.id}.png'">
@@ -1611,7 +1650,9 @@ function meter(m) {
 /* KARTĪŠU RENDERĒŠANA */
 function renderCard(m, rKey) {
   const r = RETAILERS[rKey];
-  const o = OFFERS.find(x => x.model === m.id && x.retailer === rKey);
+  const currentCat = m.type === 'skate' ? (PROFILE.skateCat || 'Senior') : (PROFILE.stickCat || 'Senior');
+  
+  const o = OFFERS.find(x => x.model === m.id && x.retailer === rKey && (x.category ? x.category === currentCat : true));
   const tPrice = total(o);
 
   let matchSpecs = false;
@@ -1619,7 +1660,12 @@ function renderCard(m, rKey) {
 
   if (m.type === 'skate') {
     const matchSize = !o ? false : (PROFILE.size === 'all' || (o.sizes || []).includes(PROFILE.size));
-    const matchFit = !o ? false : (PROFILE.fit === 'all' || (o.fits || []).includes(PROFILE.fit));
+    // Youth kategorijā der FIT 2 vai Regular standarta platums
+    const matchFit = !o ? false : (
+      PROFILE.fit === 'all' || 
+      (o.fits || []).includes(PROFILE.fit) || 
+      (currentCat === 'Youth' && ((o.fits || []).includes('Regular') || PROFILE.fit === 'FIT 2'))
+    );
     matchSpecs = matchSize && matchFit;
     matchPrice = (tPrice != null) && (tPrice >= PROFILE.minSkate && tPrice <= PROFILE.maxSkate);
   } else {
@@ -1652,7 +1698,7 @@ function renderCard(m, rKey) {
     checkedVal = o.checked || '—';
 
     if (m.type === 'skate') {
-      specVal1 = (o.sizes || []).join(', ') || '7, 7.5';
+      specVal1 = (o.sizes || []).join(', ') || (currentCat === 'Youth' ? 'Yth 8-13' : '7, 7.5');
       specVal2 = (o.fits || []).join(', ') || 'FIT 2';
     } else {
       specVal1 = PROFILE.hand;
@@ -1670,7 +1716,11 @@ function renderCard(m, rKey) {
 
   const specLabel1 = m.type === 'skate' ? t('sizes') : 'Satvēriens';
   const specLabel2 = m.type === 'skate' ? t('fit') : 'Flex / Liekums';
-  const targetUrl = (o && o.url) || r.url;
+  
+  // Ja konkrēta saite nav atrasta, poga ved uz veikala atbilstošo kategorijas lapu
+  const categoryFallbackUrl = RETAILER_CAT_URLS[currentCat]?.[rKey] || r.url;
+  const targetUrl = (o && o.url) || categoryFallbackUrl;
+  
   const statusBadge = isAvailable ? badge(o.status) : `<span class="badge b-no">Nav pieejams</span>`;
   const actionBtn = isAvailable 
     ? `<a class="btn" href="${targetUrl}" target="_blank" rel="noopener">${t('openStore')}</a>`
@@ -1679,11 +1729,11 @@ function renderCard(m, rKey) {
   return `
     <article class="card ${isAvailable ? '' : 'card-zero'}">
       <div class="imgbox" data-open-lightbox="${m.id}" title="Noklikšķini, lai palielinātu">
-        <img id="${cardImgId}" src="${firstImg}" alt="${m.brand} ${m.name}" onerror="this.src='${m.fallbackImg}'">
+        <img id="${cardImgId}" src="${firstImg}" alt="${m.brand} ${getModelName(m)}" onerror="this.src='${m.fallbackImg}'">
         ${dotsHtml}
       </div>
       <div class="body">
-        <h3>${m.brand} ${m.name}</h3>
+        <h3>${m.brand} ${getModelName(m)}</h3>
         <p class="shop">${r.name} &nbsp; ${statusBadge}</p>
         <div class="card-specs-table">
           ${row(t('price'), priceHtml)}
@@ -1705,6 +1755,7 @@ function renderCard(m, rKey) {
 function renderTableView(list, models) {
   const rs = Object.keys(RETAILERS);
   const head = rs.map(k => `<th>${RETAILERS[k].name}</th>`).join('');
+  const currentCat = PROFILE.skateCat || 'Senior';
   
   const body = models.map(m => {
     const modelOffers = list.filter(x => x.model === m.id && x.price != null && x.price > 0 && x.stock);
@@ -1730,7 +1781,7 @@ function renderTableView(list, models) {
         return `<td><span class="badge b-no">Nav datu / filtrs</span></td>`;
       }
     }).join('');
-    return `<tr><td><b style="font-size:14px">${m.brand} ${m.name}</b></td>${cells}</tr>`;
+    return `<tr><td><b style="font-size:14px">${m.brand} ${getModelName(m)}</b></td>${cells}</tr>`;
   }).join('');
   
   return `<div class="tw"><table><tr><th>Modelis</th>${head}</tr>${body}</table></div>`;
@@ -1738,7 +1789,6 @@ function renderTableView(list, models) {
 
 function filtersBar(type) {
   const models = type === 'skate' ? SKATE_MODELS : STICK_MODELS;
-
   const catVal = type === 'skate' ? (PROFILE.skateCat || 'Senior') : (PROFILE.stickCat || 'Senior');
   const catShort = CAT_SHORT_MAP[catVal] || catVal;
 
@@ -1748,7 +1798,7 @@ function filtersBar(type) {
 
   let currentSortLabel = t('sortDef');
   const currentModel = models.find(m => m.id === S.sort);
-  if (currentModel) currentSortLabel = currentModel.name;
+  if (currentModel) currentSortLabel = getModelName(currentModel);
 
   return `<div class="filters-bar">
     <button type="button" class="profile-pill-link" data-open="profile">
@@ -1767,7 +1817,7 @@ function filtersBar(type) {
         </button>
         <div class="ui-dropdown-menu">
           <button type="button" class="ui-dropdown-opt ${S.sort === 'default' ? 'active' : ''}" data-val="default">${t('sortDef')}</button>
-          ${models.map(m => `<button type="button" class="ui-dropdown-opt ${S.sort === m.id ? 'active' : ''}" data-val="${m.id}">${m.name}</button>`).join('')}
+          ${models.map(m => `<button type="button" class="ui-dropdown-opt ${S.sort === m.id ? 'active' : ''}" data-val="${m.id}">${getModelName(m)}</button>`).join('')}
         </div>
       </div>
     </div>
@@ -1846,7 +1896,6 @@ function viewHome() {
       </div>
     </div>
 
-    <!-- SALĪDZINĀŠANĀ IESAISTĪTIE VEIKALI -->
     <div style="margin-top:36px; padding:10px 0;">
       <h2 style="margin:0 0 20px; font-size:20px; font-weight:900; text-align:center; color:var(--text); letter-spacing:.02em;">Salīdzināšanā iesaistītie veikali</h2>
       <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; align-items:center;">
@@ -1872,7 +1921,10 @@ function viewCategory(type) {
     : t('subTitleSticks', { hand: `<b>${PROFILE.hand}</b>`, flex: `<b>${PROFILE.flex}</b>`, curve: `<b>${PROFILE.curve}</b>`, cat: `<b>${stickCatFull}</b>` });
 
   const rKeys = Object.keys(RETAILERS);
-  const offersList = OFFERS.filter(o => o.type === type);
+  const currentCat = isSkate ? skateCatFull : stickCatFull;
+  
+  // Atlasa tikai konkrētās vecuma grupas piedāvājumus
+  const offersList = OFFERS.filter(o => o.type === type && (o.category ? o.category === currentCat : true));
   const verified = offersList.filter(o => o.status === 'VERIFIED').length;
   const inStockOffers = offersList.filter(o => o.stock && o.price != null && o.price > 0);
   const best = inStockOffers.filter(o => o.status === 'VERIFIED').sort((a, b) => total(a) - total(b))[0];
@@ -1881,7 +1933,7 @@ function viewCategory(type) {
   let filtered = [...models];
   if (S.searchQuery.trim()) {
     const q = S.searchQuery.toLowerCase();
-    filtered = filtered.filter(m => m.name.toLowerCase().includes(q) || m.series.toLowerCase().includes(q));
+    filtered = filtered.filter(m => getModelName(m).toLowerCase().includes(q) || m.series.toLowerCase().includes(q));
   }
 
   if (S.sort && S.sort !== 'default') {
@@ -1894,7 +1946,7 @@ function viewCategory(type) {
 
   const columnsHtml = rKeys.map(k => `
     <div class="store-col">
-      ${storeHeader(k)}
+      ${storeHeader(k, currentCat)}
       <div class="store-cards">
         ${filtered.length ? filtered.map(m => renderCard(m, k)).join('') : '<div class="empty">Nav atrasts neviens modelis</div>'}
       </div>
@@ -2042,7 +2094,7 @@ function viewProfile() {
                 <button type="button" class="ui-dropdown-opt ${skateCat==='Senior'?'active':''}" data-val="Senior">Senior (SR)</button>
                 <button type="button" class="ui-dropdown-opt ${skateCat==='Intermediate'?'active':''}" data-val="Intermediate">Intermediate (INT)</button>
                 <button type="button" class="ui-dropdown-opt ${skateCat==='Junior'?'active':''}" data-val="Junior">Junior (JR)</button>
-                <button type="button" class="ui-dropdown-opt ${skateCat==='Youth'?'active':''}" data-val="Youth">Youth (YTH)</button>
+                <button type="button" class="ui-dropdown-opt ${skateCat==='Youth'?'active':''}" data-val="Youth">Youth (Bērnu · YTH)</button>
               </div>
               <input type="hidden" id="p-skate-cat" value="${skateCat}">
             </div>
@@ -2073,7 +2125,7 @@ function viewProfile() {
               </button>
               <div class="ui-dropdown-menu">
                 <button type="button" class="ui-dropdown-opt ${PROFILE.fit==='FIT 1'?'active':''}" data-val="FIT 1">FIT 1 — Šaura pēda / zems pacēlums (D Vapor)</button>
-                <button type="button" class="ui-dropdown-opt ${PROFILE.fit==='FIT 2'?'active':''}" data-val="FIT 2">FIT 2 — Standarta platums & pacēlums (D)</button>
+                <button type="button" class="ui-dropdown-opt ${PROFILE.fit==='FIT 2'?'active':''}" data-val="FIT 2">FIT 2 — Standarta platums & pacēlums (D / Regular)</button>
                 <button type="button" class="ui-dropdown-opt ${PROFILE.fit==='FIT 3'?'active':''}" data-val="FIT 3">FIT 3 — Plata pēda / augsts pacēlums (EE)</button>
                 <button type="button" class="ui-dropdown-opt ${PROFILE.fit==='all'?'active':''}" data-val="all">Visi platumi</button>
               </div>
@@ -2128,7 +2180,7 @@ function viewProfile() {
         <div class="profile-actions">
           <button type="button" id="btn-save-profile" class="btn-save-profile">Saglabāt profilu</button>
           <button type="button" id="btn-reset-profile" class="btn-reset-profile">Atiestatīt noklusējumu</button>
-          <div id="save-toast" class="save-toast">Profils veiksmīgi saglabāts!</div>
+          <div id="save-toast" class="save-toast"></div>
         </div>
       </div>
     </div>
@@ -2164,7 +2216,7 @@ function viewProfile() {
                 <button type="button" class="ui-dropdown-opt ${stickCat==='Senior'?'active':''}" data-val="Senior">Senior (SR)</button>
                 <button type="button" class="ui-dropdown-opt ${stickCat==='Intermediate'?'active':''}" data-val="Intermediate">Intermediate (INT)</button>
                 <button type="button" class="ui-dropdown-opt ${stickCat==='Junior'?'active':''}" data-val="Junior">Junior (JR)</button>
-                <button type="button" class="ui-dropdown-opt ${stickCat==='Youth'?'active':''}" data-val="Youth">Youth (YTH)</button>
+                <button type="button" class="ui-dropdown-opt ${stickCat==='Youth'?'active':''}" data-val="Youth">Youth (Bērnu · YTH)</button>
               </div>
               <input type="hidden" id="p-stick-cat" value="${stickCat}">
             </div>
@@ -2248,7 +2300,7 @@ function viewProfile() {
         <div class="profile-actions">
           <button type="button" id="btn-save-profile" class="btn-save-profile">Saglabāt profilu</button>
           <button type="button" id="btn-reset-profile" class="btn-reset-profile">Atiestatīt noklusējumu</button>
-          <div id="save-toast" class="save-toast">Profils veiksmīgi saglabāts!</div>
+          <div id="save-toast" class="save-toast"></div>
         </div>
       </div>
     </div>
@@ -2292,7 +2344,6 @@ function render() {
   else if (S.tab === 'profile') app.innerHTML = viewProfile();
 }
 
-/* AUTOMĀTISKO DATU IELĀDE */
 async function loadScrapedData() {
   try {
     const response = await fetch('scraped_data.json?t=' + Date.now());
@@ -2301,11 +2352,11 @@ async function loadScrapedData() {
 
     if (liveData && liveData.offers && Array.isArray(liveData.offers)) {
       liveData.offers.forEach(item => {
-        const idx = OFFERS.findIndex(o => o.model === item.model && o.retailer === item.retailer);
+        const itemCat = item.category || 'Senior';
+        const idx = OFFERS.findIndex(o => o.model === item.model && o.retailer === item.retailer && (o.category || 'Senior') === itemCat);
         if (idx !== -1) {
-          // Atjaunojam ierakstu ar jaunajiem datiem no skrāpera
           OFFERS[idx] = { ...OFFERS[idx], ...item };
-        } else if (item.price && item.price > 0) {
+        } else {
           OFFERS.push(item);
         }
       });
@@ -2377,6 +2428,23 @@ function onSkateCategoryChange(newCat) {
   PROFILE.skateCat = newCat;
   const sizeOptions = getSkateSizeOptions(newCat);
   PROFILE.size = sizeOptions[0].val;
+
+  // Ja izvēlas Youth, automātiski pielāgo reālu bērnu cenu budžetu
+  if (newCat === 'Youth' && PROFILE.minSkate >= 250) {
+    PROFILE.minSkate = 50;
+    PROFILE.maxSkate = 250;
+    const minInp = document.getElementById('p-minSkate');
+    const maxInp = document.getElementById('p-maxSkate');
+    if (minInp) minInp.value = 50;
+    if (maxInp) maxInp.value = 250;
+  } else if (newCat === 'Senior' && PROFILE.maxSkate <= 250) {
+    PROFILE.minSkate = 300;
+    PROFILE.maxSkate = 650;
+    const minInp = document.getElementById('p-minSkate');
+    const maxInp = document.getElementById('p-maxSkate');
+    if (minInp) minInp.value = 300;
+    if (maxInp) maxInp.value = 650;
+  }
 
   const sizeMenu = document.getElementById('skate-size-menu');
   const sizeDropdownBtn = document.querySelector('#dropdown-skate-size .ui-dropdown-label');
@@ -2583,7 +2651,9 @@ document.addEventListener('click', e => {
   const vBtn = e.target.closest('[data-v]');
   if (vBtn) { S.view = vBtn.dataset.v; render(); return; }
 
+  /* SAGLABĀT PROFILU: NEIZMET UZ SĀKUMU, RĀDA ZAĻU ĶEKSI */
   if (e.target.id === 'btn-save-profile') {
+    // Slidas
     PROFILE.skateBrand = document.getElementById('p-skate-brand')?.value || 'Bauer';
     PROFILE.skateCat = document.getElementById('p-skate-cat')?.value || 'Senior';
     PROFILE.size = document.getElementById('p-size')?.value || '7.5';
@@ -2593,6 +2663,7 @@ document.addEventListener('click', e => {
     PROFILE.minSkate = +document.getElementById('p-minSkate')?.value || 0;
     PROFILE.maxSkate = +document.getElementById('p-maxSkate')?.value || 9999;
 
+    // Nūjas
     PROFILE.stickBrand = document.getElementById('p-stick-brand')?.value || 'Bauer';
     PROFILE.stickCat = document.getElementById('p-stick-cat')?.value || 'Senior';
     PROFILE.category = PROFILE.stickCat;
@@ -2604,10 +2675,15 @@ document.addEventListener('click', e => {
     PROFILE.maxStick = +document.getElementById('p-maxStick')?.value || 9999;
 
     localStorage.setItem('hsr_user_profile', JSON.stringify(PROFILE));
+    
+    // Rāda zaļu ķeksi uz vietas
     const toast = document.getElementById('save-toast');
     if (toast) {
+      toast.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green);flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg> <span>Profils veiksmīgi saglabāts!</span>`;
       toast.style.display = 'inline-flex';
-      setTimeout(() => { S.tab = 'home'; render(); window.scrollTo({ top: 0, behavior: 'smooth' }); }, 700);
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 3000);
     }
     return;
   }
@@ -2646,7 +2722,6 @@ document.addEventListener('submit', e => {
   }
 });
 
-// Sākumlapas slīdņa rotācija (15s)
 setInterval(() => {
   if (S.tab !== 'home') return;
   const slides = document.querySelectorAll('.hero-slide');
@@ -2657,7 +2732,6 @@ setInterval(() => {
   dots.forEach((d, i) => d.classList.toggle('active', i === S.sliderIndex));
 }, 15000);
 
-// Mazo bilžu auto-slaideris kartītēs (10s)
 setInterval(() => {
   document.querySelectorAll('.card').forEach(card => {
     const dots = card.querySelectorAll('.card-img-dot');
