@@ -350,10 +350,10 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
 .sum small{display:block;color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 .sum b{font-size:18px;font-weight:800}
 
-/* CUSTOM FILTER ELEMENTS (SELECT & CHECKBOX) - Saskan ar augšējo navigāciju */
+/* CUSTOM FILTER ELEMENTS — BULTIŅA PELĒKĀ TONĪ KĀ MEKLĒTĀJAM UN VALODAI */
 .custom-select{
   appearance:none;
-  background:var(--switch-bg) url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23ed2027%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E") no-repeat right 8px center;
+  background:var(--switch-bg) url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23a9b0be%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E") no-repeat right 8px center;
   background-size:14px;
   color:var(--text);
   border:1px solid var(--switch-border);
@@ -419,7 +419,7 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
 .filters-bar .divider{width:1px;height:24px;background:var(--line);margin:0 2px;flex-shrink:0}
 .filters-bar label{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);flex-shrink:0;white-space:nowrap}
 
-/* SKATU POGAS (TĀDAS KĀ HEADER NAV) */
+/* SKATU POGAS */
 .views{margin-left:auto;display:flex;gap:6px;flex-shrink:0}
 .views button{
   background:var(--switch-bg);
@@ -452,12 +452,12 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
   color:var(--red);
 }
 
-.stores-container{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:start}
+.stores-container{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
 @media (max-width:960px){.stores-container{grid-template-columns:1fr;gap:24px}}
 .store-col{display:flex;flex-direction:column;gap:16px}
-.store-cards{display:flex;flex-direction:column;gap:16px}
+.store-cards{display:flex;flex-direction:column;gap:16px;flex:1}
 
-/* VEIKALU LOGO (INTERAKTĪVS AR SARKANU SPĪDUMU) */
+/* VEIKALU LOGO */
 .store-header{
   display:flex;
   flex-direction:column;
@@ -485,8 +485,18 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
 .store-ext-hint{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-top:6px;opacity:.65;transition:opacity .2s,color .2s}
 .store-header:hover .store-ext-hint{opacity:1;color:var(--link)}
 
-/* PREČU KARTĪTES */
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 4px 16px rgba(0,0,0,.08);transition:all .2s ease}
+/* PREČU KARTĪTES UN VIENOTS AUGSTUMS */
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  box-shadow:0 4px 16px rgba(0,0,0,.08);
+  transition:all .2s ease;
+  height:100%;
+}
 .card-zero{background:var(--card-zero);border-color:var(--line);border-style:dashed}
 .price.is-zero{color:var(--muted)}
 .btn-zero{color:var(--muted);background:var(--btn-zero-bg)}
@@ -494,13 +504,13 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
 
 .imgbox{position:relative;height:185px;display:grid;place-items:center;background:var(--img-grad);cursor:zoom-in}
 .imgbox::after{content:"";position:absolute;bottom:15px;left:20%;width:60%;height:14px;background:radial-gradient(ellipse,rgba(0,0,0,.45),transparent 70%);filter:blur(4px);pointer-events:none}
-.imgbox img{position:relative;z-index:2;max-height:150px;max-width:85%;object-fit:contain;filter:drop-shadow(0 8px 8px rgba(0,0,0,.35));transition:opacity .25s ease}
+.imgbox img{position:relative;z-index:2;max-height:150px;max-width:85%;object-fit:contain;filter:drop-shadow(0 8px 8px rgba(0,0,0,.35));transition:opacity 0.4s ease-in-out}
 
 .card-img-dots{position:absolute;bottom:8px;right:12px;z-index:3;display:flex;gap:4px}
 .card-img-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;transition:all .15s}
 .card-img-dot.active{background:var(--red);width:12px;border-radius:3px}
 
-.body{padding:14px 16px;flex:1}
+.body{padding:14px 16px;flex:1;display:flex;flex-direction:column}
 .body h3{margin:0;font-size:16px;font-weight:700}
 .shop{color:var(--muted);margin:0 0 10px;font-size:12px}
 .badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;letter-spacing:.04em}
@@ -512,15 +522,17 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
 [data-theme="light"] .b-ok{background:#d1fae5;color:#047857;border:1px solid #6ee7b7}
 [data-theme="light"] .b-no{background:#f1f5f9;color:#64748b;border:1px solid #cbd5e1}
 [data-theme="light"] .b-spec{background:rgba(237,32,39,.08);color:var(--red);border:1px solid rgba(237,32,39,.25)}
+
+.card-specs-table{width:100%;margin-bottom:8px}
 .row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:6px 0;border-top:1px solid var(--line);font-size:13px}
 .row span:first-child{color:var(--muted)}
 .row span:last-child{text-align:right;font-weight:600}
 .price{font-size:20px;font-weight:800}
 .note{color:var(--muted);font-size:12px;margin:10px 0 0;line-height:1.4}
-.btn{display:block;text-align:center;padding:10px;background:var(--btn-bg);border-top:1px solid var(--line);color:var(--link);text-decoration:none;font-weight:700;font-size:13px;transition:all .2s}
+.btn{display:block;text-align:center;padding:10px;background:var(--btn-bg);border-top:1px solid var(--line);color:var(--link);text-decoration:none;font-weight:700;font-size:13px;transition:all .2s;margin-top:auto}
 .btn:hover{background:var(--btn-hover);transform:translateY(-1px)}
 
-.meterbox{margin-top:12px}
+.meterbox{margin-top:auto;padding-top:10px}
 .mlabel{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);margin-bottom:8px}
 .meter{position:relative;height:8px;border-radius:99px;background:linear-gradient(90deg,#ef4444,#f59e0b 50%,#34d399)}
 .meter i{position:absolute;top:-4px;width:4px;height:16px;border-radius:2px;background:#fff;transform:translateX(-50%);box-shadow:0 0 0 2px var(--card)}
@@ -530,7 +542,7 @@ table{border-collapse:collapse;width:100%;background:var(--card);min-width:640px
 th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line)}
 th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
 
-/* HERO SLIDER (NOLAISTS PAR 42PX, PLŪSTOŠS FADE) */
+/* HERO SLIDER */
 .hero-slider-wrap{
   position:relative;
   margin-top:42px;
@@ -561,7 +573,7 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
 .hero-tag{display:inline-block;background:var(--red);color:#fff;font-size:11px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
 .hero-title{font-size:clamp(22px,3vw,28px);font-weight:900;line-height:1.2;margin:0 0 8px;color:#fff}
 .hero-desc{font-size:13px;color:#cbd5e1;line-height:1.4;margin:0 0 14px}
-.hero-btn{display:inline-block;background:#fff;color:#0b0f19;padding:8px 18px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none;transition:all .2s}
+.hero-btn{display:inline-block;background:#fff;color:#0b0f19;padding:8px 18px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none;transition:all .15s}
 .hero-btn:hover{transform:translateY(-1px);background:var(--red);color:#fff}
 .slider-dots{position:absolute;bottom:12px;left:36px;display:flex;gap:6px;z-index:3}
 .slider-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;transition:all .2s}
@@ -570,11 +582,18 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
 /* REKOMENDĀCIJAS JOSLA */
 .home-recom{margin-top:32px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px}
 .home-recom-title{margin-bottom:18px}
-.rail-wrap{display:grid;grid-template-columns:repeat(3, 1fr);gap:18px}
+.rail-wrap{display:grid;grid-template-columns:repeat(3, 1fr);gap:18px;align-items:stretch}
 @media (max-width:960px){.rail-wrap{grid-template-columns:1fr}}
 
-/* AIZSARGU SADAĻA */
-.uc-wrap{margin:40px auto;max-width:820px;text-align:center;padding:40px 20px;background:var(--card);border:1px dashed var(--line);border-radius:16px}
+/* AIZSARGU SADAĻA — PILNĪGI SAPLŪST AR BACKGROUNDU */
+.uc-wrap{
+  margin:40px auto;
+  max-width:820px;
+  text-align:center;
+  padding:20px;
+  background:transparent;
+  border:none;
+}
 .uc-img{max-width:100%;max-height:320px;border-radius:12px;margin:0 auto 24px;display:block;box-shadow:0 8px 24px rgba(0,0,0,.4)}
 
 /* PROFILA BLOKS */
@@ -606,7 +625,6 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
 .form-group{display:flex;flex-direction:column;gap:7px}
 .form-group label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
 
-/* Vienots formu dizains, kas saskan ar custom-select */
 .form-group input, .form-group textarea{
   background:var(--input-bg);
   color:var(--text);
@@ -1093,11 +1111,11 @@ const t = (k, params = {}) => {
 function getUiTimestamp() {
   try {
     const d = new Date(document.lastModified);
-    if (isNaN(d.getTime())) return '03.11.2026 00:55';
+    if (isNaN(d.getTime())) return '03.11.2026 01:15';
     const pad = n => ('0' + n).slice(-2);
     return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
   } catch(e) {
-    return '03.11.2026 00:55';
+    return '03.11.2026 01:15';
   }
 }
 
@@ -1305,6 +1323,7 @@ function meter(m) {
   </div>`;
 }
 
+/* UNIFICĒTA KARTĪŠU RENDERĒŠANA AR IDENTISKU RINDIRU SKAITU UN AUGSTUMU */
 function renderCard(m, rKey) {
   const r = RETAILERS[rKey];
   const o = OFFERS.find(x => x.model === m.id && x.retailer === rKey);
@@ -1337,51 +1356,65 @@ function renderCard(m, rKey) {
     </div>
   ` : '';
 
-  if (isAvailable) {
-    const specRow1 = m.type === 'skate' ? row(t('sizes'), (o.sizes || []).join(', ') || '7, 7.5') : row('Satvēriens', PROFILE.hand);
-    const specRow2 = m.type === 'skate' ? row(t('fit'), (o.fits || []).join(', ') || 'FIT 2') : row('Flex / Liekums', `${PROFILE.flex} · ${PROFILE.curve}`);
+  // Datu rindu vērtības — identiskas visiem veikaliem
+  let priceHtml, shippingVal, totalVal, specVal1, specVal2, stockHtml, checkedVal;
 
-    return `<article class="card">
+  if (isAvailable) {
+    priceHtml = `<span class="price">${eur(o.price)}</span>`;
+    shippingVal = o.shipping == null ? '—' : eur(o.shipping);
+    totalVal = eur(tPrice);
+    stockHtml = `<span style="color:var(--green);font-weight:700">${t('inStock')}</span>`;
+    checkedVal = o.checked || '—';
+
+    if (m.type === 'skate') {
+      specVal1 = (o.sizes || []).join(', ') || '7, 7.5';
+      specVal2 = (o.fits || []).join(', ') || 'FIT 2';
+    } else {
+      specVal1 = PROFILE.hand;
+      specVal2 = `${PROFILE.flex} · ${PROFILE.curve}`;
+    }
+  } else {
+    priceHtml = `<span class="price is-zero">0.00 €</span>`;
+    shippingVal = '—';
+    totalVal = '0.00 €';
+    specVal1 = '—';
+    specVal2 = '—';
+    stockHtml = `<span style="color:var(--amber)">${t('outStock')}</span>`;
+    checkedVal = (o && o.checked) || '—';
+  }
+
+  const specLabel1 = m.type === 'skate' ? t('sizes') : 'Satvēriens';
+  const specLabel2 = m.type === 'skate' ? t('fit') : 'Flex / Liekums';
+  const targetUrl = (o && o.url) || r.url;
+  const statusBadge = isAvailable ? badge(o.status) : `<span class="badge b-no">Nav pieejams</span>`;
+  const actionBtn = isAvailable 
+    ? `<a class="btn" href="${targetUrl}" target="_blank" rel="noopener">${t('openStore')}</a>`
+    : `<a class="btn btn-zero" href="${targetUrl}" target="_blank" rel="noopener">${t('checkStore', { store: r.name })}</a>`;
+
+  return `
+    <article class="card ${isAvailable ? '' : 'card-zero'}">
       <div class="imgbox" data-open-lightbox="${m.id}" title="Noklikšķini, lai palielinātu">
         <img id="${cardImgId}" src="${firstImg}" alt="${m.brand} ${m.name}" onerror="this.src='${m.fallbackImg}'">
         ${dotsHtml}
       </div>
       <div class="body">
         <h3>${m.brand} ${m.name}</h3>
-        <p class="shop">${r.name} &nbsp; ${badge(o.status)}</p>
-        ${row(t('price'), `<span class="price">${eur(o.price)}</span>`)}
-        ${row(t('shipping'), o.shipping == null ? '—' : eur(o.shipping))}
-        ${row(t('total'), eur(tPrice))}
-        ${specRow1}
-        ${specRow2}
-        ${row(t('stock'), `<span style="color:var(--green);font-weight:700">${t('inStock')}</span>`)}
-        ${row(t('checked'), o.checked || '—')}
+        <p class="shop">${r.name} &nbsp; ${statusBadge}</p>
+        <div class="card-specs-table">
+          ${row(t('price'), priceHtml)}
+          ${row(t('shipping'), shippingVal)}
+          ${row(t('total'), totalVal)}
+          ${row(specLabel1, specVal1)}
+          ${row(specLabel2, specVal2)}
+          ${row(t('stock'), stockHtml)}
+          ${row(t('checked'), checkedVal)}
+        </div>
         ${meter(m)}
         <p class="note">${m.note}</p>
       </div>
-      <a class="btn" href="${o.url}" target="_blank" rel="noopener">${t('openStore')}</a>
-    </article>`;
-  } else {
-    const targetUrl = (o && o.url) || r.url;
-    return `<article class="card card-zero">
-      <div class="imgbox" data-open-lightbox="${m.id}">
-        <img id="${cardImgId}" src="${firstImg}" alt="${m.brand} ${m.name}" onerror="this.src='${m.fallbackImg}'">
-        ${dotsHtml}
-      </div>
-      <div class="body">
-        <h3>${m.brand} ${m.name}</h3>
-        <p class="shop">${r.name} &nbsp; <span class="badge b-no">Nav pieejams</span></p>
-        ${row(t('price'), `<span class="price is-zero">0.00 €</span>`)}
-        ${row(t('shipping'), '—')}
-        ${row(t('total'), '0.00 €')}
-        ${row(t('stock'), `<span style="color:var(--amber)">${t('outStock')}</span>`)}
-        ${row(t('checked'), (o && o.checked) || '—')}
-        ${meter(m)}
-        <p class="note">${m.note}</p>
-      </div>
-      <a class="btn btn-zero" href="${targetUrl}" target="_blank" rel="noopener">${t('checkStore', { store: r.name })}</a>
-    </article>`;
-  }
+      ${actionBtn}
+    </article>
+  `;
 }
 
 function renderTableView(list, models) {
@@ -1494,13 +1527,15 @@ function viewHome() {
             <div style="font-size:48px; opacity:0.85;">🛡️</div>
           </div>
           <div class="body">
-            <h3>Hokeja Aizsargu Radars PRO</h3>
+            <h3>Hockey Equipment Radar PRO</h3>
             <p class="shop">Pilns ekipējuma komplekts &nbsp; <span class="badge b-demo">Drīzumā</span></p>
-            ${row('Kategorijas', 'Plecsargi · Kājsargi · Cimdi · Bikses')}
-            ${row('Aizsardzība', 'Amatieru – Elites līmenis')}
-            ${row('Pieejamība', '<span style="color:var(--amber)">Tiek izstrādāts</span>')}
-            ${row('Statuss', 'Plānots 2026/2027')}
-            <p class="note">Modulis ar precīziem anatomiskajiem izmēriem un aizsardzības klases salīdzināšanu drīzumā būs pieejams.</p>
+            <div class="card-specs-table">
+              ${row('Kategorijas', 'Plecsargi · Elkoņsargi · Kājsargi · Bikses · Cimdi · Ķiveres')}
+              ${row('Aizsardzība', 'Amatieru – Elites līmenis')}
+              ${row('Pieejamība', '<span style="color:var(--amber)">Tiek izstrādāts</span>')}
+              ${row('Statuss', 'Plānots 2026/2027')}
+            </div>
+            <p class="note">Tiek izstrādāts viedais plecsargu, elkoņsargu, kājsargu, bikšu, cimdu un ķiveres salīdzināšanas modulis ar precīziem izmēru kalkulatoriem un aizsardzības klasēm.</p>
           </div>
           <a class="btn btn-zero" href="#" data-t="protective">Uzzināt vairāk →</a>
         </article>
@@ -1577,11 +1612,11 @@ function viewProtective() {
     <div class="uc-wrap">
       <img src="img/under-construction.jpg" alt="Aizsargu modulis izstrādē" class="uc-img" onerror="this.style.display='none'">
       <span class="hero-tag" style="margin-bottom:12px;">Drīzumā</span>
-      <h1 style="font-size:26px; margin-bottom:10px;">Hokeja Aizsargu Radars PRO</h1>
-      <p style="color:var(--muted); max-width:540px; margin:0 auto 20px; font-size:14px; line-height:1.6;">
-        Tiek izstrādāts viedais plecsargu, kājsargu, bikšu un cimdu salīdzināšanas modulis ar precīziem izmēru kalkulatoriem un aizsardzības klases līmeņiem.
+      <h1 style="font-size:26px; margin-bottom:10px;">Hockey Equipment Radar PRO</h1>
+      <p style="color:var(--muted); max-width:560px; margin:0 auto 20px; font-size:14px; line-height:1.6;">
+        Tiek izstrādāts viedais plecsargu, elkoņsargu, kājsargu, bikšu, cimdu un ķiveres salīdzināšanas modulis ar precīziem izmēru kalkulatoriem un aizsardzības klasēm.
       </p>
-      <button data-t="skates" class="btn-save-profile" style="padding:10px 20px; font-size:14px;">Atgriezties pie slidām</button>
+      <button data-t="home" class="btn-save-profile" style="padding:10px 20px; font-size:14px;">Atgriezties uz sākumu</button>
     </div>
   `;
 }
@@ -1852,22 +1887,31 @@ document.addEventListener('click', e => {
     return;
   }
 
+  // Bilžu slēdzis kartītē
   const imgDot = e.target.closest('[data-img-switch]');
   if (imgDot) {
     e.stopPropagation();
     const targetImg = document.getElementById(imgDot.dataset.imgSwitch);
-    if (targetImg) targetImg.src = imgDot.dataset.imgSrc;
+    if (targetImg) {
+      targetImg.style.opacity = '0';
+      setTimeout(() => {
+        targetImg.src = imgDot.dataset.imgSrc;
+        targetImg.style.opacity = '1';
+      }, 150);
+    }
     imgDot.parentNode.querySelectorAll('.card-img-dot').forEach(d => d.classList.remove('active'));
     imgDot.classList.add('active');
     return;
   }
 
+  // Lightbox atvēršana
   const openLb = e.target.closest('[data-open-lightbox]');
   if (openLb) {
     openLightbox(openLb.dataset.openLightbox);
     return;
   }
 
+  // Lightbox sīktēla maiņa
   const lbThumb = e.target.closest('[data-lb-src]');
   if (lbThumb) {
     document.getElementById('lightbox-main-img').src = lbThumb.dataset.lbSrc;
@@ -1876,6 +1920,7 @@ document.addEventListener('click', e => {
     return;
   }
 
+  // Slaidera punkti
   const sDot = e.target.closest('[data-slide]');
   if (sDot) {
     const idx = +sDot.dataset.slide;
@@ -1886,6 +1931,7 @@ document.addEventListener('click', e => {
     return;
   }
 
+  // Profila iekšējās cilnes
   const pTab = e.target.closest('[data-ptab]');
   if (pTab) {
     PROFILE.activeTab = pTab.dataset.ptab;
@@ -1973,6 +2019,7 @@ document.addEventListener('submit', e => {
   }
 });
 
+// Sākumlapas slīdņa rotācija
 setInterval(() => {
   if (S.tab !== 'home') return;
   const slides = document.querySelectorAll('.hero-slide');
@@ -1983,8 +2030,29 @@ setInterval(() => {
   dots.forEach((d, i) => d.classList.toggle('active', i === S.sliderIndex));
 }, 5000);
 
+// Mazo bilžu vienmērīgais auto-slaideris kartītēs
+setInterval(() => {
+  document.querySelectorAll('.card').forEach(card => {
+    const dots = card.querySelectorAll('.card-img-dot');
+    if (dots.length > 1) {
+      let activeIdx = Array.from(dots).findIndex(d => d.classList.contains('active'));
+      let nextIdx = (activeIdx + 1) % dots.length;
+      const nextDot = dots[nextIdx];
+      const targetImg = document.getElementById(nextDot.dataset.imgSwitch);
+      if (targetImg) {
+        targetImg.style.opacity = '0';
+        setTimeout(() => {
+          targetImg.src = nextDot.dataset.imgSrc;
+          targetImg.style.opacity = '1';
+        }, 200);
+      }
+      dots.forEach((d, i) => d.classList.toggle('active', i === nextIdx));
+    }
+  });
+}, 3500);
+
 render();
 loadScrapedData();
 </script>
 </body>
-</html>v
+</html>
