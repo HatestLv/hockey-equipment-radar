@@ -33,13 +33,14 @@ EUR_TO_YOUTH = {
     "33": "Yth 13.5"
 }
 
-# Veikalu bāzes meklēšanas URL un noklusētās sadaļas
+# Veikalu bāzes meklēšanas URL un rezerves saites
 RETAILER_CONFIG = {
     "hj": {
         "name": "Hokejam.lv",
         "search_url": "https://www.hokejam.lv/lv/meklesana?search={query}",
         "default_url": "https://www.hokejam.lv/",
         "youth_fallback": "https://www.hokejam.lv/lv/51-bernu-hokeja-slidas",
+        "intermediate_fallback": "https://www.hokejam.lv/lv/48-pieauguso-hokeja-slidas",
         "shipping": 0.0
     },
     "hp": {
@@ -47,6 +48,7 @@ RETAILER_CONFIG = {
         "search_url": "https://hokejapasaule.lv/catalogsearch/result/?q={query}",
         "default_url": "https://hokejapasaule.lv/",
         "youth_fallback": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-berniem",
+        "intermediate_fallback": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas",
         "shipping": 3.5
     },
     "sp": {
@@ -54,20 +56,19 @@ RETAILER_CONFIG = {
         "search_url": "https://www.sportega.lv/search?q={query}",
         "default_url": "https://www.sportega.lv/",
         "youth_fallback": "https://www.sportega.lv/hokeja-ekipejums/berns-youth/c233",
+        "intermediate_fallback": "https://www.sportega.lv/hokeja-slidas/c354",
         "shipping": 4.0
     }
 }
 
-# MODEĻU DEFINĪCIJAS:
-# Te pietiek norādīt tikai modeļa kodu un atslēgvārdus!
+# MODEĻU DEFINĪCIJAS
 MODELS = [
     {
         "id": "bauer-supreme-m40",
         "type": "skate",
         "brand": "Bauer",
         "keywords": ["Supreme", "M40"],
-        "categories": ["Senior", "Youth"], # Eksistē abās grupās
-        # Tiešās saites kalpo kā garantēts ātrais ceļš, ja veikala meklētājs ir lēns vai bloķēts:
+        "categories": ["Senior", "Intermediate", "Youth"],
         "direct_urls": {
             "Youth": {
                 "hj": "https://www.hokejam.lv/lv/bernu-hokeja-slidas/5729-bauer-supreme-m40-s24-bernu-hokeja-slidas",
@@ -86,7 +87,7 @@ MODELS = [
         "type": "skate",
         "brand": "Bauer",
         "keywords": ["Vapor", "FLY40"],
-        "categories": ["Senior", "Youth"],
+        "categories": ["Senior", "Intermediate", "Youth"],
         "direct_urls": {
             "Youth": {
                 "hp": "https://hokejapasaule.lv/lv_lv/bauer-vapor-s25-fly40-youth-hokeja-slidas",
@@ -103,7 +104,7 @@ MODELS = [
         "type": "skate",
         "brand": "Bauer",
         "keywords": ["Supreme", "F40"],
-        "categories": ["Senior"], # F40 bērniem netiek ražots, tāpēc Youth te NAV!
+        "categories": ["Senior", "Intermediate"], # Youth šim modelim neeksistē
         "direct_urls": {
             "Senior": {
                 "hj": "https://www.hokejam.lv/lv/pieauguso-hokeja-slidas/5455-bauer-supreme-f40-s26-pieauguso-hokeja-slidas",
@@ -115,68 +116,89 @@ MODELS = [
 ]
 
 def check_category_match(title, category):
-    """Pārbauda, vai atrastā preces virsraksts atbilst meklētajai vecuma grupai."""
+    """Pārbauda, vai atrastās preces virsraksts atbilst meklētajai vecuma grupai."""
     title_low = title.lower()
+    
     if category == "Youth":
-        return any(k in title_low for k in ["bērnu", "youth", "yth"])
+        return any(k in title_low for k in ["bērnu", "bernu", "youth", "yth"])
+    
+    elif category == "Intermediate":
+        return any(k in title_low for k in ["jauniešu", "jauniesu", "intermediate", "int"])
+    
     elif category == "Junior":
         return any(k in title_low for k in ["junioru", "junior", "jr"])
-    elif category == "Intermediate":
-        return any(k in title_low for k in ["intermediate", "int"])
+    
     elif category == "Senior":
-        # Ja nav bērnu un nav junioru, bet ir pieaugušo vai senior
-        if any(k in title_low for k in ["bērnu", "youth", "junior", "junioru", "yth", "jr"]):
+        # Ja virsrakstā ir bērnu, jauniešu vai junioru apzīmējumi, tas NAV Senior
+        excluded = [
+            "bērnu", "bernu", "youth", "yth",
+            "jauniešu", "jauniesu", "intermediate", "int",
+            "junioru", "junior", "jr"
+        ]
+        if any(k in title_low for k in excluded):
             return False
-        return any(k in title_low for k in ["pieaugušo", "senior", "sr"]) or True
+        return any(k in title_low for k in ["pieaugušo", "pieauguso", "senior", "sr"]) or True
+
     return False
 
 def discover_product_url(retailer_key, model, category, session):
     """Automātiski atrod preci veikala meklētājā pēc atslēgvārdiem."""
     cfg = RETAILER_CONFIG[retailer_key]
-    query = "+".join(model["keywords"])
+    
+    # Izveido meklēšanas vaicājumus konkrētajai kategorijai
+    queries = []
+    base_q = "+".join(model["keywords"])
+    
     if category == "Youth":
-        query += "+bernu"
+        queries = [f"{base_q}+bernu", f"{base_q}+youth"]
+    elif category == "Intermediate":
+        queries = [f"{base_q}+jauniesu", f"{base_q}+intermediate", f"{base_q}+int"]
+    elif category == "Junior":
+        queries = [f"{base_q}+junioru", f"{base_q}+junior"]
     elif category == "Senior":
-        query += "+senior"
+        queries = [f"{base_q}+senior", f"{base_q}+pieauguso", base_q]
+    else:
+        queries = [base_q]
 
-    search_url = cfg["search_url"].format(query=query)
-    try:
-        resp = session.get(search_url, timeout=10)
-        if resp.status_code != 200:
-            return None
-        soup = BeautifulSoup(resp.text, 'html.parser')
+    for q in queries:
+        search_url = cfg["search_url"].format(query=q)
+        try:
+            resp = session.get(search_url, timeout=10)
+            if resp.status_code != 200:
+                continue
+            soup = BeautifulSoup(resp.text, 'html.parser')
 
-        if retailer_key == "hj":
-            items = soup.select('.product-miniature, .js-product-miniature')
-            for it in items:
-                title_el = it.select_one('.product-title a')
-                if title_el:
-                    title = title_el.get_text().strip()
-                    if all(k.lower() in title.lower() for k in model["keywords"]) and check_category_match(title, category):
-                        return title_el['href']
+            if retailer_key == "hj":
+                items = soup.select('.product-miniature, .js-product-miniature')
+                for it in items:
+                    title_el = it.select_one('.product-title a')
+                    if title_el:
+                        title = title_el.get_text().strip()
+                        if all(k.lower() in title.lower() for k in model["keywords"]) and check_category_match(title, category):
+                            return title_el['href']
 
-        elif retailer_key == "hp":
-            items = soup.select('.product-item-info')
-            for it in items:
-                title_el = it.select_one('a.product-item-link')
-                if title_el:
-                    title = title_el.get_text().strip()
-                    if all(k.lower() in title.lower() for k in model["keywords"]) and check_category_match(title, category):
-                        return title_el['href']
+            elif retailer_key == "hp":
+                items = soup.select('.product-item-info')
+                for it in items:
+                    title_el = it.select_one('a.product-item-link')
+                    if title_el:
+                        title = title_el.get_text().strip()
+                        if all(k.lower() in title.lower() for k in model["keywords"]) and check_category_match(title, category):
+                            return title_el['href']
 
-        elif retailer_key == "sp":
-            items = soup.select('.c-product-card, article')
-            for it in items:
-                title_el = it.select_one('a[href*="/d"]')
-                if title_el:
-                    title = title_el.get_text().strip()
-                    if all(k.lower() in title.lower() for k in model["keywords"]) and check_category_match(title, category):
-                        link = title_el['href']
-                        if not link.startswith('http'):
-                            link = "https://www.sportega.lv" + link
-                        return link
-    except Exception as e:
-        print(f"[{retailer_key.upper()}] Meklēšanas kļūda vaicājumam '{query}': {e}")
+            elif retailer_key == "sp":
+                items = soup.select('.c-product-card, article')
+                for it in items:
+                    title_el = it.select_one('a[href*="/d"]')
+                    if title_el:
+                        title = title_el.get_text().strip()
+                        if all(k.lower() in title.lower() for k in model["keywords"]) and check_category_match(title, category):
+                            link = title_el['href']
+                            if not link.startswith('http'):
+                                link = "https://www.sportega.lv" + link
+                            return link
+        except Exception as e:
+            print(f"[{retailer_key.upper()}] Meklēšanas kļūda vaicājumam '{q}': {e}")
 
     return None
 
@@ -207,7 +229,6 @@ def extract_real_price(soup, retailer_key):
                 clean = re.sub(r'[^\d.,]', '', p_elem.get_text()).replace(',', '.')
                 return float(clean)
 
-        # Rezerves meta tags
         meta_p = soup.find('meta', attrs={'property': 'product:price:amount'}) or soup.find('meta', attrs={'itemprop': 'price'})
         if meta_p and meta_p.get('content'):
             return float(meta_p['content'].replace(',', '.'))
@@ -216,7 +237,7 @@ def extract_real_price(soup, retailer_key):
     return 0.0
 
 def extract_real_sizes(soup, retailer_key, category):
-    """Nolasa tikai faktiski noliktavā esošos izmērus."""
+    """Nolasa tikai noliktavā pieejamos izmērus."""
     sizes = []
     try:
         if retailer_key == 'hj':
@@ -226,8 +247,12 @@ def extract_real_sizes(soup, retailer_key, category):
                 if not txt:
                     continue
                 match_yth = re.search(r'Y\s*([\d.]+)', txt, re.IGNORECASE)
-                if match_yth:
+                if match_yth and category == 'Youth':
                     sizes.append(f"Yth {match_yth.group(1)}")
+                elif category == 'Intermediate':
+                    match_int = re.search(r'\b([4-6])(?:\.5)?\b', txt)
+                    if match_int:
+                        sizes.append(match_int.group(0))
                 elif category == 'Senior':
                     match_sr = re.search(r'\b([6-9]|1[0-3])(?:\.5)?\b', txt)
                     if match_sr:
@@ -236,7 +261,6 @@ def extract_real_sizes(soup, retailer_key, category):
         elif retailer_key == 'hp':
             swatches = soup.select('.swatch-attribute.size .swatch-option, .swatch-attribute.boot_size .swatch-option')
             for sw in swatches:
-                # Ja ir klase 'disabled', izmērs nav noliktavā!
                 if 'disabled' in sw.get('class', []):
                     continue
                 txt = sw.get_text().strip()
@@ -257,12 +281,11 @@ def extract_real_sizes(soup, retailer_key, category):
                     eur_val = eur_match.group(1)
                     if category == 'Youth' and eur_val in EUR_TO_YOUTH:
                         sizes.append(EUR_TO_YOUTH[eur_val])
-                    elif category != 'Youth':
+                    else:
                         sizes.append(eur_val)
     except Exception as e:
         print(f"Kļūda lasot izmērus: {e}")
 
-    # Ja atsevišķa variāciju selektora nav, pārbauda virsrakstu (viena izmēra prece)
     if not sizes and category == 'Youth':
         title = soup.get_text()
         yth_matches = re.findall(r'Yth\s*([\d.]+)|EUR\s*(\d{2})', title, re.IGNORECASE)
@@ -275,7 +298,7 @@ def extract_real_sizes(soup, retailer_key, category):
     return list(dict.fromkeys(sizes))
 
 def scrape_url(url, retailer_key, category, session):
-    """Atver atrasto konkrēto lapu un nolasa reālos datus."""
+    """Atver atrasto lapu un nolasa reālos datus."""
     try:
         resp = session.get(url, timeout=12)
         if resp.status_code != 200:
@@ -284,7 +307,6 @@ def scrape_url(url, retailer_key, category, session):
         soup = BeautifulSoup(resp.text, 'html.parser')
         price = extract_real_price(soup, retailer_key)
 
-        # Groza pogas un noliktavas pārbaude
         btn = soup.select_one('#product-addtocart-button, .add-to-cart, button[data-button-action="add-to-cart"], .c-product-detail__btn-buy')
         is_in_stock = bool(btn and not btn.has_attr('disabled'))
 
@@ -314,16 +336,22 @@ def scrape_all():
             for r_key in ["hj", "hp", "sp"]:
                 print(f"Pārbauda [{cat.upper()}] {r_key.upper()} -> {model['brand']} {model['id']}...")
 
-                # 1. Pārbauda, vai ir iepriekš fiksēta tiešā saite
+                # 1. Pārbauda, vai ir fiksēta tiešā saite
                 target_url = model.get("direct_urls", {}).get(cat, {}).get(r_key)
 
-                # 2. Ja tiešās saites nav, izmanto Viedo meklētāju
+                # 2. Ja tiešās saites nav, meklē veikalā
                 if not target_url:
                     target_url = discover_product_url(r_key, model, cat, session)
 
-                # 3. Ja prece veikalā nav atrasta vispār
+                # 3. Ja prece veikalā nav atrasta
                 if not target_url:
-                    fallback_link = RETAILER_CONFIG[r_key]["youth_fallback"] if cat == "Youth" else RETAILER_CONFIG[r_key]["default_url"]
+                    if cat == "Youth":
+                        fallback_link = RETAILER_CONFIG[r_key]["youth_fallback"]
+                    elif cat == "Intermediate":
+                        fallback_link = RETAILER_CONFIG[r_key]["intermediate_fallback"]
+                    else:
+                        fallback_link = RETAILER_CONFIG[r_key]["default_url"]
+
                     print(f" -> Nav atrasts veikalā. Atzīmēts kā nepieejams.")
                     all_offers.append({
                         "type": model["type"],
@@ -341,7 +369,7 @@ def scrape_all():
                     })
                     continue
 
-                # 4. Ja saite atrasta, nolasa cenu un izmērus
+                # 4. Nolasa cenu un pieejamos izmērus
                 price, stock, sizes, final_url, status = scrape_url(target_url, r_key, cat, session)
                 time.sleep(1)
 
