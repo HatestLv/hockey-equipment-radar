@@ -350,8 +350,30 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
 .sum small{display:block;color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 .sum b{font-size:18px;font-weight:800}
 
-/* PIELĀGOTS KĀRTOŠANAS DROPDOWN */
-.sort-box{position:relative;display:flex;align-items:center;gap:8px}
+/* FILTRU JOSLA — AR OVERFLOW: VISIBLE LAI DROPDOWN NETIKTU APGRIEZTS */
+.filters-bar{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px 14px;
+  margin-bottom:18px;
+  position:relative;
+  z-index:20;
+  overflow:visible;
+}
+@media (max-width:860px){.filters-bar{flex-wrap:wrap}}
+
+.profile-pill-link{display:inline-flex;align-items:center;gap:8px;background:rgba(237,32,39,.08);border:1px solid rgba(237,32,39,.28);padding:7px 12px;border-radius:8px;font-size:13px;color:var(--text);text-decoration:none;cursor:pointer;transition:all .15s ease;flex-shrink:0;white-space:nowrap}
+.profile-pill-link:hover{background:rgba(237,32,39,.16);border-color:var(--red);transform:translateY(-1px)}
+.profile-pill-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);flex-shrink:0}
+.profile-pill-tag{color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;margin-left:2px}
+.filters-bar .divider{width:1px;height:24px;background:var(--line);margin:0 2px;flex-shrink:0}
+
+/* PIELĀGOTS KĀRTOŠANAS DROPDOWN AR APDROŠINĀTU Z-INDEX */
+.sort-box{position:relative;display:flex;align-items:center;gap:8px;z-index:25}
 .sort-btn{
   background:var(--switch-bg);
   border:1px solid var(--switch-border);
@@ -371,17 +393,18 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
 .sort-btn:hover, .sort-btn.active{border-color:var(--red);transform:scale(1.02)}
 .sort-btn svg{color:var(--muted);transition:transform .2s ease}
 .sort-btn.active svg{transform:rotate(180deg)}
+
 .sort-menu{
   position:absolute;
   top:calc(100% + 8px);
   left:0;
-  min-width:210px;
+  min-width:220px;
   background:var(--card);
   border:1px solid var(--line);
   border-radius:12px;
-  box-shadow:0 12px 32px rgba(0,0,0,.35);
+  box-shadow:0 16px 36px rgba(0,0,0,.5);
   padding:6px;
-  z-index:100;
+  z-index:1000;
   opacity:0;
   visibility:hidden;
   transform:translateY(-6px);
@@ -448,13 +471,22 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
   transform:scale(1);
 }
 
-.filters-bar{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:18px;overflow-x:auto;scrollbar-width:none}
-.filters-bar::-webkit-scrollbar{display:none}
-.profile-pill-link{display:inline-flex;align-items:center;gap:8px;background:rgba(237,32,39,.08);border:1px solid rgba(237,32,39,.28);padding:7px 12px;border-radius:8px;font-size:13px;color:var(--text);text-decoration:none;cursor:pointer;transition:all .15s ease;flex-shrink:0;white-space:nowrap}
-.profile-pill-link:hover{background:rgba(237,32,39,.16);border-color:var(--red);transform:translateY(-1px)}
-.profile-pill-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);flex-shrink:0}
-.profile-pill-tag{color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;margin-left:2px}
-.filters-bar .divider{width:1px;height:24px;background:var(--line);margin:0 2px;flex-shrink:0}
+.custom-select{
+  appearance:none;
+  background:var(--switch-bg) url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23a9b0be%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E") no-repeat right 8px center;
+  background-size:14px;
+  color:var(--text);
+  border:1px solid var(--switch-border);
+  border-radius:10px;
+  padding:0 28px 0 12px;
+  height:32px;
+  font-size:13px;
+  font-weight:600;
+  outline:none;
+  cursor:pointer;
+  transition:all .2s ease;
+}
+.custom-select:hover, .custom-select:focus{border-color:var(--red)}
 
 /* SKATU POGAS */
 .views{margin-left:auto;display:flex;gap:6px;flex-shrink:0}
@@ -630,7 +662,7 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
 .rail-wrap{display:grid;grid-template-columns:repeat(3, 1fr);gap:18px;align-items:stretch}
 @media (max-width:960px){.rail-wrap{grid-template-columns:1fr}}
 
-/* AIZSARGU SADAĻA */
+/* AIZSARGU SADAĻA — BEZ RĀMJA, AR DABISKU ZEMES ĒNU */
 .uc-wrap{
   margin:40px auto;
   max-width:820px;
@@ -639,7 +671,28 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
   background:transparent;
   border:none;
 }
-.uc-img{max-width:100%;max-height:320px;border-radius:12px;margin:0 auto 24px;display:block;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.uc-img-box{
+  position:relative;
+  display:inline-block;
+  margin:0 auto 28px;
+}
+.uc-img{
+  max-width:100%;
+  max-height:300px;
+  display:block;
+  border:none;
+  box-shadow:none;
+}
+.uc-img-shadow{
+  position:absolute;
+  bottom:-14px;
+  left:10%;
+  width:80%;
+  height:18px;
+  background:radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, transparent 72%);
+  filter:blur(5px);
+  pointer-events:none;
+}
 
 /* PROFILA BLOKS */
 .profile-tabs{display:flex;gap:8px;margin-bottom:20px;border-bottom:1px solid var(--line);padding-bottom:12px}
@@ -670,7 +723,6 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
 .form-group{display:flex;flex-direction:column;gap:7px}
 .form-group label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
 
-/* Vienots formu dizains */
 .form-group input, .form-group textarea{
   background:var(--input-bg);
   color:var(--text);
@@ -948,7 +1000,6 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
     <form id="contact-quick-form" style="display:flex; flex-direction:column; gap:12px; margin-bottom:16px;">
       <div class="form-group">
         <label for="msg-subject">Tēma</label>
-        <!-- Kontaktu tēmas izvēlne tagad saskan ar jauno izkrītošo sarakstu standartu -->
         <div class="sort-box" style="width:100%;">
           <button id="msg-subject-btn" class="sort-btn" style="width:100%; justify-content:space-between;" type="button">
             <span id="msg-subject-label">Neprecīza cena vai noliktavas statuss</span>
@@ -1165,11 +1216,11 @@ const t = (k, params = {}) => {
 function getUiTimestamp() {
   try {
     const d = new Date(document.lastModified);
-    if (isNaN(d.getTime())) return '03.11.2026 12:45';
+    if (isNaN(d.getTime())) return '03.11.2026 14:10';
     const pad = n => ('0' + n).slice(-2);
     return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
   } catch(e) {
-    return '03.11.2026 12:45';
+    return '03.11.2026 14:10';
   }
 }
 
@@ -1377,7 +1428,7 @@ function meter(m) {
   </div>`;
 }
 
-/* KARTĪŠU RENDERĒŠANA (VIENOTS AUGSTUMS / PILNA INFORMĀCIJA PAT NEPIEEJAMĀM) */
+/* KARTĪŠU RENDERĒŠANA (VIENOTS AUGSTUMS) */
 function renderCard(m, rKey) {
   const r = RETAILERS[rKey];
   const o = OFFERS.find(x => x.model === m.id && x.retailer === rKey);
@@ -1677,13 +1728,18 @@ function viewCategory(type) {
 function viewProtective() {
   return `
     <div class="uc-wrap">
-      <img src="img/under-construction.png" alt="Aizsargu modulis izstrādē" class="uc-img" onerror="this.src='img/under-construction.jpg'; this.onerror=function(){this.style.display='none';}">
-      <span class="hero-tag" style="margin-bottom:12px;">Drīzumā</span>
-      <h1 style="font-size:26px; margin-bottom:10px;">Hockey Equipment Radar PRO</h1>
-      <p style="color:var(--muted); max-width:560px; margin:0 auto 20px; font-size:14px; line-height:1.6;">
-        Tiek izstrādāts viedais plecsargu, elkoņsargu, kājsargu, bikšu, cimdu un ķiveres salīdzināšanas modulis ar precīziem izmēru kalkulatoriem un aizsardzības klasēm.
-      </p>
-      <button data-t="home" class="btn-save-profile" style="padding:10px 20px; font-size:14px;">Atgriezties uz sākumu</button>
+      <div class="uc-img-box">
+        <img src="img/under-construction.png" alt="Aizsargu modulis izstrādē" class="uc-img" onerror="this.src='img/under-construction.jpg'; this.onerror=function(){this.style.display='none';}">
+        <div class="uc-img-shadow"></div>
+      </div>
+      <div>
+        <span class="hero-tag" style="margin-bottom:12px;">Drīzumā</span>
+        <h1 style="font-size:26px; margin-bottom:10px;">Hockey Equipment Radar PRO</h1>
+        <p style="color:var(--muted); max-width:560px; margin:0 auto 24px; font-size:14px; line-height:1.6;">
+          Tiek izstrādāts viedais plecsargu, elkoņsargu, kājsargu, bikšu, cimdu un ķiveres salīdzināšanas modulis ar precīziem izmēru kalkulatoriem un aizsardzības klasēm.
+        </p>
+        <button data-t="home" class="btn-save-profile" style="padding:10px 22px; font-size:14px;">Atgriezties uz sākumu</button>
+      </div>
     </div>
   `;
 }
@@ -1964,7 +2020,7 @@ document.addEventListener('click', e => {
 
   // Kārtošanas izvēle
   const so = e.target.closest('.sort-opt');
-  if (so) {
+  if (so && !so.hasAttribute('data-msg-subject')) {
     S.sort = so.dataset.sort;
     const sm = document.getElementById('sort-menu');
     const sb = document.getElementById('sort-btn');
@@ -1974,11 +2030,34 @@ document.addEventListener('click', e => {
     return;
   }
 
+  // Kontaktu formas dropdown
+  const msb = e.target.closest('#msg-subject-btn');
+  if (msb) {
+    const msm = document.getElementById('msg-subject-menu');
+    if (msm) {
+      msm.classList.toggle('open');
+      msb.classList.toggle('active');
+    }
+    return;
+  }
+
+  const mso = e.target.closest('[data-msg-subject]');
+  if (mso) {
+    const val = mso.dataset.msgSubject;
+    document.getElementById('msg-subject-label').textContent = val;
+    document.getElementById('msg-subject-val').value = val;
+    document.querySelectorAll('[data-msg-subject]').forEach(b => b.classList.remove('active'));
+    mso.classList.add('active');
+    document.getElementById('msg-subject-menu').classList.remove('open');
+    document.getElementById('msg-subject-btn').classList.remove('active');
+    return;
+  }
+
   if (!e.target.closest('.sort-box')) {
-    const sm = document.getElementById('sort-menu');
-    const sb = document.getElementById('sort-btn');
-    if (sm) sm.classList.remove('open');
-    if (sb) sb.classList.remove('active');
+    document.getElementById('sort-menu')?.classList.remove('open');
+    document.getElementById('sort-btn')?.classList.remove('active');
+    document.getElementById('msg-subject-menu')?.classList.remove('open');
+    document.getElementById('msg-subject-btn')?.classList.remove('active');
   }
 
   const mb = e.target.closest('#menu-btn');
