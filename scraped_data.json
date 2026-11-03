@@ -1,22 +1,25 @@
 {
-  "updatedAt": "2026-11-03T16:22:59.593161",
+  "updatedAt": "2026-11-03T16:45:03.580079",
   "offers": [
     {
       "type": "skate",
       "category": "Senior",
       "model": "bauer-supreme-m40",
       "retailer": "hj",
-      "price": 0.0,
+      "price": 416.49,
       "shipping": 0.0,
-      "sizes": [],
+      "sizes": [
+        "7.5",
+        "3"
+      ],
       "fits": [
         "FIT 2",
         "Regular"
       ],
-      "stock": false,
+      "stock": true,
       "checked": "2026-11-03",
-      "url": "https://www.hokejam.lv/lv/48-pieauguso-hokeja-slidas",
-      "status": "UNVERIFIED"
+      "url": "https://www.hokejam.lv/lv/pieauguso-hokeja-slidas/4507-bauer-supreme-m40-pieauguso-hokeja-slidas",
+      "status": "VERIFIED"
     },
     {
       "type": "skate",
@@ -32,7 +35,7 @@
       ],
       "stock": false,
       "checked": "2026-11-03",
-      "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas",
+      "url": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s24-m40-senior-hokeja-slidas",
       "status": "UNVERIFIED"
     },
     {
@@ -49,7 +52,7 @@
       ],
       "stock": false,
       "checked": "2026-11-03",
-      "url": "https://www.sportega.lv/hokeja-slidas/c354",
+      "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-senior/d1438036",
       "status": "UNVERIFIED"
     },
     {
@@ -86,7 +89,7 @@
       ],
       "stock": false,
       "checked": "2026-11-03",
-      "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas",
+      "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-jauniesiem",
       "status": "UNVERIFIED"
     },
     {
@@ -103,7 +106,7 @@
       ],
       "stock": false,
       "checked": "2026-11-03",
-      "url": "https://www.sportega.lv/hokeja-slidas/c354",
+      "url": "https://www.sportega.lv/hokeja-ekipejums/jauniesi/c2558",
       "status": "UNVERIFIED"
     },
     {
@@ -174,7 +177,7 @@
       ],
       "stock": true,
       "checked": "2026-11-03",
-      "url": "https://www.hokejam.lv/lv/bernu-hokeja-slidas/5729-20693-bauer-supreme-m40-s24-bernu-hokeja-slidas#/94-platums-d/3931-slidu_izmers-y_115",
+      "url": "https://www.hokejam.lv/lv/bernu-hokeja-slidas/5729-bauer-supreme-m40-s24-bernu-hokeja-slidas",
       "status": "VERIFIED"
     },
     {
@@ -191,7 +194,7 @@
       ],
       "stock": false,
       "checked": "2026-11-03",
-      "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-berniem",
+      "url": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s24-m40-youth-hokeja-slidas",
       "status": "UNVERIFIED"
     },
     {
@@ -201,14 +204,24 @@
       "retailer": "sp",
       "price": 0.0,
       "shipping": 4.0,
-      "sizes": [],
+      "sizes": [
+        "Yth 8",
+        "Yth 7",
+        "Yth 9",
+        "Yth 10",
+        "Yth 10.5",
+        "Yth 11",
+        "Yth 12",
+        "Yth 12.5",
+        "Yth 13.5"
+      ],
       "fits": [
         "FIT 2",
         "Regular"
       ],
       "stock": false,
       "checked": "2026-11-03",
-      "url": "https://www.sportega.lv/hokeja-ekipejums/berns-youth/c233",
+      "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-youth-d-standarta-kaja-eur-26/d1438563",
       "status": "UNVERIFIED"
     },
     {
@@ -242,7 +255,7 @@
       ],
       "stock": false,
       "checked": "2026-11-03",
-      "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas",
+      "url": "https://hokejapasaule.lv/lv_lv/bauer-vapor-s25-fly40-senior-hokeja-slidas",
       "status": "UNVERIFIED"
     },
     {
@@ -259,7 +272,7 @@
       ],
       "stock": false,
       "checked": "2026-11-03",
-      "url": "https://www.sportega.lv/hokeja-slidas/c354",
+      "url": "https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-senior/d1502757",
       "status": "UNVERIFIED"
     },
     {
@@ -293,7 +306,7 @@
       ],
       "stock": false,
       "checked": "2026-11-03",
-      "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas",
+      "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-jauniesiem",
       "status": "UNVERIFIED"
     },
     {
@@ -310,7 +323,7 @@
       ],
       "stock": false,
       "checked": "2026-11-03",
-      "url": "https://www.sportega.lv/hokeja-slidas/c354",
+      "url": "https://www.sportega.lv/hokeja-ekipejums/jauniesi/c2558",
       "status": "UNVERIFIED"
     },
     {
@@ -397,7 +410,7 @@
       ],
       "stock": false,
       "checked": "2026-11-03",
-      "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-berniem",
+      "url": "https://hokejapasaule.lv/lv_lv/bauer-vapor-s25-fly40-youth-hokeja-slidas",
       "status": "UNVERIFIED"
     },
     {
@@ -407,14 +420,24 @@
       "retailer": "sp",
       "price": 0.0,
       "shipping": 4.0,
-      "sizes": [],
+      "sizes": [
+        "Yth 8",
+        "Yth 13.5",
+        "Yth 7",
+        "Yth 9",
+        "Yth 10",
+        "Yth 10.5",
+        "Yth 11",
+        "Yth 12",
+        "Yth 12.5"
+      ],
       "fits": [
         "FIT 2",
         "Regular"
       ],
       "stock": false,
       "checked": "2026-11-03",
-      "url": "https://www.sportega.lv/hokeja-ekipejums/berns-youth/c233",
+      "url": "https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-youth-d-standarta-kaja-eur-26/d1503208",
       "status": "UNVERIFIED"
     },
     {
@@ -422,17 +445,20 @@
       "category": "Senior",
       "model": "bauer-supreme-f40",
       "retailer": "hj",
-      "price": 0.0,
+      "price": 475.99,
       "shipping": 0.0,
-      "sizes": [],
+      "sizes": [
+        "8",
+        "2"
+      ],
       "fits": [
         "FIT 2",
         "Regular"
       ],
-      "stock": false,
+      "stock": true,
       "checked": "2026-11-03",
-      "url": "https://www.hokejam.lv/lv/48-pieauguso-hokeja-slidas",
-      "status": "UNVERIFIED"
+      "url": "https://www.hokejam.lv/lv/pieauguso-hokeja-slidas/5455-bauer-supreme-f40-s26-pieauguso-hokeja-slidas",
+      "status": "VERIFIED"
     },
     {
       "type": "skate",
@@ -448,7 +474,7 @@
       ],
       "stock": false,
       "checked": "2026-11-03",
-      "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas",
+      "url": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s26-f40-senior-hokeja-slidas",
       "status": "UNVERIFIED"
     },
     {
@@ -465,7 +491,7 @@
       ],
       "stock": false,
       "checked": "2026-11-03",
-      "url": "https://www.sportega.lv/hokeja-slidas/c354",
+      "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-f40-senior/d1583973",
       "status": "UNVERIFIED"
     },
     {
@@ -499,7 +525,7 @@
       ],
       "stock": false,
       "checked": "2026-11-03",
-      "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas",
+      "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-jauniesiem",
       "status": "UNVERIFIED"
     },
     {
@@ -516,7 +542,7 @@
       ],
       "stock": false,
       "checked": "2026-11-03",
-      "url": "https://www.sportega.lv/hokeja-slidas/c354",
+      "url": "https://www.sportega.lv/hokeja-ekipejums/jauniesi/c2558",
       "status": "UNVERIFIED"
     },
     {
@@ -568,6 +594,57 @@
       "stock": false,
       "checked": "2026-11-03",
       "url": "https://www.sportega.lv/hokeja-ekipejums/juniors/c2559",
+      "status": "UNVERIFIED"
+    },
+    {
+      "type": "stick",
+      "category": "Senior",
+      "model": "bauer-supreme-fuse-s26",
+      "retailer": "hj",
+      "price": 288.99,
+      "shipping": 0.0,
+      "sizes": [],
+      "fits": [
+        "FIT 2",
+        "Regular"
+      ],
+      "stock": true,
+      "checked": "2026-11-03",
+      "url": "https://www.hokejam.lv/lv/pieauguso-kompozitu-hokeja-nujas/5726-20674-bauer-supreme-fuse-s26-senior-composite-hockey-stick#/27-virsma-grip/31-puse-kreisa_puse/43-liekums-p92/58-cietiba-65",
+      "status": "VERIFIED"
+    },
+    {
+      "type": "stick",
+      "category": "Senior",
+      "model": "bauer-supreme-fuse-s26",
+      "retailer": "hp",
+      "price": 0.0,
+      "shipping": 3.5,
+      "sizes": [],
+      "fits": [
+        "FIT 2",
+        "Regular"
+      ],
+      "stock": false,
+      "checked": "2026-11-03",
+      "url": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s26-fuse-grip-senior-hokeja-nuja",
+      "status": "UNVERIFIED"
+    },
+    {
+      "type": "stick",
+      "category": "Senior",
+      "model": "bauer-supreme-fuse-s26",
+      "retailer": "sp",
+      "price": 0.0,
+      "shipping": 4.0,
+      "sizes": [],
+      "fits": [
+        "FIT 2",
+        "Regular"
+      ],
+      "stock": false,
+      "checked": "2026-11-03",
+      "url": "https://www.sportega.lv/kompozitmateriala-hokeja-nuja-bauer-supreme-fuse-senior/d1585348",
       "status": "UNVERIFIED"
     }
   ]
