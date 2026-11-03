@@ -14,8 +14,10 @@ HEADERS = {
 }
 
 TARGET_SKATES = [
+    # --- SENIOR ---
     {
         "type": "skate",
+        "category": "Senior",
         "model": "bauer-vapor-fly40",
         "retailer": "hp",
         "url": "https://hokejapasaule.lv/lv_lv/bauer-vapor-s25-fly40-senior-hokeja-slidas",
@@ -25,6 +27,7 @@ TARGET_SKATES = [
     },
     {
         "type": "skate",
+        "category": "Senior",
         "model": "bauer-vapor-fly40",
         "retailer": "hj",
         "url": "https://www.hokejam.lv/lv/meklesana?search=FLY40",
@@ -34,6 +37,7 @@ TARGET_SKATES = [
     },
     {
         "type": "skate",
+        "category": "Senior",
         "model": "bauer-vapor-fly40",
         "retailer": "sp",
         "url": "https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-senior/d1502757",
@@ -43,6 +47,7 @@ TARGET_SKATES = [
     },
     {
         "type": "skate",
+        "category": "Senior",
         "model": "bauer-supreme-f40",
         "retailer": "hp",
         "url": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s26-f40-senior-hokeja-slidas",
@@ -52,6 +57,7 @@ TARGET_SKATES = [
     },
     {
         "type": "skate",
+        "category": "Senior",
         "model": "bauer-supreme-f40",
         "retailer": "hj",
         "url": "https://www.hokejam.lv/lv/pieauguso-hokeja-slidas/5455-bauer-supreme-f40-s26-pieauguso-hokeja-slidas",
@@ -61,6 +67,7 @@ TARGET_SKATES = [
     },
     {
         "type": "skate",
+        "category": "Senior",
         "model": "bauer-supreme-f40",
         "retailer": "sp",
         "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-f40-senior/d1583973",
@@ -70,6 +77,7 @@ TARGET_SKATES = [
     },
     {
         "type": "skate",
+        "category": "Senior",
         "model": "bauer-supreme-m40",
         "retailer": "hp",
         "url": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s24-m40-senior-hokeja-slidas",
@@ -79,6 +87,7 @@ TARGET_SKATES = [
     },
     {
         "type": "skate",
+        "category": "Senior",
         "model": "bauer-supreme-m40",
         "retailer": "hj",
         "url": "https://www.hokejam.lv/lv/pieauguso-hokeja-slidas/4507-bauer-supreme-m40-pieauguso-hokeja-slidas",
@@ -88,11 +97,113 @@ TARGET_SKATES = [
     },
     {
         "type": "skate",
+        "category": "Senior",
         "model": "bauer-supreme-m40",
         "retailer": "sp",
         "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-senior/d1438036",
         "default_sizes": ["7", "7.5", "8"],
         "default_fits": ["FIT 2"],
+        "shipping": 4.0
+    },
+
+    # --- YOUTH (BĒRNU) ---
+    {
+        "type": "skate",
+        "category": "Youth",
+        "model": "bauer-vapor-fly40",
+        "retailer": "hp",
+        "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-berniem",
+        "keywords": ["fly40", "vapor"],
+        "default_sizes": ["Yth 8", "Yth 9", "Yth 10", "Yth 11", "Yth 12", "Yth 13"],
+        "default_fits": ["FIT 2", "Regular"],
+        "shipping": 3.5
+    },
+    {
+        "type": "skate",
+        "category": "Youth",
+        "model": "bauer-vapor-fly40",
+        "retailer": "hj",
+        "url": "https://www.hokejam.lv/lv/51-bernu-hokeja-slidas",
+        "keywords": ["fly40", "vapor"],
+        "default_sizes": ["Yth 9", "Yth 10", "Yth 11", "Yth 12"],
+        "default_fits": ["FIT 2", "Regular"],
+        "shipping": 0.0
+    },
+    {
+        "type": "skate",
+        "category": "Youth",
+        "model": "bauer-vapor-fly40",
+        "retailer": "sp",
+        "url": "https://www.sportega.lv/hokeja-ekipejums/berns-youth/c233",
+        "keywords": ["fly40", "vapor"],
+        "default_sizes": ["Yth 8", "Yth 9", "Yth 10", "Yth 11", "Yth 12", "Yth 13"],
+        "default_fits": ["FIT 2", "Regular"],
+        "shipping": 4.0
+    },
+    {
+        "type": "skate",
+        "category": "Youth",
+        "model": "bauer-supreme-f40",
+        "retailer": "hp",
+        "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-berniem",
+        "keywords": ["f40", "supreme"],
+        "default_sizes": ["Yth 8", "Yth 9", "Yth 10", "Yth 11", "Yth 12"],
+        "default_fits": ["FIT 2", "Regular"],
+        "shipping": 3.5
+    },
+    {
+        "type": "skate",
+        "category": "Youth",
+        "model": "bauer-supreme-f40",
+        "retailer": "hj",
+        "url": "https://www.hokejam.lv/lv/51-bernu-hokeja-slidas",
+        "keywords": ["f40", "supreme"],
+        "default_sizes": ["Yth 10", "Yth 11", "Yth 12"],
+        "default_fits": ["FIT 2", "Regular"],
+        "shipping": 0.0
+    },
+    {
+        "type": "skate",
+        "category": "Youth",
+        "model": "bauer-supreme-f40",
+        "retailer": "sp",
+        "url": "https://www.sportega.lv/hokeja-ekipejums/berns-youth/c233",
+        "keywords": ["f40", "supreme"],
+        "default_sizes": ["Yth 8", "Yth 9", "Yth 10", "Yth 11", "Yth 12"],
+        "default_fits": ["FIT 2", "Regular"],
+        "shipping": 4.0
+    },
+    {
+        "type": "skate",
+        "category": "Youth",
+        "model": "bauer-supreme-m40",
+        "retailer": "hp",
+        "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-berniem",
+        "keywords": ["m40", "supreme"],
+        "default_sizes": ["Yth 8", "Yth 9", "Yth 10", "Yth 11"],
+        "default_fits": ["FIT 2", "Regular"],
+        "shipping": 3.5
+    },
+    {
+        "type": "skate",
+        "category": "Youth",
+        "model": "bauer-supreme-m40",
+        "retailer": "hj",
+        "url": "https://www.hokejam.lv/lv/51-bernu-hokeja-slidas",
+        "keywords": ["m40", "supreme"],
+        "default_sizes": ["Yth 8", "Yth 9", "Yth 10"],
+        "default_fits": ["FIT 2", "Regular"],
+        "shipping": 0.0
+    },
+    {
+        "type": "skate",
+        "category": "Youth",
+        "model": "bauer-supreme-m40",
+        "retailer": "sp",
+        "url": "https://www.sportega.lv/hokeja-ekipejums/berns-youth/c233",
+        "keywords": ["m40", "supreme"],
+        "default_sizes": ["Yth 8", "Yth 9", "Yth 10", "Yth 11", "Yth 12"],
+        "default_fits": ["FIT 2", "Regular"],
         "shipping": 4.0
     }
 ]
@@ -100,6 +211,7 @@ TARGET_SKATES = [
 TARGET_STICKS = [
     {
         "type": "stick",
+        "category": "Senior",
         "model": "bauer-supreme-fuse-s26",
         "retailer": "hp",
         "url": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s26-fuse-grip-senior-hokeja-nuja",
@@ -110,6 +222,7 @@ TARGET_STICKS = [
     },
     {
         "type": "stick",
+        "category": "Senior",
         "model": "bauer-supreme-fuse-s26",
         "retailer": "hj",
         "url": "https://www.hokejam.lv/lv/pieauguso-kompozitu-hokeja-nujas/5726-20674-bauer-supreme-fuse-s26-senior-composite-hockey-stick#/27-virsma-grip/31-puse-kreisa_puse/43-liekums-p92/58-cietiba-65",
@@ -120,6 +233,7 @@ TARGET_STICKS = [
     },
     {
         "type": "stick",
+        "category": "Senior",
         "model": "bauer-supreme-fuse-s26",
         "retailer": "sp",
         "url": "https://www.sportega.lv/kompozitmateriala-hokeja-nuja-bauer-supreme-fuse-senior/d1585348",
@@ -155,12 +269,12 @@ def extract_price(html, soup):
                                     pass
                 return None
             res = find_p(raw)
-            if res and 40 <= res <= 3000:
+            if res and 30 <= res <= 3000:
                 return res
         except:
             continue
 
-    # 2. Meta tagi (OpenGraph / Schema)
+    # 2. Meta tagi
     for attr in [
         {'property': 'product:price:amount'},
         {'itemprop': 'price'},
@@ -172,7 +286,7 @@ def extract_price(html, soup):
             cleaned = re.sub(r'[^\d.,]', '', meta['content']).replace(',', '.')
             try:
                 val = float(cleaned)
-                if 40 <= val <= 3000:
+                if 30 <= val <= 3000:
                     return val
             except:
                 pass
@@ -195,7 +309,7 @@ def extract_price(html, soup):
             if p_el.has_attr('data-price-amount'):
                 try:
                     val = float(p_el['data-price-amount'])
-                    if 40 <= val <= 3000: return val
+                    if 30 <= val <= 3000: return val
                 except:
                     pass
             txt = p_el.get_text()
@@ -203,7 +317,7 @@ def extract_price(html, soup):
             if nums:
                 try:
                     val = float(nums[0].replace(',', '.'))
-                    if 40 <= val <= 3000: return val
+                    if 30 <= val <= 3000: return val
                 except:
                     pass
 
@@ -213,7 +327,7 @@ def extract_price(html, soup):
     for p in p_matches:
         try:
             v = float(p.replace(' ', '').replace(',', '.'))
-            if 40 <= v <= 3000:
+            if 30 <= v <= 3000:
                 valid.append(v)
         except:
             pass
@@ -223,14 +337,12 @@ def extract_price(html, soup):
     return None
 
 def check_stock(html, soup):
-    # Pārbauda konkrētās groza pogas esamību un statusu
     btn = soup.select_one('#product-addtocart-button, .add-to-cart, button[data-button-action="add-to-cart"], .btn-cart, .add_to_cart_button')
     if btn:
         if btn.has_attr('disabled') or 'disabled' in btn.get('class', []):
             return False
         return True
 
-    # Pārbauda mikrodatu pieejamību
     avail_el = soup.select_one('[itemprop="availability"], .product-availability, .stock.available, .stock.unavailable')
     if avail_el:
         txt = (avail_el.get('href', '') + ' ' + avail_el.get_text()).lower()
@@ -239,7 +351,6 @@ def check_stock(html, soup):
         if 'outofstock' in txt or 'out_of_stock' in txt or 'nav noliktavā' in txt or 'izpārdots' in txt:
             return False
 
-    # Fallback teksts preces blokā
     html_low = html.lower()
     if 'prece nav pieejama' in html_low or 'prece ir izpārdota' in html_low:
         return False
@@ -247,6 +358,43 @@ def check_stock(html, soup):
         return True
 
     return False
+
+def scrape_category_listing(cat_url, keywords, session):
+    """Meklē konkrēto modeli bērnu/youth sadaļā pēc atslēgvārdiem"""
+    try:
+        resp = session.get(cat_url, timeout=12)
+        if resp.status_code != 200:
+            return None, False, cat_url
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        
+        # Meklējam visas preču kartītes sarakstā
+        cards = soup.select('.product-item, .product-miniature, .c-product-card, .product-box, article')
+        for card in cards:
+            text = card.get_text().lower()
+            if any(k.lower() in text for k in keywords):
+                # Atrasts modelis šajā kategorijā
+                link_el = card.select_one('a[href]')
+                prod_url = link_el['href'] if link_el else cat_url
+                
+                # Izvelk cenu no kartītes
+                p_text = card.select_one('.price, .c-price__current, [itemprop="price"]')
+                price = None
+                if p_text:
+                    nums = re.findall(r'\d+(?:[.,]\d{2})?', p_text.get_text())
+                    if nums:
+                        price = float(nums[0].replace(',', '.'))
+                
+                stock = True
+                if 'izpārdots' in text or 'out of stock' in text or 'nav noliktavā' in text:
+                    stock = False
+                
+                if price and 30 <= price <= 400:
+                    return price, stock, prod_url
+        
+        return None, False, cat_url
+    except Exception as e:
+        print(f"Kļūda skenējot kategoriju {cat_url}: {e}")
+        return None, False, cat_url
 
 def scrape_url(url, session):
     try:
@@ -263,7 +411,7 @@ def scrape_url(url, session):
         return None, False
 
 def scrape_all():
-    print("Sākas hokeja inventāra cenu skenēšana...")
+    print("Sākas hokeja inventāra cenu skenēšana (Senior & Youth)...")
     session = requests.Session()
     session.headers.update(HEADERS)
     
@@ -271,8 +419,16 @@ def scrape_all():
     updated_offers = []
 
     for t in all_targets:
-        print(f"Pārbauda [{t['type'].upper()}]: {t['retailer'].upper()} -> {t['model']}")
-        price, stock = scrape_url(t['url'], session)
+        cat = t.get("category", "Senior")
+        print(f"Pārbauda [{cat.upper()}] [{t['type'].upper()}]: {t['retailer'].upper()} -> {t['model']}")
+        
+        # Ja ir kategorijas URL ar atslēgvārdiem (Bērnu/Youth meklēšanai)
+        if "keywords" in t:
+            price, stock, item_url = scrape_category_listing(t["url"], t["keywords"], session)
+        else:
+            price, stock = scrape_url(t["url"], session)
+            item_url = t["url"]
+        
         time.sleep(1)
 
         status = 'VERIFIED' if (price and stock) else 'UNVERIFIED'
@@ -280,6 +436,7 @@ def scrape_all():
 
         offer = {
             "type": t["type"],
+            "category": cat,
             "model": t["model"],
             "retailer": t["retailer"],
             "price": float(price) if price else 0.0,
@@ -287,7 +444,7 @@ def scrape_all():
             "shipping": t["shipping"],
             "stock": bool(stock),
             "checked": datetime.now().strftime("%Y-%m-%d"),
-            "url": t["url"],
+            "url": item_url,
             "status": status
         }
 
@@ -309,7 +466,7 @@ def scrape_all():
     with open('scraped_data.json', 'w', encoding='utf-8') as f:
         json.dump(payload, f, indent=2, ensure_ascii=False)
 
-    print("Skenēšana pabeigta un scraped_data.json atjaunināts ar reālajiem datiem.")
+    print("Skenēšana pabeigta un scraped_data.json veiksmīgi atjaunināts ar visām vecuma grupām.")
 
 if __name__ == '__main__':
     scrape_all()
