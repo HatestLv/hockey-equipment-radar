@@ -1,40 +1,43 @@
-name: HER Cenu Radara Skenēšana
+name: Scrape Hockey Data
 
 on:
   schedule:
-    # 4 reizes dienā (06:00, 11:00, 16:00, 21:00 UTC)
+    # Izpildās 4 reizes dienā: 06:00, 11:00, 16:00 un 21:00 UTC
     - cron: '0 6,11,16,21 * * *'
-  workflow_dispatch:
+  workflow_dispatch: # Poga manuālai palaišanai un testēšanai no GitHub paneļa
+
+permissions:
+  contents: write
 
 jobs:
-  run-scraper:
+  scrape-and-update:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write # Ļauj robotam ierakstīt jaunās cenas atpakaļ repozitorijā
-
     steps:
-      - name: 1. Lejupielādē kodu
+      - name: Lejupielādēt kodu (Checkout)
         uses: actions/checkout@v4
 
-      - name: 2. Sagatavo Python vidi
+      - name: Uzstādīt Python vidi
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: 3. Instalē nepieciešamās bibliotēkas
+      - name: Instalēt nepieciešamās bibliotēkas
         run: |
           python -m pip install --upgrade pip
           pip install requests beautifulsoup4
 
-      - name: 4. Palaiž cenu vākšanas skriptu
-        run: |
-          python scraper.py
+      - name: Izpildīt veikalu skenēšanu
+        run: python scraper.py
 
-      - name: 5. Saglabā jauno scraped_data.json failu
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "Automātisks cenu atjauninājums [skip ci]"
-          file_pattern: "scraped_data.json"
-          commit_user_name: "HSR Radar Bot"
-          commit_user_email: "actions@github.com"
+      - name: Saglabāt un nosūtīt atjauninātos datus uz repozitoriju
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add scraped_data.json
+          if git diff --staged --quiet; then
+            echo "Cenu un noliktavas izmaiņas nav konstatētas."
+          else
+            git commit -m "Automātisks datu atjauninājums: $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
