@@ -1,10 +1,9 @@
-name: HSR Cenu Radara Skenēšana
+name: HER Cenu Radara Skenēšana
 
 on:
   schedule:
-    # Automātiski palaižas katru rītu plkst. 05:00 UTC (LV rītā ~07:00 vai 08:00)
-    - cron: '0 5 * * *'
-  # Poga, lai jebkurā brīdī varētu palaist ar roku pārbaudei:
+    # 4 reizes dienā (06:00, 11:00, 16:00, 21:00 UTC)
+    - cron: '0 6,11,16,21 * * *'
   workflow_dispatch:
 
 jobs:
