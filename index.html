@@ -350,7 +350,7 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
 .sum small{display:block;color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 .sum b{font-size:18px;font-weight:800}
 
-/* FILTRU JOSLA — AR OVERFLOW: VISIBLE LAI DROPDOWN NETIKTU APGRIEZTS */
+/* FILTRU JOSLA */
 .filters-bar{
   display:flex;
   align-items:center;
@@ -372,7 +372,7 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
 .profile-pill-tag{color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;margin-left:2px}
 .filters-bar .divider{width:1px;height:24px;background:var(--line);margin:0 2px;flex-shrink:0}
 
-/* PIELĀGOTS KĀRTOŠANAS DROPDOWN AR APDROŠINĀTU Z-INDEX */
+/* PIELĀGOTS KĀRTOŠANAS DROPDOWN */
 .sort-box{position:relative;display:flex;align-items:center;gap:8px;z-index:25}
 .sort-btn{
   background:var(--switch-bg);
@@ -580,7 +580,7 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
   max-width:85%;
   object-fit:contain;
   filter:drop-shadow(0 8px 8px rgba(0,0,0,.35));
-  transition:opacity 0.6s ease-in-out, transform 0.4s ease;
+  transition:opacity 0.8s ease-in-out;
 }
 
 .card-img-dots{position:absolute;bottom:8px;right:12px;z-index:3;display:flex;gap:4px}
@@ -619,7 +619,7 @@ table{border-collapse:collapse;width:100%;background:var(--card);min-width:640px
 th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line)}
 th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
 
-/* HERO SLIDER */
+/* HERO SLIDER (15S INTERVĀLS, MAIGS UN PLŪSTOŠS FADE) */
 .hero-slider-wrap{
   position:relative;
   margin-top:42px;
@@ -638,7 +638,7 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
   padding:0 36px;
   opacity:0;
   pointer-events:none;
-  transition:opacity 0.8s ease-in-out;
+  transition:opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
   background-size:cover;
   background-position:center;
 }
@@ -650,7 +650,7 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
 .hero-tag{display:inline-block;background:var(--red);color:#fff;font-size:11px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
 .hero-title{font-size:clamp(22px,3vw,28px);font-weight:900;line-height:1.2;margin:0 0 8px;color:#fff}
 .hero-desc{font-size:13px;color:#cbd5e1;line-height:1.4;margin:0 0 14px}
-.hero-btn{display:inline-block;background:#fff;color:#0b0f19;padding:8px 18px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none;transition:all .15s}
+.hero-btn{display:inline-block;background:#fff;color:#0b0f19;padding:8px 18px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none;transition:all .2s}
 .hero-btn:hover{transform:translateY(-1px);background:var(--red);color:#fff}
 .slider-dots{position:absolute;bottom:12px;left:36px;display:flex;gap:6px;z-index:3}
 .slider-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;transition:all .2s}
@@ -662,7 +662,7 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
 .rail-wrap{display:grid;grid-template-columns:repeat(3, 1fr);gap:18px;align-items:stretch}
 @media (max-width:960px){.rail-wrap{grid-template-columns:1fr}}
 
-/* AIZSARGU SADAĻA — BEZ RĀMJA, AR DABISKU ZEMES ĒNU */
+/* AIZSARGU SADAĻA — BEZ RĀMJA, AR MAIGU ZEMES ĒNU */
 .uc-wrap{
   margin:40px auto;
   max-width:820px;
@@ -814,15 +814,16 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
 .faq-q{font-weight:700;font-size:13px;color:var(--text);margin-bottom:4px}
 .faq-a{font-size:12px;color:var(--muted);line-height:1.5}
 
-/* LIGHTBOX */
+/* LIGHTBOX (PALINĀTS SKAIDRAI APSKATEI) */
 .lightbox-content{
   position:relative;
-  max-width:700px;
-  width:100%;
+  max-width:980px;
+  width:95%;
+  max-height:92vh;
   background:var(--card);
   border:1px solid var(--line);
   border-radius:16px;
-  padding:24px;
+  padding:20px 24px;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -830,28 +831,29 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
 }
 .lightbox-img-wrap{
   width:100%;
-  height:380px;
+  height:min(560px, 66vh);
   background:#fff;
   border-radius:12px;
   display:grid;
   place-items:center;
-  margin-bottom:16px;
+  margin-bottom:14px;
 }
-.lightbox-img-wrap img{max-height:340px;max-width:90%;object-fit:contain}
-.lightbox-thumbs{display:flex;gap:10px}
+.lightbox-img-wrap img{max-height:94%;max-width:94%;object-fit:contain}
+.lightbox-thumbs{display:flex;gap:12px}
 .lightbox-thumb{
-  width:60px;
-  height:60px;
+  width:70px;
+  height:70px;
   border:2px solid var(--line);
   border-radius:8px;
   background:#fff;
   display:grid;
   place-items:center;
   cursor:pointer;
-  transition:border-color .2s;
+  transition:border-color .2s, transform .15s;
 }
+.lightbox-thumb:hover{transform:scale(1.05)}
 .lightbox-thumb.active{border-color:var(--red)}
-.lightbox-thumb img{max-height:48px;max-width:48px;object-fit:contain}
+.lightbox-thumb img{max-height:56px;max-width:56px;object-fit:contain}
 
 /* FOOTER */
 footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-top:2px solid var(--header-border);box-shadow:0 -8px 24px var(--shadow-header);color:var(--muted);font-size:13px;padding:40px 0 32px}
@@ -1030,7 +1032,7 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
   </div>
 </div>
 
-<!-- LIGHTBOX -->
+<!-- LIGHTBOX (PALINĀTS SKAIDRAI APSKATEI) -->
 <div id="modal-lightbox" class="modal-overlay">
   <div class="lightbox-content">
     <button class="modal-close" data-close-modal>&times;</button>
@@ -1216,11 +1218,11 @@ const t = (k, params = {}) => {
 function getUiTimestamp() {
   try {
     const d = new Date(document.lastModified);
-    if (isNaN(d.getTime())) return '03.11.2026 14:10';
+    if (isNaN(d.getTime())) return '03.11.2026 15:30';
     const pad = n => ('0' + n).slice(-2);
     return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
   } catch(e) {
-    return '03.11.2026 14:10';
+    return '03.11.2026 15:30';
   }
 }
 
@@ -1639,10 +1641,11 @@ function viewHome() {
         ${renderCard(recSkate, 'hp')}
         ${renderCard(recStick, 'hp')}
         
-        <!-- 3. BOX: AIZSARGI PRO -->
+        <!-- 3. BOX: AIZSARGI PRO AR JAUNO VAIRODZIŅA IKONU -->
         <article class="card card-zero">
           <div class="imgbox" style="cursor:default;">
-            <div style="font-size:48px; opacity:0.85;">🛡️</div>
+            <img src="img/icons/shield.png" alt="Aizsargu modulis" style="max-height:80px; max-width:80px; object-fit:contain; filter:drop-shadow(0 4px 12px rgba(0,0,0,0.45));" onerror="if(this.src.indexOf('img/shield.png')===-1){this.src='img/shield.png';}else{this.style.display='none';this.nextElementSibling.style.display='block';}">
+            <div style="display:none; font-size:48px; opacity:0.85;">🛡️</div>
           </div>
           <div class="body">
             <h3>Hockey Equipment Radar PRO</h3>
@@ -2087,7 +2090,7 @@ document.addEventListener('click', e => {
       setTimeout(() => {
         targetImg.src = imgDot.dataset.imgSrc;
         setTimeout(() => { targetImg.style.opacity = '1'; }, 50);
-      }, 300);
+      }, 350);
     }
     imgDot.parentNode.querySelectorAll('.card-img-dot').forEach(d => d.classList.remove('active'));
     imgDot.classList.add('active');
@@ -2208,7 +2211,7 @@ document.addEventListener('submit', e => {
   }
 });
 
-// Sākumlapas slīdņa rotācija (5s)
+// Sākumlapas slīdņa rotācija (15s maigs fade)
 setInterval(() => {
   if (S.tab !== 'home') return;
   const slides = document.querySelectorAll('.hero-slide');
@@ -2217,9 +2220,9 @@ setInterval(() => {
   S.sliderIndex = (S.sliderIndex + 1) % slides.length;
   slides.forEach((s, i) => s.classList.toggle('active', i === S.sliderIndex));
   dots.forEach((d, i) => d.classList.toggle('active', i === S.sliderIndex));
-}, 5000);
+}, 15000);
 
-// Mazo bilžu auto-slaideris kartītēs (5s intervāls, plūstoša opacity pāreja)
+// Mazo bilžu auto-slaideris kartītēs (10s intervāls, maiga pakāpeniska izzušana un parādīšanās)
 setInterval(() => {
   document.querySelectorAll('.card').forEach(card => {
     const dots = card.querySelectorAll('.card-img-dot');
@@ -2232,13 +2235,13 @@ setInterval(() => {
         targetImg.style.opacity = '0';
         setTimeout(() => {
           targetImg.src = nextDot.dataset.imgSrc;
-          setTimeout(() => { targetImg.style.opacity = '1'; }, 50);
-        }, 300);
+          setTimeout(() => { targetImg.style.opacity = '1'; }, 80);
+        }, 400);
       }
       dots.forEach((d, i) => d.classList.toggle('active', i === nextIdx));
     }
   });
-}, 5000);
+}, 10000);
 
 render();
 loadScrapedData();
