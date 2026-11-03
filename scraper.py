@@ -11,7 +11,7 @@ HEADERS = {
     'Accept-Language': 'lv-LV,lv;q=0.9,en-US;q=0.8,en;q=0.7'
 }
 
-# Tabula Sportega EUR izmēru pārvēršanai par Bauer Youth izmēriem
+# Tabula Sportega un citu EUR izmēru pārvēršanai par Bauer Youth izmēriem
 EUR_TO_YOUTH = {
     "24": "Yth 6",
     "25": "Yth 7",
@@ -28,7 +28,7 @@ EUR_TO_YOUTH = {
 }
 
 TARGET_SKATES = [
-    # --- YOUTH MODEĻI ---
+    # --- YOUTH MODEĻI (Izņemts neeksistējošais Supreme F40) ---
     {
         "type": "skate",
         "category": "Youth",
@@ -58,8 +58,8 @@ TARGET_SKATES = [
         "category": "Youth",
         "model": "bauer-vapor-fly40",
         "retailer": "hj",
-        "url": "https://www.hokejam.lv/lv/51-bernu-hokeja-slidas",
-        "search_term": "Vapor FLY40",
+        "url": "https://www.hokejam.lv/lv/51-bernu-hokeja-slidas", # Vispārējā kategorija (modeļa šobrīd nav)
+        "is_category_link": True, 
         "shipping": 0.0
     },
     {
@@ -78,31 +78,6 @@ TARGET_SKATES = [
         "url": "https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-youth-d-standarta-kaja-eur-26/d1503208",
         "shipping": 4.0
     },
-    {
-        "type": "skate",
-        "category": "Youth",
-        "model": "bauer-supreme-f40",
-        "retailer": "hj",
-        "url": "https://www.hokejam.lv/lv/51-bernu-hokeja-slidas",
-        "search_term": "Supreme F40",
-        "shipping": 0.0
-    },
-    {
-        "type": "skate",
-        "category": "Youth",
-        "model": "bauer-supreme-f40",
-        "retailer": "hp",
-        "url": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s26-fuse-youth-hokeja-slidas",
-        "shipping": 3.5
-    },
-    {
-        "type": "skate",
-        "category": "Youth",
-        "model": "bauer-supreme-f40",
-        "retailer": "sp",
-        "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-fuse-youth-d-standarta-kaja-eur-31/d1584484",
-        "shipping": 4.0
-    },
 
     # --- SENIOR MODEĻI ---
     {
@@ -112,14 +87,6 @@ TARGET_SKATES = [
         "retailer": "hp",
         "url": "https://hokejapasaule.lv/lv_lv/bauer-vapor-s25-fly40-senior-hokeja-slidas",
         "shipping": 3.5
-    },
-    {
-        "type": "skate",
-        "category": "Senior",
-        "model": "bauer-vapor-fly40",
-        "retailer": "hj",
-        "url": "https://www.hokejam.lv/lv/meklesana?search=FLY40",
-        "shipping": 0.0
     },
     {
         "type": "skate",
@@ -183,7 +150,7 @@ def extract_real_price(soup, retailer):
     """Izvelk reālo gala cenu ar visām atlaidēm."""
     try:
         if retailer == 'hj':
-            # PrestaShop: meklējam konkrēto akcijas vai tekošo cenu
+            # PrestaShop
             curr_price = soup.select_one('.current-price [itemprop="price"], .current-price-value, .product-price')
             if curr_price:
                 clean = re.sub(r'[^\d.,]', '', curr_price.get_text()).replace(',', '.')
@@ -192,7 +159,7 @@ def extract_real_price(soup, retailer):
                     return val
 
         elif retailer == 'hp':
-            # Magento: prioritāte ir special-price (ja ir atlaide)
+            # Magento
             spec_price = soup.select_one('.special-price .price, [data-price-type="finalPrice"] .price')
             if spec_price:
                 clean = re.sub(r'[^\d.,]', '', spec_price.get_text()).replace(',', '.')
@@ -207,7 +174,7 @@ def extract_real_price(soup, retailer):
                     return val
 
         elif retailer == 'sp':
-            # Sportega: galvenā cenas birka
+            # Sportega
             p_elem = soup.select_one('.c-price__current, [data-price-amount], .price-wrapper .price')
             if p_elem:
                 if p_elem.has_attr('data-price-amount'):
@@ -217,7 +184,7 @@ def extract_real_price(soup, retailer):
                 if 20 <= val <= 2000:
                     return val
 
-        # Universāls rezerves meklētājs
+        # Universāls meklētājs
         meta_p = soup.find('meta', attrs={'property': 'product:price:amount'}) or soup.find('meta', attrs={'itemprop': 'price'})
         if meta_p and meta_p.get('content'):
             val = float(meta_p['content'].replace(',', '.'))
@@ -232,13 +199,12 @@ def extract_real_sizes(soup, retailer, category):
     available_sizes = []
     try:
         if retailer == 'hj':
-            # Hokejam.lv: parasti dropdown vai saraksts ar 'Y 11.5', 'Y 12.5' vai '7.5'
+            # Hokejam.lv dropdown (piem., "Y 11.5")
             options = soup.select('.form-control-select option, .input-container input[type="radio"]')
             for opt in options:
                 txt = opt.get_text().strip() if opt.name == 'option' else opt.get('title', '')
                 if not txt:
                     continue
-                # Pārbauda un konvertē "Y 11.5" -> "Yth 11.5"
                 match_yth = re.search(r'Y\s*([\d.]+)', txt, re.IGNORECASE)
                 if match_yth:
                     available_sizes.append(f"Yth {match_yth.group(1)}")
@@ -248,10 +214,9 @@ def extract_real_sizes(soup, retailer, category):
                         available_sizes.append(match_sr.group(0))
 
         elif retailer == 'hp':
-            # Hokeja Pasaule: swatches vai atribūti
+            # Hokeja Pasaule (piem., "8")
             swatches = soup.select('.swatch-attribute.size .swatch-option, .swatch-attribute.boot_size .swatch-option')
             for sw in swatches:
-                # Ja ir klase 'disabled', izmērs nav pieejams
                 if 'disabled' in sw.get('class', []):
                     continue
                 txt = sw.get_text().strip()
@@ -262,7 +227,7 @@ def extract_real_sizes(soup, retailer, category):
                         available_sizes.append(txt)
 
         elif retailer == 'sp':
-            # Sportega: dropdown ar EUR izmēriem (piem. EUR 26 -> Yth 8)
+            # Sportega dropdown (piem., "EUR 26")
             options = soup.select('select[name*="parameter"] option, .c-param-select option')
             for opt in options:
                 txt = opt.get_text().strip()
@@ -278,7 +243,7 @@ def extract_real_sizes(soup, retailer, category):
     except Exception as e:
         print(f"Kļūda lasot izmērus: {e}")
 
-    # Ja neatrada atsevišķus variantus, bet prece ir viena konkrēta izmēra prece
+    # Ja atribūtus neatrod, meklē virsrakstā (gadījumam, kad pārdod 1 izmēra preci)
     if not available_sizes:
         title = soup.get_text()
         if category == 'Youth':
@@ -289,13 +254,13 @@ def extract_real_sizes(soup, retailer, category):
                 elif eur and eur in EUR_TO_YOUTH:
                     available_sizes.append(EUR_TO_YOUTH[eur])
 
-    # Noņemam dublikātus, saglabājot secību
     return list(dict.fromkeys(available_sizes))
 
 def scrape_item(target, session):
     url = target['url']
-    # Ja preces linkā ir vispārējā kategorija (prece vēl nav atrasta)
-    if 'search_term' in target:
+    
+    # Ja preces linkā ir vispārējā kategorija (kā Hokejam.lv Fly40), atzīmē, ka nav noliktavā
+    if target.get('is_category_link'):
         return 0.0, False, [], url, 'UNVERIFIED'
 
     try:
@@ -310,17 +275,12 @@ def scrape_item(target, session):
         btn = soup.select_one('#product-addtocart-button, .add-to-cart, button[data-button-action="add-to-cart"], .c-product-detail__btn-buy')
         is_in_stock = bool(btn and not btn.has_attr('disabled'))
         
-        # Ja poga nav atrasta, bet ir cena
         if not btn and price:
             txt_low = resp.text.lower()
             if 'ir noliktavā' in txt_low or 'pieejams' in txt_low:
                 is_in_stock = True
 
         sizes = extract_real_sizes(soup, target['retailer'], target['category'])
-        if not sizes and is_in_stock:
-            # Ja izmēru selektors nav atsevišķs, atstājam pamata
-            sizes = target.get('default_sizes', ['Standard'])
-
         status = 'VERIFIED' if (price and is_in_stock) else 'UNVERIFIED'
         return (price or 0.0), is_in_stock, sizes, url, status
 
@@ -341,7 +301,7 @@ def scrape_all():
         price, stock, sizes, final_url, status = scrape_item(t, session)
         time.sleep(1)
 
-        print(f" -> Rezultāts: Cena = €{price}, Noliktavā = {stock}, Izmēri = {sizes}, Statuss = {status}")
+        print(f" -> Cena = €{price}, Stock = {stock}, Izmēri = {sizes}, {status}")
 
         updated_offers.append({
             "type": t["type"],
@@ -366,7 +326,7 @@ def scrape_all():
     with open('scraped_data.json', 'w', encoding='utf-8') as f:
         json.dump(payload, f, indent=2, ensure_ascii=False)
 
-    print("scraped_data.json veiksmīgi atjaunināts ar reālajām cenām un izmēriem.")
+    print("scraped_data.json atjaunināts ar jaunākajiem datiem.")
 
 if __name__ == '__main__':
     scrape_all()
