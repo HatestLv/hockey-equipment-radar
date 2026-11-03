@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-03T12:28:55.327580",
+  "updatedAt": "2026-11-03T13:33:50.055868",
   "offers": [
     {
       "type": "skate",
@@ -46,10 +46,10 @@
       "price": 464.99,
       "oldPrice": null,
       "shipping": 4.0,
-      "stock": false,
+      "stock": true,
       "checked": "2026-11-03",
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-senior/d1502757",
-      "status": "UNVERIFIED",
+      "status": "VERIFIED",
       "sizes": [
         "7",
         "7.5"
@@ -103,10 +103,10 @@
       "price": 489.99,
       "oldPrice": null,
       "shipping": 4.0,
-      "stock": false,
+      "stock": true,
       "checked": "2026-11-03",
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-f40-senior/d1583973",
-      "status": "UNVERIFIED",
+      "status": "VERIFIED",
       "sizes": [
         "7",
         "7.5"
@@ -160,10 +160,10 @@
       "price": 379.99,
       "oldPrice": null,
       "shipping": 4.0,
-      "stock": false,
+      "stock": true,
       "checked": "2026-11-03",
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-senior/d1438036",
-      "status": "UNVERIFIED",
+      "status": "VERIFIED",
       "sizes": [
         "7",
         "7.5",
@@ -228,10 +228,10 @@
       "price": 260.99,
       "oldPrice": null,
       "shipping": 4.0,
-      "stock": false,
+      "stock": true,
       "checked": "2026-11-03",
       "url": "https://www.sportega.lv/kompozitmateriala-hokeja-nuja-bauer-supreme-fuse-senior/d1585348",
-      "status": "UNVERIFIED",
+      "status": "VERIFIED",
       "hands": [
         "Left",
         "Right"
