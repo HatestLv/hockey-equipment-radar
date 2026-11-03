@@ -185,6 +185,8 @@ header{position:relative;z-index:10;background:var(--header-bg);border-bottom:2p
 }
 .lang-opt:hover{background:var(--card-hover);color:var(--red)}
 .lang-opt.active{background:rgba(237,32,39,.12);color:var(--red)}
+.lang-opt.disabled{opacity:0.42;cursor:not-allowed}
+.lang-opt.disabled:hover{background:transparent;color:var(--text)}
 
 /* TĒMAS SLĒDZIS */
 .theme-switch{
@@ -365,7 +367,22 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
 }
 @media (max-width:860px){.filters-bar{flex-wrap:wrap}}
 
-.profile-pill-link{display:inline-flex;align-items:center;gap:8px;background:rgba(237,32,39,.08);border:1px solid rgba(237,32,39,.28);padding:7px 12px;border-radius:8px;font-size:13px;color:var(--text);text-decoration:none;cursor:pointer;transition:all .15s ease;flex-shrink:0;white-space:nowrap}
+.profile-pill-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(237,32,39,.08);
+  border:1px solid rgba(237,32,39,.28);
+  padding:7px 12px;
+  border-radius:8px;
+  font-size:13px;
+  color:var(--text);
+  text-decoration:none;
+  cursor:pointer;
+  transition:all .15s ease;
+  flex-shrink:0;
+  white-space:nowrap;
+}
 .profile-pill-link:hover{background:rgba(237,32,39,.16);border-color:var(--red);transform:translateY(-1px)}
 .profile-pill-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);flex-shrink:0}
 .profile-pill-tag{color:var(--muted);font-size:11px;font-weight:800;text-transform:uppercase;margin-left:2px}
@@ -392,6 +409,7 @@ h1{font-weight:900;font-size:clamp(26px,3.8vw,36px);line-height:1.15;letter-spac
   box-sizing:border-box;
   transition:all .2s ease;
   outline:none;
+  white-space:nowrap;
 }
 .ui-dropdown-btn:hover, .ui-dropdown-btn.active{border-color:var(--red);transform:scale(1.01)}
 .ui-dropdown-label{
@@ -802,6 +820,10 @@ th{color:var(--muted);font-size:11px;font-weight:700;text-transform:uppercase;le
   cursor:pointer;
   box-shadow:0 4px 12px rgba(237,32,39,.35);
   transition:all .2s ease;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
 }
 .btn-save-profile:hover{opacity:.92;transform:translateY(-1px)}
 .btn-reset-profile{
@@ -1029,13 +1051,13 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
               </span>
               <span>Latviešu</span>
             </button>
-            <button class="lang-opt" data-lang="en">
+            <button class="lang-opt disabled" data-lang="en">
               <span class="flag-icon">
                 <svg width="18" height="12" viewBox="0 0 60 30"><clipPath id="s_btn"><path d="M0,0 v30 h60 v-30 z"/></clipPath><clipPath id="t_btn"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><g clip-path="url(#s_btn)"><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#t_btn)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></g></svg>
               </span>
               <span>English</span>
             </button>
-            <button class="lang-opt" data-lang="de">
+            <button class="lang-opt disabled" data-lang="de">
               <span class="flag-icon">
                 <svg width="18" height="12" viewBox="0 0 5 3"><rect width="5" height="1" y="0" fill="#000"/><rect width="5" height="1" y="1" fill="#DD0000"/><rect width="5" height="1" y="2" fill="#FFCE00"/></svg>
               </span>
@@ -1104,7 +1126,7 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
 
     <div class="faq-item">
       <div class="faq-q">Cik bieži tiek atjaunotas cenas?</div>
-      <div class="faq-a">Radars veic automātisku datu skenēšanu katru dienu. Katras kartītes laukā <i>Pēdējā pārbaude</i> var redzēt datu precizitāti.</div>
+      <div class="faq-a">Radars veic automātisku datu skenēšanu 4 reizes dienā (rīta, pusdienu, pēcpusdienas un vakara ciklos). Katras kartītes laukā <i>Pēdējā pārbaude</i> var redzēt datu precizitāti.</div>
     </div>
 
     <div class="faq-item">
@@ -1128,15 +1150,16 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
         <label>Tēma</label>
         <div class="ui-dropdown" data-dropdown-id="msg-subject">
           <button type="button" class="ui-dropdown-btn">
-            <span class="ui-dropdown-label">Neprecīza cena vai noliktavas statuss</span>
+            <span class="ui-dropdown-label">Kļūdu labojumu ziņojums</span>
             <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="#a9b0be" stroke-width="2"><path d="M1 1l4 4 4-4"/></svg>
           </button>
           <div class="ui-dropdown-menu">
-            <button type="button" class="ui-dropdown-opt active" data-val="Neprecīza cena vai noliktavas statuss">Neprecīza cena vai noliktavas statuss</button>
+            <button type="button" class="ui-dropdown-opt active" data-val="Kļūdu labojumu ziņojums">Kļūdu labojumu ziņojums</button>
+            <button type="button" class="ui-dropdown-opt" data-val="Neprecīza cena vai noliktavas statuss">Neprecīza cena vai noliktavas statuss</button>
             <button type="button" class="ui-dropdown-opt" data-val="Ieteikums jaunam veikalam / modelim">Ieteikums jaunam veikalam / modelim</button>
             <button type="button" class="ui-dropdown-opt" data-val="Vispārējs jautājums vai sadarbība">Vispārējs jautājums vai sadarbība</button>
           </div>
-          <input type="hidden" id="msg-subject-val" value="Neprecīza cena vai noliktavas statuss">
+          <input type="hidden" id="msg-subject-val" value="Kļūdu labojumu ziņojums">
         </div>
       </div>
 
@@ -1146,7 +1169,8 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
       </div>
 
       <button type="submit" class="btn-save-profile" style="margin-top:4px; text-align:center;">
-        Sagatavot un nosūtīt e-pastu ✉️
+        <span>Sagatavot un nosūtīt e-pastu</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
       </button>
     </form>
 
@@ -1200,7 +1224,9 @@ footer.bar{position:relative;margin-top:70px;background:var(--footer-bg);border-
         <div class="footer-links" style="align-items:flex-end; text-align:right;">
           <span class="footer-links-title">Lapas versija</span>
           <span style="font-size:12px; color:var(--muted); line-height:1.5;">
-            <span>Lapas (UI) atjauninājums:</span><br>
+            <span>Lapas versija:</span><br>
+            <b style="color:var(--text); font-size:14px; font-family:monospace;">v1.5.0</b><br>
+            <span style="display:inline-block; margin-top:4px;">Lapas (UI) atjauninājums:</span><br>
             <b style="color:var(--text);" id="ui-last-modified">Tiek ielādēts...</b>
           </span>
         </div>
@@ -1234,8 +1260,8 @@ const TRANSLATIONS = {
     tabIntl: 'Ārzemju deals',
     searchPh: 'Meklēt modeli, sēriju...',
     dataUpdate: 'Preču datu atjauninājums:',
-    subTitleSkates: 'Hokeja Pasaule, Hokejam.lv, Sportega. Profils: {role}, izmērs {size}, prioritāte {fit}.',
-    subTitleSticks: 'Hokeja Pasaule, Hokejam.lv, Sportega. Profils: {hand}, Flex {flex}, Liekums {curve}, {cat}.',
+    subTitleSkates: 'Hokeja Pasaule, Hokejam.lv, Sportega. Profils: {role}, vecuma grupa {cat}, izmērs {size}, prioritāte {fit}.',
+    subTitleSticks: 'Hokeja Pasaule, Hokejam.lv, Sportega. Profils: {hand}, Flex {flex}, Liekums {curve}, vecuma grupa {cat}.',
     sumBest: 'Labākais pārbaudītais',
     sumLow: 'Zemākā cena (profilam)',
     sumVer: 'Pārbaudīti piedāvājumi',
@@ -1258,80 +1284,12 @@ const TRANSLATIONS = {
     checkStore: 'Pārbaudīt {store} lapā →',
     bestPriceBadge: '★ Labākā cena',
     matchLbl: 'Atbilstība {role}'
-  },
-  en: {
-    tabHome: 'Home',
-    tabSkates: 'Skates LV',
-    tabSticks: 'Sticks LV',
-    tabProtective: 'Armor (Soon)',
-    tabUsed: 'Used Gear',
-    tabIntl: 'Intl Deals',
-    searchPh: 'Search model, series...',
-    dataUpdate: 'Product data update:',
-    subTitleSkates: 'Hokeja Pasaule, Hokejam.lv, Sportega. Profile: {role}, size {size}, priority {fit}.',
-    subTitleSticks: 'Hokeja Pasaule, Hokejam.lv, Sportega. Profile: {hand}, Flex {flex}, Curve {curve}, {cat}.',
-    sumBest: 'Best Verified',
-    sumLow: 'Lowest Price',
-    sumVer: 'Verified Deals',
-    sumSrc: 'Data Source',
-    sortLbl: 'Sort:',
-    sortDef: 'Default',
-    stockOnly: 'In stock only',
-    btnCards: 'Cards',
-    btnTable: 'Comparison',
-    price: 'Price',
-    shipping: 'Shipping',
-    total: 'Total',
-    sizes: 'Sizes',
-    fit: 'Bauer FIT',
-    stock: 'Stock',
-    checked: 'Last Check',
-    inStock: 'In Stock',
-    outStock: 'Out of Stock (0 €)',
-    openStore: 'Open Store →',
-    checkStore: 'Check {store} →',
-    bestPriceBadge: '★ Best Price',
-    matchLbl: 'Match for {role}'
-  },
-  de: {
-    tabHome: 'Startseite',
-    tabSkates: 'Schlittschuhe',
-    tabSticks: 'Schläger LV',
-    tabProtective: 'Schutzausrüstung',
-    tabUsed: 'Gebraucht',
-    tabIntl: 'EU Deals',
-    searchPh: 'Modell oder Serie suchen...',
-    dataUpdate: 'Produktdaten-Update:',
-    subTitleSkates: 'Hokeja Pasaule, Hokejam.lv, Sportega. Profil: {role}, Größe {size}, Priorität {fit}.',
-    subTitleSticks: 'Hokeja Pasaule, Hokejam.lv, Sportega. Profil: {hand}, Flex {flex}, Biegung {curve}, {cat}.',
-    sumBest: 'Bester geprüfter Preis',
-    sumLow: 'Niedrigster Preis',
-    sumVer: 'Geprüfte Angebote',
-    sumSrc: 'Datenquelle',
-    sortLbl: 'Sortieren:',
-    sortDef: 'Standard',
-    stockOnly: 'Nur auf Lager',
-    btnCards: 'Karten',
-    btnTable: 'Vergleich',
-    price: 'Preis',
-    shipping: 'Versand',
-    total: 'Gesamt',
-    sizes: 'Größen',
-    fit: 'Bauer FIT',
-    stock: 'Verfügbarkeit',
-    checked: 'Letzte Prüfung',
-    inStock: 'Auf Lager',
-    outStock: 'Nicht auf Lager (0 €)',
-    openStore: 'Zum Shop →',
-    checkStore: 'Bei {store} prüfen →',
-    bestPriceBadge: '★ Bester Preis',
-    matchLbl: 'Eignung für {role}'
   }
 };
 
-let CURR_LANG = localStorage.getItem('hsr_lang') || 'lv';
+let CURR_LANG = 'lv';
 const t = (k, params = {}) => {
-  let str = (TRANSLATIONS[CURR_LANG] && TRANSLATIONS[CURR_LANG][k]) || TRANSLATIONS['lv'][k] || k;
+  let str = TRANSLATIONS['lv'][k] || k;
   for (const [pKey, pVal] of Object.entries(params)) {
     str = str.replace(`{${pKey}}`, pVal);
   }
@@ -1342,11 +1300,11 @@ const t = (k, params = {}) => {
 function getUiTimestamp() {
   try {
     const d = new Date(document.lastModified);
-    if (isNaN(d.getTime())) return '03.11.2026 18:25';
+    if (isNaN(d.getTime())) return '03.11.2026 19:40';
     const pad = n => ('0' + n).slice(-2);
     return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
   } catch(e) {
-    return '03.11.2026 18:25';
+    return '03.11.2026 19:40';
   }
 }
 
@@ -1552,6 +1510,13 @@ const BAUER_STICK_TABLES = {
   ]
 };
 
+const CAT_SHORT_MAP = {
+  'Senior': 'SR',
+  'Intermediate': 'INT',
+  'Junior': 'JR',
+  'Youth': 'YTH'
+};
+
 /* 5. LIETOTĀJA PROFILS */
 const DEFAULT_PROFILE = {
   activeTab: 'skates',
@@ -1604,9 +1569,7 @@ const badge = s => s === 'VERIFIED' ? '<span class="badge b-ok">Pārbaudīts</sp
 const row = (l, v) => `<div class="row"><span>${l}</span><span>${v}</span></div>`;
 
 const ROLES = {
-  lv: { forward: 'uzbrucējam', defense: 'aizsargam' },
-  en: { forward: 'forward', defense: 'defenseman' },
-  de: { forward: 'Stürmer', defense: 'Verteidiger' }
+  lv: { forward: 'uzbrucējam', defense: 'aizsargam' }
 };
 
 function storeHeader(rKey) {
@@ -1764,16 +1727,19 @@ function renderTableView(list, models) {
 function filtersBar(type) {
   const models = type === 'skate' ? SKATE_MODELS : STICK_MODELS;
 
+  const catVal = type === 'skate' ? (PROFILE.skateCat || 'Senior') : (PROFILE.stickCat || 'Senior');
+  const catShort = CAT_SHORT_MAP[catVal] || catVal;
+
   const pillText = type === 'skate' 
-    ? `Profils: ${PROFILE.skateCat} · Izm. ${PROFILE.size} · ${PROFILE.fit} · €${PROFILE.minSkate}–${PROFILE.maxSkate}`
-    : `Profils: ${PROFILE.hand} · Flex ${PROFILE.flex} · ${PROFILE.curve} · €${PROFILE.minStick}–${PROFILE.maxStick}`;
+    ? `Profils: ${catShort} · Izm. ${PROFILE.size} · ${PROFILE.fit} · €${PROFILE.minSkate}–${PROFILE.maxSkate}`
+    : `Profils: ${catShort} · ${PROFILE.hand} · Flex ${PROFILE.flex} · ${PROFILE.curve} · €${PROFILE.minStick}–${PROFILE.maxStick}`;
 
   let currentSortLabel = t('sortDef');
   const currentModel = models.find(m => m.id === S.sort);
   if (currentModel) currentSortLabel = currentModel.name;
 
   return `<div class="filters-bar">
-    <button type="button" class="profile-pill-link" data-open="profile" title="Pielāgot profilu">
+    <button type="button" class="profile-pill-link" data-open="profile">
       <span class="profile-pill-dot"></span>
       <span><b>${pillText}</b></span>
       <span class="profile-pill-tag">MAINĪT ⚙️</span>
@@ -1887,9 +1853,12 @@ function viewCategory(type) {
   const title = isSkate ? t('tabSkates') : t('tabSticks');
   const roleName = (ROLES[CURR_LANG] && ROLES[CURR_LANG][PROFILE.role]) || ROLES['lv'][PROFILE.role];
 
+  const skateCatFull = PROFILE.skateCat || 'Senior';
+  const stickCatFull = PROFILE.stickCat || 'Senior';
+
   const sub = isSkate 
-    ? t('subTitleSkates', { role: `<b>${roleName}</b>`, size: `<b>${PROFILE.size}</b>`, fit: `<b>${PROFILE.fit}</b>` })
-    : t('subTitleSticks', { hand: `<b>${PROFILE.hand}</b>`, flex: `<b>${PROFILE.flex}</b>`, curve: `<b>${PROFILE.curve}</b>`, cat: `<b>${PROFILE.stickCat || 'Senior'}</b>` });
+    ? t('subTitleSkates', { role: `<b>${roleName}</b>`, cat: `<b>${skateCatFull}</b>`, size: `<b>${PROFILE.size}</b>`, fit: `<b>${PROFILE.fit}</b>` })
+    : t('subTitleSticks', { hand: `<b>${PROFILE.hand}</b>`, flex: `<b>${PROFILE.flex}</b>`, curve: `<b>${PROFILE.curve}</b>`, cat: `<b>${stickCatFull}</b>` });
 
   const rKeys = Object.keys(RETAILERS);
   const offersList = OFFERS.filter(o => o.type === type);
@@ -1902,6 +1871,15 @@ function viewCategory(type) {
   if (S.searchQuery.trim()) {
     const q = S.searchQuery.toLowerCase();
     filtered = filtered.filter(m => m.name.toLowerCase().includes(q) || m.series.toLowerCase().includes(q));
+  }
+
+  // KĀRTOŠANAS LOĢIKAS LABOJUMS: ja izvēlēts konkrēts modelis, tas automātiski tiek pacelts uz pašu augšu!
+  if (S.sort && S.sort !== 'default') {
+    filtered.sort((a, b) => {
+      if (a.id === S.sort) return -1;
+      if (b.id === S.sort) return 1;
+      return 0;
+    });
   }
 
   const columnsHtml = rKeys.map(k => `
@@ -2300,10 +2278,10 @@ function updateHeaderNav() {
 }
 
 function updateStaticI18n() {
-  document.getElementById('current-lang-flag').innerHTML = FLAG_SVGS[CURR_LANG] || FLAG_SVGS['lv'];
-  document.getElementById('current-lang-code').textContent = CURR_LANG.toUpperCase();
+  document.getElementById('current-lang-flag').innerHTML = FLAG_SVGS['lv'];
+  document.getElementById('current-lang-code').textContent = 'LV';
   document.getElementById('site-search').placeholder = t('searchPh');
-  document.querySelectorAll('.lang-opt').forEach(b => b.classList.toggle('active', b.dataset.lang === CURR_LANG));
+  document.querySelectorAll('.lang-opt').forEach(b => b.classList.toggle('active', b.dataset.lang === 'lv'));
   document.getElementById('ui-last-modified').textContent = getUiTimestamp();
 }
 
@@ -2381,7 +2359,6 @@ function openChartModal(type) {
   const img = document.getElementById('modal-chart-img');
   const baseName = type === 'skates' ? 'skate-size-chart' : 'stick-size-chart';
 
-  // Pārbauda gan JPG, gan PNG failus gan img/ mapē, gan img/tables/
   const sources = [
     `img/${baseName}.jpg`,
     `img/${baseName}.png`,
@@ -2450,8 +2427,8 @@ document.addEventListener('click', e => {
 
   const lo = e.target.closest('.lang-opt');
   if (lo) {
+    if (lo.dataset.lang !== 'lv') return; // Bloķēts priekš EN / DE
     CURR_LANG = lo.dataset.lang;
-    localStorage.setItem('hsr_lang', CURR_LANG);
     document.getElementById('lang-menu').classList.remove('open');
     render();
     return;
@@ -2534,7 +2511,6 @@ document.addEventListener('click', e => {
     return;
   }
 
-  // Aizvēršana modālajiem logiem (ieskaitot izmēru tabulu klikšķinot ārpus tās)
   if (e.target.hasAttribute('data-close-modal') || e.target.classList.contains('modal-overlay') || (e.target.closest('#modal-chart') && !e.target.closest('#modal-chart-img'))) {
     document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
     return;
@@ -2593,7 +2569,6 @@ document.addEventListener('click', e => {
     document.getElementById('ptab-skates-content').style.display = PROFILE.activeTab === 'skates' ? 'block' : 'none';
     document.getElementById('ptab-sticks-content').style.display = PROFILE.activeTab === 'sticks' ? 'block' : 'none';
 
-    // Pielāgojam izmēru tabulas pogu
     const chartBtnEl = document.getElementById('btn-open-chart');
     const chartTextEl = document.getElementById('chart-btn-text');
     if (chartBtnEl && chartTextEl) {
