@@ -240,7 +240,7 @@ function evaluate(m, rKey, cat) {
   const res = { o, state: 'no_data', total: offerTotal(o), sizeOk: null, fitOk: null, budgetOk: null, inStock: false };
 
   if (!isTracked(rKey, m.type, cat) || (o && o.status === 'NOT_TRACKED')) { res.state = 'not_tracked'; return res; }
-  if (!o || o.status === 'ERROR') return res;
+  if (!o || o.status === 'ERROR' || (o.stale && !(o.price > 0))) { res.stale = !!(o && o.stale); return res; }
   if (!(o.price > 0)) { res.state = 'not_found'; return res; }
   if (!o.stock) { res.state = 'out_of_stock'; return res; }
   res.inStock = true;
@@ -264,6 +264,14 @@ function evaluate(m, rKey, cat) {
   else if (!res.budgetOk) res.state = 'over_budget';
   else res.state = 'match';
   return res;
+}
+
+/** Kartītes nozīmīte; ja neder tikai platums, saka to. */
+function stateInfo(ev, m) {
+  if (ev.state === 'no_size' && m.type === 'skate' && ev.sizeOk !== false && ev.fitOk === false) {
+    return { badge: '<span class="badge b-demo">Nav tava platuma</span>', cls: 'card-partial' };
+  }
+  return STATE_INFO[ev.state];
 }
 
 const STATE_INFO = {
@@ -357,7 +365,7 @@ function renderCard(m, rKey, cat) {
   const r = CFG.retailers[rKey];
   const ev = evaluate(m, rKey, cat);
   const o = ev.o;
-  const info = STATE_INFO[ev.state];
+  const info = stateInfo(ev, m);
   const hasPrice = o && o.price > 0;
 
   const imgs = imageCandidates(m, cat);
@@ -402,6 +410,81 @@ function renderCard(m, rKey, cat) {
       ${btn}
     </article>`;
 }
+
+/** Stāvokļi, kuriem rāda kompakto kartīti (nav ko salīdzināt). */
+const COMPACT_STATES = ['not_found', 'no_data', 'not_tracked'];
+
+function renderCompactCard(m, rKey, cat, ev) {
+  const r = CFG.retailers[rKey];
+  const info = STATE_INFO[ev.state];
+  const msg = {
+    not_found: 'Šajā vecuma grupā nav atrasts',
+    no_data: ev.stale ? 'Veikals pēdējā skenēšanā neatbildēja' : 'Dati vēl nav saņemti',
+    not_tracked: 'Cenas vēl netiek vāktas'
+  }[ev.state] || '';
+  const url = categoryUrl(rKey, m.type, cat);
+  return `<div class="card-compact">
+    <p class="cc-title">${esc(m.brand)} ${esc(modelName(m, cat))}</p>
+    <div class="cc-row"><span>${msg}</span>${info.badge}</div>
+    <a href="${esc(safeUrl(url))}" target="_blank" rel="noopener">${t('checkStore', { store: esc(r.name) })}</a>
+  </div>`;
+}
+
+/** Datora skats: režģis, kur katrs modelis ir viena rinda pāri visiem veikaliem. */
+function renderStoresGrid(models, type, cat) {
+  const rKeys = retailerKeys();
+  const head = rKeys.map(k => storeHeader(k, type, cat)).join('');
+  let rows = '';
+  for (const m of models) {
+    const evs = rKeys.map(k => evaluate(m, k, cat));
+    if (S.stockOnly && !evs.some(e => e.inStock)) continue;          // nevienā veikalā nav — rindu nerāda
+    rows += evs.map((ev, i) => {
+      if (S.stockOnly && !ev.inStock) return '<div class="card-placeholder"></div>';
+      return COMPACT_STATES.includes(ev.state) ? renderCompactCard(m, rKeys[i], cat, ev) : renderCard(m, rKeys[i], cat);
+    }).join('');
+  }
+  if (!rows) rows = `<div class="store-empty" style="grid-column:1 / -1">${models.length ? 'Nav pieejamu modeļu ar šiem filtriem.' : 'Nav atrasts neviens modelis.'}</div>`;
+  return `<div class="stores-grid">${head}${rows}</div>`;
+}
+
+/** Telefona skats: viens modelis, zem tā visi veikali. */
+function renderMobileList(models, type, cat) {
+  const rKeys = retailerKeys();
+  const cards = models.map(m => {
+    const evs = rKeys.map(k => ({ k, ev: evaluate(m, k, cat) }));
+    if (S.stockOnly && !evs.some(x => x.ev.inStock)) return '';
+    const matchTotals = evs.filter(x => x.ev.state === 'match').map(x => x.ev.total);
+    const best = matchTotals.length ? Math.min(...matchTotals) : null;
+    const imgs = imageCandidates(m, cat);
+    const stores = evs.filter(x => !S.stockOnly || x.ev.inStock).map(({ k, ev }) => {
+      const r = CFG.retailers[k];
+      const o = ev.o;
+      const hasPrice = o && o.price > 0;
+      const isBest = best !== null && ev.state === 'match' && ev.total === best;
+      const url = hasPrice && o.url ? o.url : categoryUrl(k, m.type, cat);
+      const meta = ev.inStock
+        ? `${stateInfo(ev, m).badge} ${m.type === 'skate' ? sizesHtml(o, m) : `<span>${fitsHtml(o, m)}</span>`}`
+        : STATE_INFO[ev.state].badge;
+      return `<div class="m-store ${isBest ? 'is-best' : ''}">
+        <span class="m-store-name">${esc(r.name)}${isBest ? ' <span class="badge b-ok">★ Labākā</span>' : ''}</span>
+        <span class="m-store-price ${hasPrice ? '' : 'is-zero'}">${hasPrice ? eur(ev.total) : '—'}</span>
+        <div class="m-store-meta">${meta}</div>
+        <a class="m-link" href="${esc(safeUrl(url))}" target="_blank" rel="noopener">${ev.inStock ? t('openStore') : t('checkStore', { store: esc(r.name) })}</a>
+      </div>`;
+    }).join('');
+    return `<article class="m-card">
+      <div class="m-head">
+        <div class="m-thumb" data-open-lightbox="${esc(m.id)}" data-cat="${esc(cat)}">${imgTag(imgs[0], m.name)}</div>
+        <div><h3>${esc(m.brand)} ${esc(modelName(m, cat))}</h3><div class="m-sub">${esc(m.series)} · ${esc(m.profileBadge)}</div></div>
+      </div>
+      ${stores}
+    </article>`;
+  }).join('');
+  return `<div class="mobile-list">${cards || '<div class="store-empty">Nav pieejamu modeļu ar šiem filtriem.</div>'}</div>`;
+}
+
+const MOBILE_MQ = window.matchMedia('(max-width: 960px)');
+MOBILE_MQ.addEventListener('change', () => { if (S.tab === 'skates' || S.tab === 'sticks') render(); });
 
 /** Modeļi izvēlētajai grupai ar meklēšanu un kārtošanu. */
 function visibleModels(type, cat) {
@@ -452,12 +535,6 @@ function renderTableView(models, type, cat) {
     return `<tr><td><b style="font-size:14px">${esc(m.brand)} ${esc(modelName(m, cat))}</b></td>${cells}</tr>`;
   }).join('');
   return `<div class="tw"><table><tr><th>Modelis</th>${head}</tr>${body}</table></div>`;
-}
-
-function categoryChips(type, cat) {
-  return `<div class="cat-chips" role="group" aria-label="Vecuma grupa">
-    ${categories().map(c => `<button type="button" class="cat-chip ${c === cat ? 'on' : ''}" data-cat-switch="${c}" data-type="${type}">${CATEGORY_LABELS[c] || c}</button>`).join('')}
-  </div>`;
 }
 
 function filtersBar(type, cat) {
@@ -519,10 +596,10 @@ function dataNotice(type, cat) {
   if (!OFFERS.some(o => o.type === type && o.status !== 'NOT_TRACKED')) {
     return `<div class="notice-bar"><b>Dati vēl nav savākti.</b> ${type === 'stick' ? 'Nūju' : 'Šīs sadaļas'} cenas parādīsies pēc nākamās automātiskās skenēšanas.</div>`;
   }
-  const bad = rs.filter(k => !untracked.includes(k) && ['error', 'empty'].includes(DATA.retailerStatus[k]));
+  const bad = rs.filter(k => !untracked.includes(k) && ['error', 'empty', 'partial'].includes(DATA.retailerStatus[k]));
   if (!bad.length) return '';
-  const names = bad.map(k => CFG.retailers[k].name).join(' un ');
-  return `<div class="notice-bar"><b>Uzmanību:</b> ${esc(names)} dati pēdējā skenēšanā netika nolasīti. Šo veikalu kartītēs var būt veci dati vai "Nav atrasts" — pārbaudi veikala lapā.</div>`;
+  const names = bad.map(k => CFG.retailers[k].name + (DATA.retailerStatus[k] === 'partial' ? ' (daļēji)' : '')).join(', ');
+  return `<div class="notice-bar"><b>Uzmanību:</b> ${esc(names)} dati pēdējā skenēšanā netika pilnībā nolasīti. Šo veikalu kartītēs var būt veci dati vai "Nav atrasts" — pārbaudi veikala lapā.</div>`;
 }
 
 function viewCategory(type) {
@@ -543,16 +620,6 @@ function viewCategory(type) {
     ? `Hokeja Pasaule, Hokejam.lv, Sportega. Profils: <b>${ROLE_NAMES[p.role]}</b>, vecuma grupa <b>${cat}</b>, izmērs <b>${p.size === 'all' ? 'visi' : esc(p.size)}</b>, platums <b>${p.fit === 'all' ? 'visi' : esc(p.fit)}</b>.`
     : `Hokeja Pasaule, Hokejam.lv, Sportega. Profils: <b>${esc(p.hand)}</b>, Flex <b>${p.flex === 'all' ? 'visi' : esc(p.flex)}</b>, liekums <b>${p.curve === 'all' ? 'visi' : esc(p.curve)}</b>, vecuma grupa <b>${cat}</b>.`;
 
-  const columns = rKeys.map(k => {
-    const cards = models
-      .filter(m => !S.stockOnly || evaluate(m, k, cat).inStock)
-      .map(m => renderCard(m, k, cat)).join('');
-    const empty = models.length
-      ? '<div class="store-empty">Šajā veikalā nav pieejamu modeļu ar šiem filtriem.</div>'
-      : '<div class="store-empty">Nav atrasts neviens modelis.</div>';
-    return `<div class="store-col">${storeHeader(k, type, cat)}<div class="store-cards">${cards || empty}</div></div>`;
-  }).join('');
-
   return `
     <div class="section-top-row">
       <h1>${isSkate ? t('tabSkates') : t('tabSticks')}</h1>
@@ -562,7 +629,6 @@ function viewCategory(type) {
       </div>
     </div>
     <p class="sub">${sub}</p>
-    ${categoryChips(type, cat)}
     <div class="sum">
       <div><small>Labākā cena tavam profilam</small><b>${matches.length ? eur(Math.min(...matches)) : '—'}</b></div>
       <div><small>Zemākā cena (jebkurš izmērs)</small><b>${inStock.length ? eur(Math.min(...inStock)) : '—'}</b></div>
@@ -571,7 +637,7 @@ function viewCategory(type) {
     </div>
     ${dataNotice(type, cat)}
     ${filtersBar(type, cat)}
-    ${S.view === 'cards' ? `<div class="stores-container">${columns}</div>` : renderTableView(models, type, cat)}
+    ${S.view === 'table' ? renderTableView(models, type, cat) : (MOBILE_MQ.matches ? renderMobileList(models, type, cat) : renderStoresGrid(models, type, cat))}
   `;
 }
 
@@ -625,7 +691,7 @@ function viewHome() {
 
     <div class="home-recom">
       <div class="home-recom-title">
-        <h3 style="margin:0 0 6px; font-size:22px; font-weight:800; letter-spacing:-0.01em;">Pielāgots tavam stilam: <span style="color:var(--red); text-transform:uppercase;">${isForward ? 'Uzbrucējs' : 'Aizsargs'}</span> · ${esc(CFG.categoryShort[PROFILE.skateCat])}</h3>
+        <h3 style="margin:0 0 6px; font-size:22px; font-weight:800; letter-spacing:-0.01em;">Pielāgots tavam stilam: <span style="color:var(--accent); text-transform:uppercase;">${isForward ? 'Uzbrucējs' : 'Aizsargs'}</span> · ${esc(CFG.categoryShort[PROFILE.skateCat])}</h3>
         <p style="margin:0; font-size:14px; color:var(--muted); line-height:1.4;">Balstoties uz tavu spēlētāja profilu, vecuma grupu un izmēru, iesakām šos modeļus labākajā pieejamajā veikalā.</p>
       </div>
       <div class="rail-wrap">

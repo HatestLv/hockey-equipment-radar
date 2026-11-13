@@ -227,7 +227,7 @@ def normalize_hand(raw):
     t = (raw or "").lower().strip()
     if re.search(r"(left|kreis)", t) or re.fullmatch(r"l\b.*", t):
         return "Left"
-    if re.search(r"(right|labā|laba|labais)", t) or re.fullmatch(r"r\b.*", t):
+    if re.search(r"(right|\blab)", t) or re.fullmatch(r"r\b.*", t):
         return "Right"
     return None
 
@@ -556,6 +556,7 @@ def scrape_all():
     # 1) Kategoriju lapas — katru unikālo URL lejupielādē tikai vienreiz
     catalogs = {}     # url -> (produkti, ok)
     stats = {}
+    pages_ok, pages_failed = {}, {}
     for r_key, r in RETAILERS.items():
         for item_type, cat_urls in r["categoryUrls"].items():
             type_keywords = [k for m in MODELS if m["type"] == item_type for k in m["keywords"]]
@@ -568,6 +569,8 @@ def scrape_all():
                 log(f"Katalogs [{r_key.upper()} · {item_type} · {cat}] {url}")
                 catalogs[url] = crawl_category(session, r_key, url, type_keywords, f"{r_key}_{item_type}_{cat}")
                 stats[r_key] = stats.get(r_key, 0) + len(catalogs[url][0])
+                bucket = pages_ok if catalogs[url][1] else pages_failed
+                bucket[r_key] = bucket.get(r_key, 0) + 1
                 time.sleep(REQUEST_PAUSE)
 
     # 2) Katram modelim katrā grupā katrā veikalā
@@ -650,8 +653,11 @@ def scrape_all():
 
     payload = {
         "updatedAt": started.isoformat(timespec="seconds"),
+        # ok = viss nolasīts, partial = daļa lapu neatbildēja, error = neviena lapa, empty = lapas ielādējās, bet produkti netika atrasti
         "retailerStatus": {
-            r_key: ("error" if r_key in failed_retailers else ("empty" if stats.get(r_key, 0) == 0 else "ok"))
+            r_key: ("error" if pages_failed.get(r_key) and not pages_ok.get(r_key)
+                    else "partial" if pages_failed.get(r_key)
+                    else "empty" if stats.get(r_key, 0) == 0 else "ok")
             for r_key in RETAILERS
         },
         "offers": offers,
