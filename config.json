@@ -1,0 +1,595 @@
+{
+  "_info": "VIENĪGAIS iestatījumu avots. Šo failu lasa gan lapa (app.js), gan skrāperis (scraper.py). Jaunu modeli, veikalu vai saiti pievieno TIKAI šeit.",
+  "categories": [
+    "Senior",
+    "Intermediate",
+    "Junior",
+    "Youth"
+  ],
+  "categoryShort": {
+    "Senior": "SR",
+    "Intermediate": "INT",
+    "Junior": "JR",
+    "Youth": "YTH"
+  },
+  "_categoryWords": "Vārdi, pēc kuriem skrāperis produkta nosaukumā atpazīst vecuma grupu. Vajadzīgs veikaliem, kur vairākām grupām ir viena kopīga lapa.",
+  "categoryWords": {
+    "Senior": [
+      "senior",
+      "sr",
+      "pieaugušo",
+      "pieauguso",
+      "pieaugušajiem"
+    ],
+    "Intermediate": [
+      "intermediate",
+      "int",
+      "pusaudžu",
+      "pusaudzu",
+      "pusaudžiem"
+    ],
+    "Junior": [
+      "junior",
+      "jr",
+      "junioru",
+      "junioriem"
+    ],
+    "Youth": [
+      "youth",
+      "yth",
+      "bērnu",
+      "bernu",
+      "bērniem"
+    ]
+  },
+  "_excludeWords": "Ja produkta nosaukumā ir kāds no šiem vārdiem, tas NAV šī tipa prece (piem. M40 cimdi nav slidas).",
+  "excludeWords": {
+    "skate": [
+      "nūja",
+      "nuja",
+      "stick",
+      "cimdi",
+      "gloves",
+      "ķivere",
+      "kivere",
+      "helmet",
+      "bikses",
+      "pants",
+      "plecsargi",
+      "elkoņsargi",
+      "kājsargi",
+      "soma",
+      "bag",
+      "asmeņi",
+      "asmens",
+      "steel",
+      "zeķes",
+      "aizsargs"
+    ],
+    "stick": [
+      "slidas",
+      "skate",
+      "cimdi",
+      "gloves",
+      "ķivere",
+      "helmet",
+      "bikses",
+      "soma",
+      "lente",
+      "tape"
+    ]
+  },
+  "retailers": {
+    "hj": {
+      "name": "Hokejam.lv",
+      "url": "https://www.hokejam.lv/",
+      "shipping": 0.0,
+      "logoDark": "img/logo/hokejam-lv.png",
+      "logoLight": "img/logo/hokejam-lv-dark.png",
+      "categoryUrls": {
+        "skate": {
+          "Senior": "https://www.hokejam.lv/lv/48-pieauguso-hokeja-slidas",
+          "Intermediate": "https://www.hokejam.lv/lv/241-pusaudzu-hokeja-slidas",
+          "Junior": "https://www.hokejam.lv/lv/50-junioru-hokeja-slidas",
+          "Youth": "https://www.hokejam.lv/lv/51-bernu-hokeja-slidas"
+        },
+        "stick": {
+          "Senior": "https://www.hokejam.lv/lv/30-kompozitu-hokeja-nujas",
+          "Intermediate": "https://www.hokejam.lv/lv/30-kompozitu-hokeja-nujas",
+          "Junior": "https://www.hokejam.lv/lv/30-kompozitu-hokeja-nujas",
+          "Youth": "https://www.hokejam.lv/lv/30-kompozitu-hokeja-nujas"
+        }
+      }
+    },
+    "hp": {
+      "name": "Hokeja Pasaule",
+      "url": "https://hokejapasaule.lv/",
+      "shipping": 3.5,
+      "logoDark": "img/logo/hokeja-pasaule.png",
+      "logoLight": "img/logo/hokeja-pasaule_dark.png",
+      "categoryUrls": {
+        "skate": {
+          "Senior": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas",
+          "Intermediate": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas",
+          "Junior": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-junioriem",
+          "Youth": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-berniem"
+        },
+        "stick": {
+          "Senior": "https://hokejapasaule.lv/lv_lv/nujas/hokeja-nujas",
+          "Intermediate": "https://hokejapasaule.lv/lv_lv/nujas/hokeja-nujas",
+          "Junior": "https://hokejapasaule.lv/lv_lv/nujas/hokeja-nujas",
+          "Youth": "https://hokejapasaule.lv/lv_lv/nujas/hokeja-nujas"
+        }
+      }
+    },
+    "sp": {
+      "name": "Sportega",
+      "url": "https://www.sportega.lv/",
+      "shipping": 4.0,
+      "logoDark": "img/logo/sportega.png",
+      "logoLight": "img/logo/sportega-dark.png",
+      "categoryUrls": {
+        "skate": {
+          "Senior": "https://www.sportega.lv/hokeja-slidas/c354",
+          "Intermediate": "https://www.sportega.lv/hokeja-slidas/c354",
+          "Junior": "https://www.sportega.lv/hokeja-ekipejums/juniors/c2559",
+          "Youth": "https://www.sportega.lv/hokeja-ekipejums/berns-youth/c233"
+        },
+        "stick": {
+          "Senior": "https://www.sportega.lv/hokeja-ekipejums/kompozitmateriala-hokeja-nujas/c172",
+          "Intermediate": "https://www.sportega.lv/hokeja-ekipejums/kompozitmateriala-hokeja-nujas/c172",
+          "Junior": "https://www.sportega.lv/hokeja-ekipejums/kompozitmateriala-hokeja-nujas/c172",
+          "Youth": "https://www.sportega.lv/hokeja-ekipejums/kompozitmateriala-hokeja-nujas/c172"
+        }
+      }
+    }
+  },
+  "_models": "imgDir: bildes meklē vispirms imgDir/<grupa>/1.png (piem. img/skates/bauer-supreme-m40/youth/1.png), ja tādas nav — imgDir/1.png. categories: grupas, kurās modelis vispār eksistē.",
+  "models": [
+    {
+      "id": "bauer-vapor-fly40",
+      "type": "skate",
+      "brand": "Bauer",
+      "name": "Vapor S25 FLY40",
+      "series": "Vapor Agility",
+      "keywords": [
+        "fly40"
+      ],
+      "categories": [
+        "Senior",
+        "Intermediate",
+        "Junior",
+        "Youth"
+      ],
+      "match": {
+        "forward": 92,
+        "defense": 64
+      },
+      "profileBadge": "Agility / Ātrums",
+      "note": "Vapor ģeometrija ar PowerFly holderi un Curv kompozītu. Izteikts uzsvars uz eksplozīvu startu.",
+      "imgDir": "img/skates/bauer-vapor-fly40",
+      "imgCount": 3
+    },
+    {
+      "id": "bauer-supreme-f40",
+      "type": "skate",
+      "brand": "Bauer",
+      "name": "Supreme S26 F40",
+      "series": "Supreme Power",
+      "keywords": [
+        "f40"
+      ],
+      "categories": [
+        "Senior",
+        "Intermediate",
+        "Junior"
+      ],
+      "match": {
+        "forward": 72,
+        "defense": 90
+      },
+      "profileBadge": "Power / Stabilitāte",
+      "note": "Supreme jaunākā paaudze (S26). Anatomisks atbalsts potītei un stabilitāte divcīņās.",
+      "imgDir": "img/skates/bauer-supreme-f40",
+      "imgCount": 3
+    },
+    {
+      "id": "bauer-supreme-m40",
+      "type": "skate",
+      "brand": "Bauer",
+      "name": "Supreme S24 M40",
+      "series": "Supreme Power (S24)",
+      "keywords": [
+        "m40"
+      ],
+      "categories": [
+        "Senior",
+        "Intermediate",
+        "Junior",
+        "Youth"
+      ],
+      "match": {
+        "forward": 68,
+        "defense": 86
+      },
+      "profileBadge": "Power / Izturība",
+      "note": "Supreme sērijas pārbaudīta platforma par pieejamāku budžeta cenu.",
+      "imgDir": "img/skates/bauer-supreme-m40",
+      "imgCount": 3
+    },
+    {
+      "id": "bauer-supreme-fuse-s26",
+      "type": "stick",
+      "brand": "Bauer",
+      "name": "Supreme S26 FUSE Composite",
+      "series": "Supreme High-Kick",
+      "keywords": [
+        "fuse"
+      ],
+      "categories": [
+        "Senior",
+        "Intermediate",
+        "Junior",
+        "Youth"
+      ],
+      "match": {
+        "forward": 70,
+        "defense": 92,
+        "allround": 85
+      },
+      "profileBadge": "Power / Šķēlieni",
+      "note": "Supreme liekšanās punkts (Mid/High Kick) maksimālai šāviena jaudai un one-timer metieniem.",
+      "imgDir": "img/sticks/bauer-supreme-fuse",
+      "imgCount": 3
+    }
+  ],
+  "_fitAliases": "Kuri veikalu platumu apzīmējumi atbilst kurai Bauer FIT izvēlei profilā. Sportega raksta Konusveida/Regulāri/Plašs, Hokeja Pasaule un Hokejam.lv — FIT 1/2/3.",
+  "fitAliases": {
+    "FIT 1": [
+      "FIT 1"
+    ],
+    "FIT 2": [
+      "FIT 2",
+      "D",
+      "R",
+      "REGULAR"
+    ],
+    "FIT 3": [
+      "FIT 3",
+      "EE",
+      "W",
+      "WIDE"
+    ]
+  },
+  "sizeTables": {
+    "skate": {
+      "Senior": [
+        {
+          "val": "6",
+          "eur": "40",
+          "label": "6 (EUR 40 · 25.5 cm)"
+        },
+        {
+          "val": "6.5",
+          "eur": "41",
+          "label": "6.5 (EUR 41 · 25.5 cm)"
+        },
+        {
+          "val": "7",
+          "eur": "42",
+          "label": "7 (EUR 42 · 26.0 cm)"
+        },
+        {
+          "val": "7.5",
+          "eur": "42.5",
+          "label": "7.5 (EUR 42.5 · 26.5 cm)"
+        },
+        {
+          "val": "8",
+          "eur": "43",
+          "label": "8 (EUR 43 · 27.0 cm)"
+        },
+        {
+          "val": "8.5",
+          "eur": "43.5",
+          "label": "8.5 (EUR 43.5 · 27.5 cm)"
+        },
+        {
+          "val": "9",
+          "eur": "44",
+          "label": "9 (EUR 44 · 28.0 cm)"
+        },
+        {
+          "val": "9.5",
+          "eur": "44.5",
+          "label": "9.5 (EUR 44.5 · 28.5 cm)"
+        },
+        {
+          "val": "10",
+          "eur": "45.5",
+          "label": "10 (EUR 45.5 · 29.0 cm)"
+        },
+        {
+          "val": "10.5",
+          "eur": "46",
+          "label": "10.5 (EUR 46 · 29.5 cm)"
+        },
+        {
+          "val": "11",
+          "eur": "46.5",
+          "label": "11 (EUR 46.5 · 30.0 cm)"
+        },
+        {
+          "val": "11.5",
+          "eur": "47",
+          "label": "11.5 (EUR 47 · 30.3 cm)"
+        },
+        {
+          "val": "12",
+          "eur": "47.5",
+          "label": "12 (EUR 47.5 · 30.6 cm)"
+        }
+      ],
+      "Intermediate": [
+        {
+          "val": "4",
+          "eur": "37",
+          "label": "4 (EUR 37 · 24.0 cm)"
+        },
+        {
+          "val": "4.5",
+          "eur": "37.5",
+          "label": "4.5 (EUR 37.5 · 24.5 cm)"
+        },
+        {
+          "val": "5",
+          "eur": "38",
+          "label": "5 (EUR 38 · 25.0 cm)"
+        },
+        {
+          "val": "5.5",
+          "eur": "39",
+          "label": "5.5 (EUR 39 · 25.3 cm)"
+        },
+        {
+          "val": "6",
+          "eur": "40",
+          "label": "6 (EUR 40 · 25.5 cm)"
+        },
+        {
+          "val": "6.5",
+          "eur": "41",
+          "label": "6.5 (EUR 41 · 25.5 cm)"
+        }
+      ],
+      "Junior": [
+        {
+          "val": "1",
+          "eur": "34",
+          "label": "1 (EUR 34 · 21.5 cm)"
+        },
+        {
+          "val": "1.5",
+          "eur": "34.5",
+          "label": "1.5 (EUR 34.5 · 22.0 cm)"
+        },
+        {
+          "val": "2",
+          "eur": "35",
+          "label": "2 (EUR 35 · 22.2 cm)"
+        },
+        {
+          "val": "2.5",
+          "eur": "35.5",
+          "label": "2.5 (EUR 35.5 · 22.7 cm)"
+        },
+        {
+          "val": "3",
+          "eur": "36",
+          "label": "3 (EUR 36 · 23.2 cm)"
+        },
+        {
+          "val": "3.5",
+          "eur": "36.5",
+          "label": "3.5 (EUR 36.5 · 23.7 cm)"
+        },
+        {
+          "val": "4",
+          "eur": "37",
+          "label": "4 (EUR 37 · 24.0 cm)"
+        },
+        {
+          "val": "4.5",
+          "eur": "37.5",
+          "label": "4.5 (EUR 37.5 · 24.5 cm)"
+        },
+        {
+          "val": "5",
+          "eur": "38",
+          "label": "5 (EUR 38 · 25.0 cm)"
+        },
+        {
+          "val": "5.5",
+          "eur": "39",
+          "label": "5.5 (EUR 39 · 25.3 cm)"
+        }
+      ],
+      "Youth": [
+        {
+          "val": "Yth 6",
+          "eur": "24",
+          "label": "Yth 6 (EUR 24 · 14.6 cm)"
+        },
+        {
+          "val": "Yth 7",
+          "eur": "25",
+          "label": "Yth 7 (EUR 25 · 15.5 cm)"
+        },
+        {
+          "val": "Yth 8",
+          "eur": "26",
+          "label": "Yth 8 (EUR 26 · 16.3 cm)"
+        },
+        {
+          "val": "Yth 9",
+          "eur": "27",
+          "label": "Yth 9 (EUR 27 · 17.3 cm)"
+        },
+        {
+          "val": "Yth 10",
+          "eur": "28",
+          "label": "Yth 10 (EUR 28 · 18.1 cm)"
+        },
+        {
+          "val": "Yth 10.5",
+          "eur": "29",
+          "label": "Yth 10.5 (EUR 29 · 18.5 cm)"
+        },
+        {
+          "val": "Yth 11",
+          "eur": "30",
+          "label": "Yth 11 (EUR 30 · 19.0 cm)"
+        },
+        {
+          "val": "Yth 11.5",
+          "eur": "30.5",
+          "label": "Yth 11.5 (EUR 30.5 · 19.5 cm)"
+        },
+        {
+          "val": "Yth 12",
+          "eur": "31",
+          "label": "Yth 12 (EUR 31 · 19.7 cm)"
+        },
+        {
+          "val": "Yth 12.5",
+          "eur": "32",
+          "label": "Yth 12.5 (EUR 32 · 20.2 cm)"
+        },
+        {
+          "val": "Yth 13",
+          "eur": "32.5",
+          "label": "Yth 13 (EUR 32.5 · 20.5 cm)"
+        },
+        {
+          "val": "Yth 13.5",
+          "eur": "33",
+          "label": "Yth 13.5 (EUR 33 · 21.0 cm)"
+        }
+      ]
+    },
+    "stick": {
+      "Senior": [
+        {
+          "val": "70",
+          "label": "70 flex (52–88 kg · 149–160 cm)"
+        },
+        {
+          "val": "77",
+          "label": "77 flex (63–100 kg · 149–160 cm)"
+        },
+        {
+          "val": "87",
+          "label": "87 flex (68–113 kg · 149–160 cm)"
+        },
+        {
+          "val": "95",
+          "label": "95 flex (86–113 kg · 149–160 cm)"
+        },
+        {
+          "val": "102",
+          "label": "102 flex (93–113 kg · 149–160 cm)"
+        }
+      ],
+      "Intermediate": [
+        {
+          "val": "55",
+          "label": "55 flex (34–70 kg · 137–147 cm)"
+        },
+        {
+          "val": "65",
+          "label": "65 flex (50–75 kg · 137–147 cm)"
+        }
+      ],
+      "Junior": [
+        {
+          "val": "30",
+          "label": "30 flex (23–41 kg · 116–137 cm)"
+        },
+        {
+          "val": "40",
+          "label": "40 flex (25–50 kg · 116–137 cm)"
+        },
+        {
+          "val": "50",
+          "label": "50 flex (29–54 kg · 116–137 cm)"
+        }
+      ],
+      "Youth": [
+        {
+          "val": "10",
+          "label": "10 flex (18–25 kg · 96–116 cm)"
+        },
+        {
+          "val": "20",
+          "label": "20 flex (18–29 kg · 96–116 cm)"
+        }
+      ]
+    }
+  },
+  "defaultBudget": {
+    "skate": {
+      "Senior": [
+        300,
+        650
+      ],
+      "Intermediate": [
+        200,
+        500
+      ],
+      "Junior": [
+        150,
+        450
+      ],
+      "Youth": [
+        50,
+        250
+      ]
+    },
+    "stick": {
+      "Senior": [
+        100,
+        350
+      ],
+      "Intermediate": [
+        80,
+        250
+      ],
+      "Junior": [
+        50,
+        200
+      ],
+      "Youth": [
+        30,
+        120
+      ]
+    }
+  },
+  "usedSources": [
+    {
+      "name": "SS.lv",
+      "url": "https://www.ss.lv/lv/sports/skating/hockey-skates/"
+    },
+    {
+      "name": "Facebook Marketplace",
+      "url": "https://www.facebook.com/marketplace/"
+    },
+    {
+      "name": "Vintage.lv",
+      "url": "https://vintage.lv/"
+    },
+    {
+      "name": "Andelemandele.lv",
+      "url": "https://www.andelemandele.lv/"
+    }
+  ]
+}
