@@ -1,8 +1,13 @@
 {
-  "version": "1.5.1",
-  "released": "2026-11-13T09:19:15+00:00",
-  "notes": "Add files via upload",
+  "version": "2.0.0",
+  "released": "2026-11-13T10:38:30+00:00",
+  "notes": "v2.0 – jauns dizains, rindu izkārtojums, mobilais skats",
   "history": [
+    {
+      "version": "2.0.0",
+      "released": "2026-11-13T10:38:30+00:00",
+      "notes": "v2.0 – jauns dizains, rindu izkārtojums, mobilais skats"
+    },
     {
       "version": "1.5.1",
       "released": "2026-11-13T09:19:15+00:00",
