@@ -570,6 +570,37 @@ def load_previous():
         return {}
 
 
+HISTORY_DAYS = 120   # cik dienas glabāt cenu vēsturi
+
+
+def load_previous_history():
+    try:
+        with open(OUTPUT_PATH, encoding="utf-8") as f:
+            return json.load(f).get("history", {}) or {}
+    except (OSError, ValueError):
+        return {}
+
+
+def update_history(history, offers, today):
+    """Katram piedāvājumam ar cenu saglabā dienas zemāko cenu: {"modelis|veikals|grupa": [["2026-11-13", 416.49], ...]}"""
+    for o in offers:
+        if o.get("stale") or not (o.get("price", 0) > 0):
+            continue
+        key = f"{o['model']}|{o['retailer']}|{o['category']}"
+        series = history.setdefault(key, [])
+        if series and series[-1][0] == today:
+            series[-1][1] = min(series[-1][1], o["price"])
+        else:
+            series.append([today, o["price"]])
+    cutoff = (datetime.now(timezone.utc).date().toordinal() - HISTORY_DAYS)
+    for key in list(history):
+        history[key] = [p for p in history[key]
+                        if datetime.strptime(p[0], "%Y-%m-%d").date().toordinal() >= cutoff]
+        if not history[key]:
+            del history[key]
+    return history
+
+
 def scrape_all():
     started = datetime.now(timezone.utc)
     log(f"[{started:%Y-%m-%d %H:%M:%S} UTC] Sākas skenēšana{' (DEBUG)' if DEBUG else ''}...")
@@ -577,6 +608,7 @@ def scrape_all():
     session.headers.update(HEADERS)
     today = started.strftime("%Y-%m-%d")
     previous = load_previous()
+    history = load_previous_history()
 
     # 1) Kategoriju lapas — katru unikālo URL lejupielādē tikai vienreiz
     catalogs = {}     # url -> (produkti, ok)
@@ -686,6 +718,7 @@ def scrape_all():
             for r_key in RETAILERS
         },
         "offers": offers,
+        "history": update_history(history, offers, today),
         "diagnostics": DIAG,
     }
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:

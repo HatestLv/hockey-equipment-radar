@@ -591,5 +591,35 @@
       "name": "Andelemandele.lv",
       "url": "https://www.andelemandele.lv/"
     }
-  ]
+  ],
+  "_banners": "Sākumlapas baneri. Izmērs: 1120 × 240 px (JPG vai WebP, līdz ~200 KB). Svarīgākais teksts kreisajā pusē. link: '#skates' / '#sticks' = sadaļa lapā, 'https://...' = ārēja saite, 'contact' = kontaktu forma. from/until: 'GGGG-MM-DD' — kad rādīt (var atstāt null). ad: true — banerim parādīsies uzraksts 'Reklāma'. Pēc visiem baneriem automātiski rādās slaids 'Šeit var būt tava reklāma'.",
+  "banners": [
+    {
+      "image": "img/banners/banner_1.jpg",
+      "tag": "Jaunums veikalos",
+      "title": "Bauer S26 PULSE2 WHITE",
+      "text": "Jauda, precizitāte un ātrums katrā metienā! Izvēlies savu jauno nūju un dodies uz ledus ar pārliecību.",
+      "button": "Skatīt nūju radaru →",
+      "link": "#sticks",
+      "from": null,
+      "until": null,
+      "ad": false
+    },
+    {
+      "image": "img/banners/banner_2.jpg",
+      "tag": "Cenu analīze",
+      "title": "Atrodi labāko inventāra cenu",
+      "text": "4 reizes dienā pārbaudām Hokeja Pasaule, Hokejam.lv un Sportega cenas, izmērus un noliktavas atlikumus.",
+      "button": "Salīdzināt slidas →",
+      "link": "#skates",
+      "from": null,
+      "until": null,
+      "ad": false
+    }
+  ],
+  "bannerSpec": {
+    "title": "Šeit var būt tava reklāma",
+    "text": "Hokeja komandām, skolām, treneriem un veikaliem. Banera izmērs 1120 × 240 px.",
+    "placeholderImage": ""
+  }
 }

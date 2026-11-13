@@ -22,7 +22,7 @@
    --------------------------------------------------------------------- */
 let CFG = null;            // config.json saturs
 let OFFERS = [];           // scraped_data.json piedāvājumi
-const DATA = { updatedAt: null, retailerStatus: {}, loaded: false, configError: false };
+const DATA = { updatedAt: null, retailerStatus: {}, history: {}, loaded: false, configError: false };
 
 const S = {
   tab: 'home',
@@ -214,7 +214,8 @@ function setImg(el, candidatesStr) {
 const findOffer = (modelId, rKey, cat) =>
   OFFERS.find(o => o.model === modelId && o.retailer === rKey && (o.category || 'Senior') === cat);
 
-const offerTotal = o => (o && o.price > 0) ? o.price + (o.shipping || 0) : null;
+// Salīdzinām tikai preces cenu. Piegāde atšķiras pēc pasūtījuma, tāpēc to rāda tikai sadaļā "Vairāk".
+const offerTotal = o => (o && o.price > 0) ? o.price : null;
 
 function fitMatches(offerFits, wanted) {
   if (wanted === 'all') return true;
@@ -362,12 +363,48 @@ function meter(m) {
   </div>`;
 }
 
+/* ----- Cenu vēsture ----- */
+const historyKey = (m, rKey, cat) => `${m.id}|${rKey}|${cat}`;
+
+/** { series, min30, diff7 } — diff7 < 0 nozīmē, ka cena pēdējās 7 dienās kritusies. */
+function priceTrend(m, rKey, cat, current) {
+  const series = (DATA.history[historyKey(m, rKey, cat)] || []).filter(p => p[1] > 0);
+  if (!series.length || !(current > 0)) return { series, min30: null, diff7: null };
+  const day = s => new Date(s + 'T00:00:00Z').getTime();
+  const last = day(series[series.length - 1][0]);
+  const in30 = series.filter(p => last - day(p[0]) <= 30 * 864e5).map(p => p[1]);
+  const before7 = series.filter(p => last - day(p[0]) >= 7 * 864e5);
+  const ref = before7.length ? before7[before7.length - 1][1] : null;
+  return { series, min30: in30.length ? Math.min(...in30) : null, diff7: ref ? Math.round((current - ref) * 100) / 100 : null };
+}
+
+function trendBadge(tr) {
+  if (tr.diff7 == null || Math.abs(tr.diff7) < 1) return '';
+  return tr.diff7 < 0
+    ? `<span class="trend down" title="Salīdzinot ar cenu pirms 7 dienām">↓ €${Math.abs(tr.diff7).toFixed(0)} · 7 d.</span>`
+    : `<span class="trend up" title="Salīdzinot ar cenu pirms 7 dienām">↑ €${tr.diff7.toFixed(0)} · 7 d.</span>`;
+}
+
+/** Maza cenu līkne (SVG) pēdējām 60 dienām. */
+function sparkline(series) {
+  const pts = series.slice(-60);
+  if (pts.length < 2) return '<span style="color:var(--muted)">Vēsture sāks veidoties pēc dažām dienām</span>';
+  const vals = pts.map(p => p[1]);
+  const min = Math.min(...vals), max = Math.max(...vals), span = (max - min) || 1;
+  const W = 140, H = 34;
+  const xy = vals.map((v, i) => `${(i / (vals.length - 1) * W).toFixed(1)},${(H - 3 - (v - min) / span * (H - 6)).toFixed(1)}`).join(' ');
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" aria-label="Cenu vēsture"><polyline points="${xy}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg>`;
+}
+
+const cardId = (m, rKey, cat) => `card-${m.id}-${rKey}-${cat}`.replace(/[^a-zA-Z0-9_-]/g, '');
+
 function renderCard(m, rKey, cat) {
   const r = CFG.retailers[rKey];
   const ev = evaluate(m, rKey, cat);
   const o = ev.o;
   const info = stateInfo(ev, m);
   const hasPrice = o && o.price > 0;
+  const tr = priceTrend(m, rKey, cat, hasPrice ? o.price : null);
 
   const imgs = imageCandidates(m, cat);
   const imgId = `cimg-${m.id}-${rKey}-${cat}`;
@@ -375,19 +412,23 @@ function renderCard(m, rKey, cat) {
   const dots = imgs.length > 1 ? `<div class="card-img-dots">${imgs.map((c, i) =>
     `<span class="card-img-dot ${i === 0 ? 'active' : ''}" data-img-switch="${imgId}" data-img-src="${esc(c.join('|'))}"></span>`).join('')}</div>` : '';
 
-  const priceHtml = hasPrice ? `<span class="price">${eur(o.price)}</span>` : `<span class="price is-zero">—</span>`;
   const stockHtml = ev.inStock
     ? `<span style="color:var(--green);font-weight:700">Noliktavā</span>`
     : (hasPrice ? `<span style="color:var(--amber)">Nav noliktavā</span>` : `<span style="color:var(--muted)">—</span>`);
   const checked = o ? `${fmtDay(o.checked)}${o.stale ? ' <span class="stale-tag" title="Pēdējā skenēšanā veikals neatbildēja">(veci dati)</span>' : ''}` : '—';
+  const shipping = r.shipping > 0 ? `no €${Number(r.shipping).toFixed(2)} — precizē veikalā` : 'Precizē veikala lapā';
 
   const productUrl = o && o.url && hasPrice ? o.url : categoryUrl(rKey, m.type, cat);
   const btn = ev.inStock
     ? `<a class="btn" href="${esc(safeUrl(productUrl))}" target="_blank" rel="noopener">${t('openStore')}</a>`
     : `<a class="btn btn-zero" href="${esc(safeUrl(productUrl))}" target="_blank" rel="noopener">${t('checkStore', { store: esc(r.name) })}</a>`;
 
+  const mainSpec = m.type === 'skate'
+    ? row('Izmēri', ev.inStock ? sizesHtml(o, m) : '—')
+    : row('Satvēriens · Flex', ev.inStock ? `${sizesHtml(o, m)} · ${fitsHtml(o, m)}` : '—');
+
   return `
-    <article class="card ${info.cls}">
+    <article class="card ${info.cls}" id="${cardId(m, rKey, cat)}">
       <div class="imgbox" data-open-lightbox="${esc(m.id)}" data-cat="${esc(cat)}" title="Noklikšķini, lai palielinātu">
         ${imgTag(imgs[0], name, `id="${esc(imgId)}"`)}
         ${dots}
@@ -395,18 +436,25 @@ function renderCard(m, rKey, cat) {
       <div class="body">
         <h3>${esc(name)}</h3>
         <p class="shop">${esc(r.name)} &nbsp; ${info.badge}</p>
-        ${stateNote(ev, m, rKey)}
-        <div class="card-specs-table">
-          ${row('Cena', priceHtml)}
-          ${row('Piegāde', hasPrice ? (o.shipping > 0 ? eur(o.shipping) : 'Bezmaksas') : '—')}
-          ${row('Kopā', hasPrice ? `<b>${eur(ev.total)}</b>` : '—')}
-          ${row(m.type === 'skate' ? 'Pieejamie izmēri' : 'Satvēriens', ev.inStock ? sizesHtml(o, m) : '—')}
-          ${row(m.type === 'skate' ? 'Bauer FIT' : 'Flex · Liekums', ev.inStock ? fitsHtml(o, m) : '—')}
-          ${row('Pieejamība', stockHtml)}
-          ${row('Pēdējā pārbaude', checked)}
+        <div class="price-line">
+          ${hasPrice ? `<span class="price">${eur(o.price)}</span>` : `<span class="price is-zero">—</span>`}
+          ${trendBadge(tr)}
         </div>
-        ${meter(m)}
-        <p class="note">${esc(m.note)}</p>
+        ${stateNote(ev, m, rKey)}
+        <div class="card-specs-table">${mainSpec}</div>
+        <details class="card-more">
+          <summary>Vairāk</summary>
+          <div class="card-specs-table">
+            ${m.type === 'skate' ? row('Bauer FIT', ev.inStock ? fitsHtml(o, m) : '—') : ''}
+            ${row('Pieejamība', stockHtml)}
+            ${row('Piegāde', shipping)}
+            ${row('Zemākā cena 30 d.', tr.min30 ? eur(tr.min30) : '—')}
+            ${row('Cenu vēsture', sparkline(tr.series))}
+            ${row('Pēdējā pārbaude', checked)}
+          </div>
+          ${meter(m)}
+          <p class="note">${esc(m.note)}</p>
+        </details>
       </div>
       ${btn}
     </article>`;
@@ -488,7 +536,7 @@ function renderMobileList(models, type, cat) {
         <a class="m-link" href="${esc(safeUrl(url))}" target="_blank" rel="noopener">${ev.inStock ? t('openStore') : t('checkStore', { store: esc(r.name) })}</a>
       </div>`;
     }).join('');
-    return `<article class="m-card">
+    return `<article class="m-card" id="mcard-${esc(m.id)}">
       <div class="m-head">
         <div class="m-thumb" data-open-lightbox="${esc(m.id)}" data-cat="${esc(cat)}">${imgTag(imgs[0], m.name)}</div>
         <div><h3>${esc(m.brand)} ${esc(modelName(m, cat))}</h3><div class="m-sub">${esc(m.series)} · ${esc(m.profileBadge)}</div></div>
@@ -618,18 +666,36 @@ function dataNotice(type, cat) {
   return `<div class="notice-bar"><b>Uzmanību:</b> ${esc(names)} dati pēdējā skenēšanā netika pilnībā nolasīti. Šo veikalu kartītēs var būt veci dati vai "Nav atrasts" — pārbaudi veikala lapā.</div>`;
 }
 
+/** Viena josla ar labāko piedāvājumu un pogu, kas aizved pie kartītes. */
+function summaryBar(type, cat) {
+  const rKeys = retailerKeys();
+  const all = modelsFor(type, cat).flatMap(m => rKeys.map(k => ({ m, k, ev: evaluate(m, k, cat) })));
+  const byPrice = (a, b) => a.ev.total - b.ev.total;
+  const best = all.filter(x => x.ev.state === 'match').sort(byPrice)[0];
+  const cheapest = all.filter(x => x.ev.inStock).sort(byPrice)[0];
+  const verified = all.filter(x => x.ev.inStock && x.ev.o.status === 'VERIFIED').length;
+  const tracked = all.filter(x => x.ev.state !== 'not_tracked').length;
+  const pick = best || cheapest;
+  const label = best ? 'Labākā cena tavam profilam' : (cheapest ? 'Tavā izmērā un budžetā šobrīd nav · lētākais jebkurā izmērā' : 'Piedāvājumu vēl nav');
+  const main = pick
+    ? `<b>${eur(pick.ev.total)}</b><span class="sb-what">${esc(pick.m.brand)} ${esc(modelName(pick.m, cat))} · ${esc(CFG.retailers[pick.k].name)}</span>
+       <button type="button" class="sb-btn" data-jump="${cardId(pick.m, pick.k, cat)}" data-jump-m="mcard-${esc(pick.m.id)}">Rādīt →</button>`
+    : '<b>—</b>';
+  return `<div class="sum-bar">
+    <div class="sb-main"><small>${label}</small><div class="sb-row">${main}</div></div>
+    <div class="sb-stats">
+      ${best && cheapest && cheapest.ev.total < best.ev.total ? `<span>Lētākais jebkurā izmērā: <b>${eur(cheapest.ev.total)}</b></span>` : ''}
+      <span>Pārbaudīti: <b>${verified} / ${tracked}</b></span>
+      <span class="badge ${DATA.updatedAt ? 'b-ok' : 'b-no'}">${DATA.updatedAt ? 'LIVE' : 'GAIDA DATUS'}</span>
+    </div>
+  </div>`;
+}
+
 function viewCategory(type) {
   const isSkate = type === 'skate';
   const cat = isSkate ? PROFILE.skateCat : PROFILE.stickCat;
   const models = visibleModels(type, cat);
   const rKeys = retailerKeys();
-
-  // Kopsavilkums — tikai šīs grupas modeļi
-  const evs = modelsFor(type, cat).flatMap(m => rKeys.map(k => evaluate(m, k, cat)));
-  const matches = evs.filter(e => e.state === 'match').map(e => e.total);
-  const inStock = evs.filter(e => e.inStock).map(e => e.total);
-  const verified = evs.filter(e => e.inStock && e.o.status === 'VERIFIED').length;
-  const tracked = evs.filter(e => e.state !== 'not_tracked').length;
 
   const p = PROFILE;
   const sub = isSkate
@@ -645,12 +711,7 @@ function viewCategory(type) {
       </div>
     </div>
     <p class="sub">${sub}</p>
-    <div class="sum">
-      <div><small>Labākā cena tavam profilam</small><b>${matches.length ? eur(Math.min(...matches)) : '<span style="font-size:13px;color:var(--muted);font-weight:600">Nav tavā izmērā / budžetā</span>'}</b></div>
-      <div><small>Zemākā cena (jebkurš izmērs)</small><b>${inStock.length ? eur(Math.min(...inStock)) : '—'}</b></div>
-      <div><small>Pārbaudīti piedāvājumi</small><b>${verified} / ${tracked}</b></div>
-      <div><small>Datu avots</small><b><span class="badge ${DATA.updatedAt ? 'b-ok' : 'b-no'}">${DATA.updatedAt ? 'GITHUB ACTIONS (LIVE)' : 'GAIDA DATUS'}</span></b></div>
-    </div>
+    ${summaryBar(type, cat)}
     ${dataNotice(type, cat)}
     ${filtersBar(type, cat)}
     ${S.view === 'table' ? renderTableView(models, type, cat) : (MOBILE_MQ.matches ? renderMobileList(models, type, cat) : renderStoresGrid(models, type, cat))}
@@ -676,34 +737,59 @@ function recommendedModel(type, cat, roleKey) {
   return [...list].sort((a, b) => (rank(a) - rank(b)) || (((b.match || {})[roleKey] || 0) - ((a.match || {})[roleKey] || 0)))[0];
 }
 
+/* ----- Baneri (config.json → "banners") ----- */
+function activeBanners() {
+  const today = new Date().toISOString().slice(0, 10);
+  const list = (CFG.banners || []).filter(b => (!b.from || b.from <= today) && (!b.until || b.until >= today));
+  const spec = CFG.bannerSpec || {};
+  // Pēdējais slaids vienmēr piedāvā reklāmas vietu
+  list.push({
+    image: spec.placeholderImage || '',
+    tag: 'Reklāmas vieta',
+    title: spec.title || 'Šeit var būt tava reklāma',
+    text: spec.text || 'Hokeja komandām, skolām, treneriem un veikaliem.',
+    button: 'Sazināties →',
+    link: 'contact'
+  });
+  return list;
+}
+
+function bannerLink(b) {
+  const link = b.link || '';
+  if (link === 'contact') return `<a href="#" data-modal="contact" class="hero-btn">${esc(b.button || 'Sazināties →')}</a>`;
+  if (link.startsWith('#')) return `<a href="#" data-t="${esc(link.slice(1))}" class="hero-btn">${esc(b.button || 'Skatīt →')}</a>`;
+  if (/^https?:\/\//.test(link)) return `<a href="${esc(link)}" target="_blank" rel="noopener sponsored" class="hero-btn">${esc(b.button || 'Atvērt →')}</a>`;
+  return '';
+}
+
+function heroBanners() {
+  const list = activeBanners();
+  const slides = list.map((b, i) => {
+    const bg = b.image
+      ? `background-image:linear-gradient(90deg, rgba(14,15,19,0.92) 40%, rgba(14,15,19,0.4)), url('${esc(b.image)}');`
+      : 'background-image:linear-gradient(120deg, rgba(var(--accent-rgb),.35), rgba(14,15,19,.95) 60%);';
+    return `<div class="hero-slide ${i === 0 ? 'active' : ''}" style="${bg}">
+      ${b.ad ? '<span class="ad-label">Reklāma</span>' : ''}
+      <div class="hero-content">
+        ${b.tag ? `<span class="hero-tag">${esc(b.tag)}</span>` : ''}
+        <h2 class="hero-title">${esc(b.title)}</h2>
+        ${b.text ? `<p class="hero-desc">${esc(b.text)}</p>` : ''}
+        ${bannerLink(b)}
+      </div>
+    </div>`;
+  }).join('');
+  const dots = list.map((_, i) => `<span class="slider-dot ${i === 0 ? 'active' : ''}" data-slide="${i}"></span>`).join('');
+  S.sliderIndex = 0;
+  return `<div class="hero-slider-wrap">${slides}<div class="slider-dots">${dots}</div></div>`;
+}
+
 function viewHome() {
   const isForward = PROFILE.role === 'forward';
   const recSkate = recommendedModel('skate', PROFILE.skateCat, PROFILE.role);
   const recStick = recommendedModel('stick', PROFILE.stickCat, PROFILE.stickStyle || PROFILE.role);
 
   return `
-    <div class="hero-slider-wrap">
-      <div class="hero-slide active" style="background-image:linear-gradient(90deg, rgba(14,15,19,0.92) 40%, rgba(14,15,19,0.4)), url('img/banners/banner_1.jpg');">
-        <div class="hero-content">
-          <span class="hero-tag">Jaunums veikalos</span>
-          <h2 class="hero-title">Bauer S26 PULSE2 WHITE</h2>
-          <p class="hero-desc">Jauda, precizitāte un ātrums katrā metienā! Izvēlies savu jauno nūju un dodies uz ledus ar pārliecību – iegādājies jau šodien par labākajām cenām reģionā.</p>
-          <a href="#" data-t="sticks" class="hero-btn">Skatīt nūju radaru →</a>
-        </div>
-      </div>
-      <div class="hero-slide" style="background-image:linear-gradient(90deg, rgba(14,15,19,0.92) 40%, rgba(14,15,19,0.4)), url('img/banners/banner_2.jpg');">
-        <div class="hero-content">
-          <span class="hero-tag">Cenu analīze</span>
-          <h2 class="hero-title">Atrodi labāko inventāra cenu</h2>
-          <p class="hero-desc">4 reizes dienā pārbaudām Hokeja Pasaule, Hokejam.lv un Sportega cenas, izmērus un noliktavas atlikumus.</p>
-          <a href="#" data-t="skates" class="hero-btn">Salīdzināt slidas →</a>
-        </div>
-      </div>
-      <div class="slider-dots">
-        <span class="slider-dot active" data-slide="0"></span>
-        <span class="slider-dot" data-slide="1"></span>
-      </div>
-    </div>
+    ${heroBanners()}
 
     <div class="home-recom">
       <div class="home-recom-title">
@@ -1038,13 +1124,13 @@ document.addEventListener('click', e => {
     return;
   }
 
-  // Vecuma grupas ātrā pārslēgšana slidu/nūju lapā
-  const catBtn = el.closest('[data-cat-switch]');
-  if (catBtn) {
-    applyCategory(PROFILE, catBtn.dataset.type, catBtn.dataset.catSwitch);
-    saveProfile();
-    if (S.sort !== 'default' && S.sort !== 'price') S.sort = 'default';
-    render();
+  const jump = el.closest('[data-jump]');
+  if (jump) {
+    const target = document.getElementById(jump.dataset.jump) || document.getElementById(jump.dataset.jumpM);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      target.classList.remove('flash'); void target.offsetWidth; target.classList.add('flash');
+    }
     return;
   }
 
@@ -1228,6 +1314,7 @@ async function init() {
       if (!isNaN(d.getTime())) DATA.updatedAt = d;
     }
     DATA.retailerStatus = data.retailerStatus || {};
+    DATA.history = data.history || {};
   } catch (err) {
     console.warn('scraped_data.json nav ielādējams:', err);
   }
