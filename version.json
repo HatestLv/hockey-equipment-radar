@@ -1,8 +1,13 @@
 {
-  "version": "1.5.2",
-  "released": "2026-11-13T11:31:45+00:00",
-  "notes": "Lapas publicēšana, kompaktākas rindas, tīrīšana",
+  "version": "2.0.0",
+  "released": "2026-11-13T11:53:43+00:00",
+  "notes": "Atjauninājums",
   "history": [
+    {
+      "version": "2.0.0",
+      "released": "2026-11-13T11:53:43+00:00",
+      "notes": "Atjauninājums"
+    },
     {
       "version": "1.5.2",
       "released": "2026-11-13T11:31:45+00:00",
