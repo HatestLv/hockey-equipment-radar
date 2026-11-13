@@ -2,16 +2,23 @@ name: Scrape Hockey Data
 
 on:
   schedule:
-    # Izpildās 4 reizes dienā: 06:00, 11:00, 16:00 un 21:00 UTC
-    - cron: '0 6,11,16,21 * * *'
+    # 4 reizes dienā: ~06:07, 11:07, 16:07, 21:07 UTC
+    # (minūte 07, nevis 00 — GitHub pilnās stundas palaišanas bieži aizkavē vai izlaiž)
+    - cron: '7 6,11,16,21 * * *'
   workflow_dispatch: # Poga manuālai palaišanai un testēšanai no GitHub paneļa
 
 permissions:
   contents: write
 
+# Neļauj divām skenēšanām darboties vienlaicīgi (citādi otrā nevar izdarīt push)
+concurrency:
+  group: scrape-data
+  cancel-in-progress: false
+
 jobs:
   scrape-and-update:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Lejupielādēt kodu (Checkout)
@@ -39,5 +46,8 @@ jobs:
             echo "Cenu un noliktavas izmaiņas nav konstatētas."
           else
             git commit -m "Automātisks datu atjauninājums: $(date -u +'%Y-%m-%d %H:%M UTC')"
+            # Ja skenēšanas laikā repozitorijā kaut kas mainīts (piem. tu iepušoji index.html),
+            # vispirms paņem jaunākās izmaiņas, tad sūta — citādi push tiek noraidīts
+            git pull --rebase origin "${GITHUB_REF_NAME}"
             git push
           fi
