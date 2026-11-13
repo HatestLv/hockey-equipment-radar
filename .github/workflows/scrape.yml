@@ -10,9 +10,9 @@ on:
 permissions:
   contents: write
 
-# Neļauj divām skenēšanām darboties vienlaicīgi (citādi otrā nevar izdarīt push)
+# Neļauj vienlaicīgi rakstīt repozitorijā divām darbībām (skenēšanai un versijas maiņai)
 concurrency:
-  group: scrape-data
+  group: repo-write
   cancel-in-progress: false
 
 jobs:
