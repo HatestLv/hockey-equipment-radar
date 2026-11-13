@@ -1,9 +1,9 @@
 {
-  "updatedAt": "2026-11-13T09:21:25+00:00",
+  "updatedAt": "2026-11-13T10:58:58+00:00",
   "retailerStatus": {
     "hj": "ok",
     "hp": "error",
-    "sp": "error"
+    "sp": "partial"
   },
   "offers": [
     {
@@ -216,20 +216,15 @@
       "category": "Senior",
       "model": "bauer-supreme-f40",
       "retailer": "hj",
-      "price": 475.99,
+      "price": 0.0,
       "shipping": 0.0,
-      "sizes": [
-        "8"
-      ],
-      "fits": [
-        "FIT 2"
-      ],
-      "stock": true,
+      "sizes": [],
+      "fits": [],
+      "stock": false,
       "checked": "2026-11-13",
-      "url": "https://www.hokejam.lv/lv/pieauguso-hokeja-slidas/5455-19596-bauer-supreme-f40-s26-pieauguso-hokeja-slidas#/882-slidu_izmers-80/2230-platums-fit_2",
-      "status": "VERIFIED",
-      "stale": false,
-      "title": "BAUER Supreme F40 S26 Pieaugušo hokeja slidas"
+      "url": "https://www.hokejam.lv/lv/48-pieauguso-hokeja-slidas",
+      "status": "NOT_FOUND",
+      "stale": false
     },
     {
       "type": "skate",
@@ -623,7 +618,7 @@
       "checked": "2026-11-13",
       "url": "https://hokejapasaule.lv/lv_lv/nujas/hokeja-nujas",
       "status": "ERROR",
-      "stale": false,
+      "stale": true,
       "hands": [],
       "flexes": [],
       "curves": []
@@ -687,7 +682,7 @@
       "checked": "2026-11-13",
       "url": "https://hokejapasaule.lv/lv_lv/nujas/hokeja-nujas",
       "status": "ERROR",
-      "stale": false,
+      "stale": true,
       "hands": [],
       "flexes": [],
       "curves": []
@@ -751,7 +746,7 @@
       "checked": "2026-11-13",
       "url": "https://hokejapasaule.lv/lv_lv/nujas/hokeja-nujas",
       "status": "ERROR",
-      "stale": false,
+      "stale": true,
       "hands": [],
       "flexes": [],
       "curves": []
@@ -814,7 +809,7 @@
       "checked": "2026-11-13",
       "url": "https://hokejapasaule.lv/lv_lv/nujas/hokeja-nujas",
       "status": "ERROR",
-      "stale": false,
+      "stale": true,
       "hands": [],
       "flexes": [],
       "curves": []
