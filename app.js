@@ -85,6 +85,12 @@ const isTracked = (rKey, type, cat) => {
   const r = CFG.retailers[rKey];
   return r.auto !== false && !!(r.categoryUrls[type] && r.categoryUrls[type][cat]);
 };
+/** Tieša saite uz preci (config → productLinks), ja tāda ir; citādi kategorijas lapa. */
+const productLink = (rKey, m, cat) => {
+  const links = CFG.retailers[rKey].productLinks || {};
+  return (links[m.id] && links[m.id][cat]) || '';
+};
+const linkFor = (rKey, m, cat) => productLink(rKey, m, cat) || categoryUrl(rKey, m.type, cat);
 /** Veikals, kuru automātiski nolasīt nevar (piem. aizsardzība pret robotiem) — rādām tikai saiti. */
 const isManual = rKey => CFG.retailers[rKey].auto === false;
 
@@ -435,7 +441,7 @@ function renderCard(m, rKey, cat) {
   const checked = o ? `${fmtDay(o.checked)}${o.stale ? ' <span class="stale-tag" title="Pēdējā skenēšanā veikals neatbildēja">(veci dati)</span>' : ''}` : '—';
   const shipping = r.shipping > 0 ? `no €${Number(r.shipping).toFixed(2)} — precizē veikalā` : 'Precizē veikala lapā';
 
-  const productUrl = o && o.url && hasPrice ? o.url : categoryUrl(rKey, m.type, cat);
+  const productUrl = o && o.url && hasPrice ? o.url : linkFor(rKey, m, cat);
   const btn = ev.inStock
     ? `<a class="btn" href="${esc(safeUrl(productUrl))}" target="_blank" rel="noopener">${t('openStore')}</a>`
     : `<a class="btn btn-zero" href="${esc(safeUrl(productUrl))}" target="_blank" rel="noopener">${t('checkStore', { store: esc(r.name) })}</a>`;
@@ -486,13 +492,13 @@ function renderCompactCard(m, rKey, cat, ev) {
   const msg = {
     not_found: 'Šajā vecuma grupā nav atrasts',
     no_data: ev.stale ? 'Veikals pēdējā skenēšanā neatbildēja' : 'Dati vēl nav saņemti',
-    not_tracked: isManual(rKey) ? 'Cenas jāpārbauda veikala lapā' : 'Cenas vēl netiek vāktas'
+    not_tracked: isManual(rKey) ? (productLink(rKey, m, cat) ? 'Cenu un izmērus skaties veikalā' : 'Šajā grupā prece nav atrasta') : 'Cenas vēl netiek vāktas'
   }[ev.state] || '';
-  const url = categoryUrl(rKey, m.type, cat);
+  const url = linkFor(rKey, m, cat);
   return `<div class="card-compact">
     <p class="cc-title">${esc(m.brand)} ${esc(modelName(m, cat))}</p>
     <div class="cc-row"><span>${msg}</span>${info.badge}</div>
-    <a href="${esc(safeUrl(url))}" target="_blank" rel="noopener">${t('checkStore', { store: esc(r.name) })}</a>
+    <a href="${esc(safeUrl(url))}" target="_blank" rel="noopener">${productLink(rKey, m, cat) ? `Atvērt preci ${esc(r.name)} →` : t('checkStore', { store: esc(r.name) })}</a>
   </div>`;
 }
 
@@ -500,7 +506,7 @@ function renderCompactCard(m, rKey, cat, ev) {
 function renderCollapsedRow(m, cat, evs) {
   const label = { not_found: 'nav atrasts', no_data: 'nav datu', not_tracked: 'drīzumā' };
   const stores = retailerKeys().map((k, i) =>
-    `<a href="${esc(safeUrl(categoryUrl(k, m.type, cat)))}" target="_blank" rel="noopener">${esc(CFG.retailers[k].name)}: ${isManual(k) ? 'skatīt veikalā' : (label[evs[i].state] || '—')}</a>`).join('<span class="rc-sep">·</span>');
+    `<a href="${esc(safeUrl(linkFor(k, m, cat)))}" target="_blank" rel="noopener">${esc(CFG.retailers[k].name)}: ${isManual(k) ? (productLink(k, m, cat) ? 'skatīt preci →' : 'nav atrasts') : (label[evs[i].state] || '—')}</a>`).join('<span class="rc-sep">·</span>');
   return `<div class="row-collapsed">
     <span class="rc-title">${esc(m.brand)} ${esc(modelName(m, cat))}</span>
     <span class="rc-stores">${stores}</span>
@@ -542,7 +548,7 @@ function renderMobileList(models, type, cat) {
       const o = ev.o;
       const hasPrice = o && o.price > 0;
       const isBest = best !== null && ev.state === 'match' && ev.total === best;
-      const url = hasPrice && o.url ? o.url : categoryUrl(k, m.type, cat);
+      const url = hasPrice && o.url ? o.url : linkFor(k, m, cat);
       const meta = ev.inStock
         ? `${stateInfo(ev, m).badge} ${m.type === 'skate' ? sizesHtml(o, m) : `<span>${fitsHtml(o, m)}</span>`}`
         : stateInfo(ev, m).badge;

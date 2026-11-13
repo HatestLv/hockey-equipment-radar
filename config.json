@@ -125,7 +125,33 @@
         }
       },
       "auto": false,
-      "_auto": "Hokeja Pasaule lapu sargā Cloudflare (atbild 403 'Just a moment...'), tāpēc automātiska nolasīšana nav iespējama. Lapā rāda saiti uz veikalu. Ja veikals piešķir piekļuvi vai preču failu (feed), nomaini uz true."
+      "_auto": "Hokeja Pasaule lapu sargā Cloudflare (atbild 403 'Just a moment...'), tāpēc automātiska nolasīšana nav iespējama. Lapā rāda saiti uz veikalu. Ja veikals piešķir piekļuvi vai preču failu (feed), nomaini uz true.",
+      "_productLinks": "Tiešās saites uz precēm katrai vecuma grupai. Cenas automātiski netiek nolasītas (Cloudflare), bet poga 'Skatīt veikalā' atver tieši šo preci. Ja preces nav — atstāj tukšu vai izdzēs rindu.",
+      "productLinks": {
+        "bauer-vapor-fly40": {
+          "Senior": "https://hokejapasaule.lv/lv_lv/bauer-vapor-s25-fly40-senior-hokeja-slidas",
+          "Intermediate": "https://hokejapasaule.lv/lv_lv/bauer-vapor-s25-fly40-intermediate-hokeja-slidas",
+          "Junior": "https://hokejapasaule.lv/lv_lv/bauer-vapor-s25-fly40-junior-hokeja-slidas",
+          "Youth": "https://hokejapasaule.lv/lv_lv/bauer-vapor-s25-fly40-youth-hokeja-slidas"
+        },
+        "bauer-supreme-f40": {
+          "Senior": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s26-f40-senior-hokeja-slidas",
+          "Intermediate": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s26-f40-intermediate-hokeja-slidas",
+          "Junior": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s26-f40-junior-hokeja-slidas"
+        },
+        "bauer-supreme-m40": {
+          "Senior": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s24-m40-senior-hokeja-slidas",
+          "Intermediate": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s24-m40-intermediate-hokeja-slidas",
+          "Junior": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s24-m40-junior-hokeja-slidas",
+          "Youth": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s24-m40-youth-hokeja-slidas"
+        },
+        "bauer-supreme-fuse-s26": {
+          "Senior": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s26-fuse-grip-senior-hokeja-nuja",
+          "Intermediate": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s26-fuse-grip-intermediate-hokeja-nuja",
+          "Junior": "",
+          "Youth": "https://hokejapasaule.lv/lv_lv/bauer-supreme-s26-fuse-grip-youth-hokeja-nuja"
+        }
+      }
     },
     "sp": {
       "name": "Sportega",
