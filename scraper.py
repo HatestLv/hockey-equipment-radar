@@ -14,6 +14,7 @@ import re
 import sys
 import time
 from datetime import datetime, timezone
+from urllib.parse import quote_plus
 
 import requests
 from bs4 import BeautifulSoup
@@ -146,6 +147,11 @@ def json_ld_blocks(soup):
 # Izmēru un platumu normalizācija
 # ---------------------------------------------------------------------------
 
+def size_sort_key(s):
+    m = re.search(r"[\d.]+", s or "")
+    return float(m.group(0)) if m else 999
+
+
 def eur_to_size(eur, category, item_type):
     for row in SIZE_TABLES.get(item_type, {}).get(category, []):
         if row.get("eur") and float(row["eur"]) == float(eur):
@@ -206,9 +212,10 @@ def normalize_fit(raw):
         return "FIT 2"
     if low.startswith(("plaš", "plas", "plat", "wide")):
         return "FIT 3"
-    if re.fullmatch(r"(EE|W)", t):
+    # "EE (platāka kāja)", "D (standarta kāja)", "R"
+    if re.match(r"(EE|W)\b", t):
         return "EE"
-    if re.fullmatch(r"(D|R)", t):
+    if re.match(r"(D|R)\b", t):
         return "D"
     return None
 
@@ -228,6 +235,12 @@ def classify_group(label):
     if any(w in l for w in ["izmēr", "izmer", "size"]):
         return "size"
     return None
+
+
+def option_text(opt):
+    """Tikai paša <option> teksts (bez iekšā ieliktiem nākamajiem <option>)."""
+    own = "".join(opt.find_all(string=True, recursive=False)).strip()
+    return own or opt.get_text(" ", strip=True)
 
 
 UNAVAILABLE_WORDS = ["nav pieejams", "nav noliktavā", "izpārdots", "out of stock", "nav pieejama"]
@@ -266,6 +279,7 @@ class Variants:
         self.category = category
         self.item_type = item_type
         self.sizes, self.fits, self.hands, self.flexes, self.curves = [], [], [], [], []
+        self.combos = []   # precīzas kombinācijas, piem. {"size": "8", "fit": "FIT 1", "stock": 10}
 
     def add(self, kind, raw):
         if not raw or is_unavailable_text(raw):
@@ -307,7 +321,8 @@ RETAILER_LIST_SELECTORS = {
     # (kartītes selektors, nosaukuma saite, cenas elements)
     "hj": (".product-miniature, .js-product-miniature", ".product-title a", ".current-price .price, .price"),
     "hp": (".product-item-info, .product-item", "a.product-item-link", None),
-    "sp": (".c-product-card, .product-card, .product, article", "a[href]", ".c-price__current, .price, [class*=price]"),
+    # Sportega: <a class="pb-gallery-item" href="..."><img alt="Hokeja slidas Bauer Supreme M40 Senior"></a>
+    "sp": ("a.pb-gallery-item", ":self", None),
 }
 
 NEXT_PAGE_SELECTORS = 'a[rel="next"], a.next, .pagination a.next, a.action.next, li.next a, .pages-item-next a'
@@ -319,10 +334,11 @@ def products_from_selectors(soup, r_key, base_url):
     if not card_sel:
         return out
     for item in soup.select(card_sel):
-        a = item.select_one(title_sel)
+        a = item if title_sel == ":self" else item.select_one(title_sel)
         if not a:
             continue
-        title = a.get_text(" ", strip=True) or a.get("title", "")
+        img = a.find("img")
+        title = a.get_text(" ", strip=True) or a.get("title", "") or (img.get("alt", "") if img else "")
         if not title:
             continue
         price = 0.0
@@ -375,9 +391,12 @@ def crawl_category(session, r_key, cat_url, all_keywords, debug_name):
         b = products_from_jsonld(soup, url)
         c = products_from_links(soup, url, all_keywords)
         found = a + b + c
+        new_urls = {p["url"] for p in found} - {p["url"] for p in products}
         log(f"    lapa {pages}: {len(a)} pēc selektoriem, {len(b)} JSON-LD, {len(c)} pēc saitēm")
         DIAG[-1].update({"found": {"selectors": len(a), "jsonld": len(b), "links": len(c)}})
         products.extend(found)
+        if pages > 1 and not new_urls:
+            break   # lapa atkārtojas — tālāk nav jaunu produktu
         nxt = soup.select_one(NEXT_PAGE_SELECTORS)
         url = absolute(nxt.get("href"), url) if nxt and nxt.get("href") else None
         if url:
@@ -441,7 +460,7 @@ def parse_prestashop(soup, v):
         if not kind:
             continue
         for opt in g.select("option"):
-            v.add(kind, opt.get_text(" ", strip=True))
+            v.add(kind, option_text(opt))
         for inp in g.select('input[type="radio"]'):
             txt = inp.get("title") or ""
             if not txt:
@@ -487,6 +506,75 @@ def parse_magento(soup, v):
                 v.add(kind, o.get("data-option-label") or o.get_text(strip=True))
 
 
+def parse_sportega(soup, v):
+    """Sportega: visas variantu kombinācijas ar atlikumu un cenu ir JSON blokā #rPurchaseFormVariantOptions.
+    Izmēri ir EUR; Bauer izmēru ņem no lapas izmēru tabulas (tr[data-uuid]). Atgriež zemāko cenu vai 0."""
+    el = soup.select_one("script#rPurchaseFormVariantOptions")
+    if not el:
+        return 0.0
+    try:
+        data = json.loads(el.string or el.get_text())
+    except ValueError:
+        return 0.0
+    # EUR izmēra uuid -> Bauer izmērs no izmēru tabulas
+    bauer = {}
+    for tr in soup.select("tr[data-uuid]"):
+        cells = [c.get_text(" ", strip=True) for c in tr.find_all(["th", "td"])]
+        if len(cells) >= 2:
+            bauer[tr["data-uuid"]] = cells[1].replace(",", ".")
+    props = {}
+    for p in data.get("properties", []):
+        pname = (p.get("name") or "").lower()
+        if "izliekum" in pname or "liekum" in pname:
+            kind = "curvehand"
+        else:
+            kind = classify_group(pname)
+        props[p.get("uuid")] = (kind, {i.get("uuid"): i.get("name", "") for i in p.get("items", [])})
+
+    best = 0.0
+    for var in data.get("variants", []):
+        if var.get("showOnly") or not (var.get("stock") or 0) > 0:
+            continue
+        combo = {"stock": var.get("stock")}
+        for prop_uuid, item_uuid in (var.get("properties") or {}).items():
+            kind, items = props.get(prop_uuid, (None, {}))
+            name = items.get(item_uuid, "")
+            if kind == "size":
+                raw = bauer.get(item_uuid) or name
+                size = normalize_size(raw, v.category, v.item_type) or normalize_size(name, v.category, v.item_type)
+                if size:
+                    combo["size"] = size
+                    v.add("size", raw if normalize_size(raw, v.category, v.item_type) else name)
+            elif kind == "fit":
+                fit = normalize_fit(name)
+                if fit:
+                    combo["fit"] = fit
+                    v.add("fit", name)
+            elif kind == "flex":
+                flex = normalize_flex(name)
+                if flex:
+                    combo["flex"] = flex
+                    v.add("flex", name)
+            elif kind == "curvehand":
+                curve, hand = normalize_curve(name), normalize_hand(name)
+                if curve:
+                    combo["curve"] = curve
+                    v.add("curve", name)
+                if hand:
+                    combo["hand"] = hand
+                    v.add("hand", name)
+            elif kind == "hand":
+                hand = normalize_hand(name)
+                if hand:
+                    combo["hand"] = hand
+                    v.add("hand", name)
+        v.combos.append(combo)
+        price = ((var.get("price") or {}).get("withVat")) or 0
+        if price and (best == 0 or price < best):
+            best = float(price)
+    return round(best, 2)
+
+
 def parse_generic(soup, v):
     """Jebkuram veikalam: <select> ar nosaukumu, kas izskatās pēc izmēra/platuma."""
     for sel in soup.select("select"):
@@ -500,7 +588,7 @@ def parse_generic(soup, v):
         if not kind:
             continue
         for opt in sel.select("option"):
-            txt = opt.get_text(" ", strip=True)
+            txt = option_text(opt)
             if not opt.get("value") or "izvēl" in txt.lower() or opt.has_attr("disabled"):
                 continue
             v.add(kind, txt)
@@ -533,17 +621,22 @@ def get_product_details(session, url, r_key, model, category, debug_name):
     if soup is None:
         return None
     v = Variants(category, model["type"])
+    variant_price = 0.0
     if r_key == "hj":
         parse_prestashop(soup, v)
     elif r_key == "hp":
         parse_magento(soup, v)
+    elif r_key == "sp":
+        variant_price = parse_sportega(soup, v)
     if not v.any():
         parse_generic(soup, v)
 
     price, stock = product_info_from_jsonld(soup)
+    if variant_price:
+        price, stock = variant_price, bool(v.combos)
     # Lai varētu pielāgot nolasīšanu: kādi <select> un variantu bloki lapā vispār ir
     DIAG[-1].update({
-        "variants": {"sizes": v.sizes, "fits": v.fits, "hands": v.hands, "flexes": v.flexes, "curves": v.curves},
+        "variants": {"sizes": v.sizes, "fits": v.fits, "hands": v.hands, "flexes": v.flexes, "curves": v.curves, "combos": len(v.combos)},
         "selects": [
             {"name": sel.get("name"), "id": sel.get("id"), "class": " ".join(sel.get("class", [])),
              "options": [o.get_text(" ", strip=True)[:30] for o in sel.select("option")][:8]}
@@ -615,6 +708,8 @@ def scrape_all():
     stats = {}
     pages_ok, pages_failed = {}, {}
     for r_key, r in RETAILERS.items():
+        if r.get("auto") is False or r.get("search"):
+            continue   # izslēgts vai meklē caur veikala meklētāju (zemāk, katram modelim)
         for item_type, cat_urls in r["categoryUrls"].items():
             type_keywords = [k for m in MODELS if m["type"] == item_type for k in m["keywords"]]
             if not type_keywords:
@@ -649,12 +744,29 @@ def scrape_all():
                 if item_type == "stick":
                     base.update({"hands": [], "flexes": [], "curves": []})
 
-                if not cat_url:
+                if not cat_url or r.get("auto") is False:
                     base["status"] = "NOT_TRACKED"
                     offers.append(base)
                     continue
 
-                products, ok = catalogs.get(cat_url, ([], False))
+                if r.get("search"):
+                    # Veikala meklētājs: viens pieprasījums uz modeli, rezultātos visas vecuma grupas
+                    query = model.get("search") or f"{model['brand']} {model['keywords'][0]}"
+                    source_url = r["search"].format(q=quote_plus(query))
+                    if source_url not in catalogs:
+                        log(f"Meklēšana [{r_key.upper()}] {query}")
+                        catalogs[source_url] = crawl_category(session, r_key, source_url, model["keywords"],
+                                                              f"{r_key}_search_{model['id']}")
+                        stats[r_key] = stats.get(r_key, 0) + len(catalogs[source_url][0])
+                        bucket = pages_ok if catalogs[source_url][1] else pages_failed
+                        bucket[r_key] = bucket.get(r_key, 0) + 1
+                        time.sleep(REQUEST_PAUSE)
+                    shared = True
+                else:
+                    source_url = cat_url
+                    shared = sum(1 for c in CATEGORIES if cat_urls.get(c) == cat_url) > 1
+
+                products, ok = catalogs.get(source_url, ([], False))
                 if not ok:
                     # Lapa nav ielādējusies — paturam iepriekšējos datus, nevis pārrakstām ar 0
                     failed_retailers.add(r_key)
@@ -668,7 +780,6 @@ def scrape_all():
                         offers.append(base)
                     continue
 
-                shared = sum(1 for c in CATEGORIES if cat_urls.get(c) == cat_url) > 1
                 prod = match_product(products, model, cat, shared)
                 if not prod:
                     log(f" -> nav atrasts: [{cat}] {r_key.upper()} {model['id']}")
@@ -694,17 +805,20 @@ def scrape_all():
                     "url": prod["url"],
                     "price": round(price, 2),
                     "stock": bool(stock and price > 0),
-                    "sizes": v.sizes if v else [],
+                    "sizes": sorted(v.sizes, key=size_sort_key) if v else [],
                     "fits": v.fits if v else [],
                     "status": "VERIFIED" if (price > 0 and has_options) else ("FOUND" if price > 0 else "NOT_FOUND"),
                 })
                 if item_type == "stick" and v:
                     base.update({"hands": v.hands, "flexes": v.flexes, "curves": v.curves})
+                if v and v.combos:
+                    base["variants"] = v.combos   # precīzas kombinācijas (izmērs + platums, roka + liekums + flex)
                 offers.append(base)
                 log(f"    cena {price} € · izmēri {base['sizes']} · platumi {base['fits']}")
 
     # 3) Drošības pārbaude: ja NEVIENS veikals neatbildēja, neko nepārrakstām
-    if stats and all(n == 0 for n in stats.values()) and len(failed_retailers) == len(RETAILERS):
+    auto_retailers = [k for k, r in RETAILERS.items() if r.get("auto") is not False]
+    if stats and all(n == 0 for n in stats.values()) and len(failed_retailers) >= len(auto_retailers):
         log("KĻŪDA: neviens veikals neatbildēja. scraped_data.json NETIEK mainīts.")
         sys.exit(1)
 
@@ -712,7 +826,8 @@ def scrape_all():
         "updatedAt": started.isoformat(timespec="seconds"),
         # ok = viss nolasīts, partial = daļa lapu neatbildēja, error = neviena lapa, empty = lapas ielādējās, bet produkti netika atrasti
         "retailerStatus": {
-            r_key: ("error" if pages_failed.get(r_key) and not pages_ok.get(r_key)
+            r_key: ("manual" if RETAILERS[r_key].get("auto") is False
+                    else "error" if pages_failed.get(r_key) and not pages_ok.get(r_key)
                     else "partial" if pages_failed.get(r_key)
                     else "empty" if stats.get(r_key, 0) == 0 else "ok")
             for r_key in RETAILERS

@@ -64,7 +64,10 @@
       "asmens",
       "steel",
       "zeķes",
-      "aizsargs"
+      "aizsargs",
+      "skrituļslidas",
+      "skritulslidas",
+      "inline"
     ],
     "stick": [
       "slidas",
@@ -120,7 +123,9 @@
           "Junior": "https://hokejapasaule.lv/lv_lv/nujas/hokeja-nujas",
           "Youth": "https://hokejapasaule.lv/lv_lv/nujas/hokeja-nujas"
         }
-      }
+      },
+      "auto": false,
+      "_auto": "Hokeja Pasaule lapu sargā Cloudflare (atbild 403 'Just a moment...'), tāpēc automātiska nolasīšana nav iespējama. Lapā rāda saiti uz veikalu. Ja veikals piešķir piekļuvi vai preču failu (feed), nomaini uz true."
     },
     "sp": {
       "name": "Sportega",
@@ -130,10 +135,10 @@
       "logoLight": "img/logo/sportega-dark.png",
       "categoryUrls": {
         "skate": {
-          "Senior": "https://www.sportega.lv/hokeja-slidas/c354",
-          "Intermediate": "https://www.sportega.lv/hokeja-slidas/c354",
-          "Junior": "https://www.sportega.lv/hokeja-ekipejums/juniors/c2559",
-          "Youth": "https://www.sportega.lv/hokeja-ekipejums/berns-youth/c233"
+          "Senior": "https://www.sportega.lv/hokeja-ekipejums/slidas/c8",
+          "Intermediate": "https://www.sportega.lv/hokeja-ekipejums/slidas/c8",
+          "Junior": "https://www.sportega.lv/hokeja-ekipejums/slidas/c8",
+          "Youth": "https://www.sportega.lv/hokeja-ekipejums/slidas/c8"
         },
         "stick": {
           "Senior": "https://www.sportega.lv/hokeja-ekipejums/kompozitmateriala-hokeja-nujas/c172",
@@ -141,10 +146,12 @@
           "Junior": "https://www.sportega.lv/hokeja-ekipejums/kompozitmateriala-hokeja-nujas/c172",
           "Youth": "https://www.sportega.lv/hokeja-ekipejums/kompozitmateriala-hokeja-nujas/c172"
         }
-      }
+      },
+      "search": "https://www.sportega.lv/search?q={q}",
+      "_search": "Sportega preces meklē caur veikala meklētāju (viens pieprasījums uz modeli). categoryUrls izmanto tikai saitēm lapā."
     }
   },
-  "_models": "imgDir: bildes meklē vispirms imgDir/<grupa>/1.png (piem. img/skates/bauer-supreme-m40/youth/1.png), ja tādas nav — imgDir/1.png. categories: grupas, kurās modelis vispār eksistē.",
+  "_models": "imgDir: bildes meklē vispirms imgDir/<grupa>/1.png (piem. img/skates/bauer-supreme-m40/youth/1.png), ja tādas nav — imgDir/1.png. categories: grupas, kurās modelis vispār eksistē. search: ko ierakstīt veikala meklētājā (Sportega).",
   "models": [
     {
       "id": "bauer-vapor-fly40",
@@ -168,7 +175,8 @@
       "profileBadge": "Agility / Ātrums",
       "note": "Vapor ģeometrija ar PowerFly holderi un Curv kompozītu. Izteikts uzsvars uz eksplozīvu startu.",
       "imgDir": "img/skates/bauer-vapor-fly40",
-      "imgCount": 3
+      "imgCount": 3,
+      "search": "bauer fly40"
     },
     {
       "id": "bauer-supreme-f40",
@@ -191,7 +199,8 @@
       "profileBadge": "Power / Stabilitāte",
       "note": "Supreme jaunākā paaudze (S26). Anatomisks atbalsts potītei un stabilitāte divcīņās.",
       "imgDir": "img/skates/bauer-supreme-f40",
-      "imgCount": 3
+      "imgCount": 3,
+      "search": "bauer f40"
     },
     {
       "id": "bauer-supreme-m40",
@@ -215,7 +224,8 @@
       "profileBadge": "Power / Izturība",
       "note": "Supreme sērijas pārbaudīta platforma par pieejamāku budžeta cenu.",
       "imgDir": "img/skates/bauer-supreme-m40",
-      "imgCount": 3
+      "imgCount": 3,
+      "search": "bauer m40"
     },
     {
       "id": "bauer-supreme-fuse-s26",
@@ -240,7 +250,8 @@
       "profileBadge": "Power / Šķēlieni",
       "note": "Supreme liekšanās punkts (Mid/High Kick) maksimālai šāviena jaudai un one-timer metieniem.",
       "imgDir": "img/sticks/bauer-supreme-fuse",
-      "imgCount": 3
+      "imgCount": 3,
+      "search": "bauer supreme fuse"
     }
   ],
   "_fitAliases": "Kuri veikalu platumu apzīmējumi atbilst kurai Bauer FIT izvēlei profilā. Sportega raksta Konusveida/Regulāri/Plašs, Hokeja Pasaule un Hokejam.lv — FIT 1/2/3.",

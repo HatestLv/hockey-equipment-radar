@@ -83,8 +83,10 @@ const categoryUrl = (rKey, type, cat) => {
 };
 const isTracked = (rKey, type, cat) => {
   const r = CFG.retailers[rKey];
-  return !!(r.categoryUrls[type] && r.categoryUrls[type][cat]);
+  return r.auto !== false && !!(r.categoryUrls[type] && r.categoryUrls[type][cat]);
 };
+/** Veikals, kuru automātiski nolasīt nevar (piem. aizsardzība pret robotiem) — rādām tikai saiti. */
+const isManual = rKey => CFG.retailers[rKey].auto === false;
 
 const VERSION = { version: null, released: null, notes: '' };
 
@@ -240,7 +242,7 @@ function evaluate(m, rKey, cat) {
   const o = findOffer(m.id, rKey, cat);
   const res = { o, state: 'no_data', total: offerTotal(o), sizeOk: null, fitOk: null, budgetOk: null, inStock: false };
 
-  if (!isTracked(rKey, m.type, cat) || (o && o.status === 'NOT_TRACKED')) { res.state = 'not_tracked'; return res; }
+  if (!isTracked(rKey, m.type, cat) || (o && o.status === 'NOT_TRACKED')) { res.state = 'not_tracked'; res.manual = isManual(rKey); return res; }
   if (!o || o.status === 'ERROR' || (o.stale && !(o.price > 0))) { res.stale = !!(o && o.stale); return res; }
   if (!(o.price > 0)) { res.state = 'not_found'; return res; }
   if (!o.stock) { res.state = 'out_of_stock'; return res; }
@@ -250,10 +252,23 @@ function evaluate(m, rKey, cat) {
   const max = m.type === 'skate' ? p.maxSkate : p.maxStick;
   res.budgetOk = res.total >= (+min || 0) && res.total <= (+max || Infinity);
 
-  if (m.type === 'skate') {
+  const combos = Array.isArray(o.variants) && o.variants.length ? o.variants : null;
+  if (m.type === 'skate' && combos) {
+    // Precīzas kombinācijas: izmēram jābūt pieejamam TIEŠI tavā platumā
+    const inSize = combos.filter(c => p.size === 'all' || normSize(c.size) === normSize(p.size));
+    res.sizeOk = inSize.length > 0;
+    res.fitOk = p.fit === 'all' ? true
+      : (res.sizeOk ? inSize.some(c => fitMatches(c.fit ? [c.fit] : [], p.fit) !== false) : fitMatches(o.fits, p.fit));
+    res.sizeInOtherFit = res.sizeOk && res.fitOk === false;
+  } else if (m.type === 'skate') {
     const sizes = (o.sizes || []).map(normSize);
     res.sizeOk = p.size === 'all' ? true : (sizes.length ? sizes.includes(normSize(p.size)) : null);
     res.fitOk = fitMatches(o.fits, p.fit);
+  } else if (combos) {
+    // Nūjas: roka + liekums + flex vienā variantā
+    const ok = (val, want) => want === 'all' || val == null || String(val) === String(want);
+    res.sizeOk = combos.some(c => ok(c.hand, p.hand) && ok(c.curve, p.curve) && ok(c.flex, p.flex));
+    res.fitOk = true;
   } else {
     const chk = (list, val) => val === 'all' ? true : ((list && list.length) ? list.map(String).includes(String(val)) : null);
     const parts = [chk(o.hands, p.hand), chk(o.flexes, p.flex), chk(o.curves, p.curve)];
@@ -269,6 +284,7 @@ function evaluate(m, rKey, cat) {
 
 /** Kartītes nozīmīte; ja neder tikai platums, saka to. */
 function stateInfo(ev, m) {
+  if (ev.manual) return { badge: '<span class="badge b-no">Skatīt veikalā</span>', cls: 'card-zero' };
   if (ev.state === 'no_size' && m.type === 'skate' && ev.sizeOk !== false && ev.fitOk === false) {
     return { badge: '<span class="badge b-demo">Nav tava platuma</span>', cls: 'card-partial' };
   }
@@ -295,6 +311,7 @@ function stateNote(ev, m, rKey) {
         : `<div class="state-note ok">Pieejams tavā izmērā un budžetā.</div>`;
     case 'no_size':
       if (m.type === 'skate') {
+        if (ev.sizeInOtherFit) return `<div class="state-note warn">Izmērs ${esc(p.size)} ir pieejams, bet ne platumā ${esc(p.fit)}.</div>`;
         if (ev.sizeOk === false && ev.fitOk === false) return `<div class="state-note warn">Nav pieejams ne tavā izmērā (${esc(p.size)}), ne platumā (${esc(p.fit)}).</div>`;
         return ev.sizeOk === false
           ? `<div class="state-note warn">Tavs izmērs (${esc(p.size)}) šajā veikalā nav pieejams.</div>`
@@ -465,11 +482,11 @@ const COMPACT_STATES = ['not_found', 'no_data', 'not_tracked'];
 
 function renderCompactCard(m, rKey, cat, ev) {
   const r = CFG.retailers[rKey];
-  const info = STATE_INFO[ev.state];
+  const info = stateInfo(ev, m);
   const msg = {
     not_found: 'Šajā vecuma grupā nav atrasts',
     no_data: ev.stale ? 'Veikals pēdējā skenēšanā neatbildēja' : 'Dati vēl nav saņemti',
-    not_tracked: 'Cenas vēl netiek vāktas'
+    not_tracked: isManual(rKey) ? 'Cenas jāpārbauda veikala lapā' : 'Cenas vēl netiek vāktas'
   }[ev.state] || '';
   const url = categoryUrl(rKey, m.type, cat);
   return `<div class="card-compact">
@@ -483,7 +500,7 @@ function renderCompactCard(m, rKey, cat, ev) {
 function renderCollapsedRow(m, cat, evs) {
   const label = { not_found: 'nav atrasts', no_data: 'nav datu', not_tracked: 'drīzumā' };
   const stores = retailerKeys().map((k, i) =>
-    `<a href="${esc(safeUrl(categoryUrl(k, m.type, cat)))}" target="_blank" rel="noopener">${esc(CFG.retailers[k].name)}: ${label[evs[i].state] || '—'}</a>`).join('<span class="rc-sep">·</span>');
+    `<a href="${esc(safeUrl(categoryUrl(k, m.type, cat)))}" target="_blank" rel="noopener">${esc(CFG.retailers[k].name)}: ${isManual(k) ? 'skatīt veikalā' : (label[evs[i].state] || '—')}</a>`).join('<span class="rc-sep">·</span>');
   return `<div class="row-collapsed">
     <span class="rc-title">${esc(m.brand)} ${esc(modelName(m, cat))}</span>
     <span class="rc-stores">${stores}</span>
@@ -528,7 +545,7 @@ function renderMobileList(models, type, cat) {
       const url = hasPrice && o.url ? o.url : categoryUrl(k, m.type, cat);
       const meta = ev.inStock
         ? `${stateInfo(ev, m).badge} ${m.type === 'skate' ? sizesHtml(o, m) : `<span>${fitsHtml(o, m)}</span>`}`
-        : STATE_INFO[ev.state].badge;
+        : stateInfo(ev, m).badge;
       return `<div class="m-store ${isBest ? 'is-best' : ''}">
         <span class="m-store-name">${esc(r.name)}${isBest ? ' <span class="badge b-ok">★ Labākā</span>' : ''}</span>
         <span class="m-store-price ${hasPrice ? '' : 'is-zero'}">${hasPrice ? eur(ev.total) : '—'}</span>
@@ -579,7 +596,7 @@ function renderTableView(models, type, cat) {
     const cells = evs.map(ev => {
       if (S.stockOnly && !ev.inStock) return `<td><span class="badge b-no">—</span></td>`;
       if (!ev.inStock) {
-        const label = { out_of_stock: 'Nav noliktavā', not_found: 'Nav atrasts', not_tracked: 'Drīzumā', no_data: 'Nav datu' }[ev.state];
+        const label = ev.manual ? 'Skatīt veikalā' : { out_of_stock: 'Nav noliktavā', not_found: 'Nav atrasts', not_tracked: 'Drīzumā', no_data: 'Nav datu' }[ev.state];
         const price = ev.o && ev.o.price > 0 ? `<b style="color:var(--muted)">${eur(ev.total)}</b><br>` : '';
         return `<td>${price}<span class="badge b-no">${label}</span></td>`;
       }
@@ -661,9 +678,12 @@ function dataNotice(type, cat) {
     return `<div class="notice-bar"><b>Dati vēl nav savākti.</b> ${type === 'stick' ? 'Nūju' : 'Šīs sadaļas'} cenas parādīsies pēc nākamās automātiskās skenēšanas.</div>`;
   }
   const bad = rs.filter(k => !untracked.includes(k) && ['error', 'empty', 'partial'].includes(DATA.retailerStatus[k]));
-  if (!bad.length) return '';
+  const manual = rs.filter(isManual).map(k => CFG.retailers[k].name);
+  const manualNote = manual.length
+    ? `<div class="notice-bar notice-info">${esc(manual.join(', '))} cenas automātiski nolasīt nevar (veikala aizsardzība pret robotiem), tāpēc rādām saiti uz veikalu.</div>` : '';
+  if (!bad.length) return manualNote;
   const names = bad.map(k => CFG.retailers[k].name + (DATA.retailerStatus[k] === 'partial' ? ' (daļēji)' : '')).join(', ');
-  return `<div class="notice-bar"><b>Uzmanību:</b> ${esc(names)} dati pēdējā skenēšanā netika pilnībā nolasīti. Šo veikalu kartītēs var būt veci dati vai "Nav atrasts" — pārbaudi veikala lapā.</div>`;
+  return manualNote + `<div class="notice-bar"><b>Uzmanību:</b> ${esc(names)} dati pēdējā skenēšanā netika pilnībā nolasīti. Šo veikalu kartītēs var būt veci dati vai "Nav atrasts" — pārbaudi veikala lapā.</div>`;
 }
 
 /** Viena josla ar labāko piedāvājumu un pogu, kas aizved pie kartītes. */
