@@ -1,8 +1,13 @@
 {
-  "version": "1.5.1",
-  "released": "2026-11-13T09:19:15+00:00",
-  "notes": "Add files via upload",
+  "version": "1.5.2",
+  "released": "2026-11-13T11:31:45+00:00",
+  "notes": "Lapas publicēšana, kompaktākas rindas, tīrīšana",
   "history": [
+    {
+      "version": "1.5.2",
+      "released": "2026-11-13T11:31:45+00:00",
+      "notes": "Lapas publicēšana, kompaktākas rindas, tīrīšana"
+    },
     {
       "version": "1.5.1",
       "released": "2026-11-13T09:19:15+00:00",
