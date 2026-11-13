@@ -294,9 +294,10 @@ function stateNote(ev, m, rKey) {
         : `<div class="state-note ok">Pieejams tavā izmērā un budžetā.</div>`;
     case 'no_size':
       if (m.type === 'skate') {
-        return ev.fitOk === false
-          ? `<div class="state-note warn">Tavs platums (${esc(p.fit)}) šajā veikalā nav pieejams.</div>`
-          : `<div class="state-note warn">Tavs izmērs (${esc(p.size)}) šajā veikalā nav pieejams.</div>`;
+        if (ev.sizeOk === false && ev.fitOk === false) return `<div class="state-note warn">Nav pieejams ne tavā izmērā (${esc(p.size)}), ne platumā (${esc(p.fit)}).</div>`;
+        return ev.sizeOk === false
+          ? `<div class="state-note warn">Tavs izmērs (${esc(p.size)}) šajā veikalā nav pieejams.</div>`
+          : `<div class="state-note warn">Tavs platums (${esc(p.fit)}) šajā veikalā nav pieejams.</div>`;
       }
       return `<div class="state-note warn">Nav pieejams ar tavu satvērienu / flex / liekumu.</div>`;
     case 'over_budget': {
@@ -430,6 +431,17 @@ function renderCompactCard(m, rKey, cat, ev) {
   </div>`;
 }
 
+/** Viena šaura josla modelim, kas nav atrasts nevienā veikalā. */
+function renderCollapsedRow(m, cat, evs) {
+  const label = { not_found: 'nav atrasts', no_data: 'nav datu', not_tracked: 'drīzumā' };
+  const stores = retailerKeys().map((k, i) =>
+    `<a href="${esc(safeUrl(categoryUrl(k, m.type, cat)))}" target="_blank" rel="noopener">${esc(CFG.retailers[k].name)}: ${label[evs[i].state] || '—'}</a>`).join('<span class="rc-sep">·</span>');
+  return `<div class="row-collapsed">
+    <span class="rc-title">${esc(m.brand)} ${esc(modelName(m, cat))}</span>
+    <span class="rc-stores">${stores}</span>
+  </div>`;
+}
+
 /** Datora skats: režģis, kur katrs modelis ir viena rinda pāri visiem veikaliem. */
 function renderStoresGrid(models, type, cat) {
   const rKeys = retailerKeys();
@@ -438,6 +450,10 @@ function renderStoresGrid(models, type, cat) {
   for (const m of models) {
     const evs = rKeys.map(k => evaluate(m, k, cat));
     if (S.stockOnly && !evs.some(e => e.inStock)) continue;          // nevienā veikalā nav — rindu nerāda
+    if (evs.every(e => COMPACT_STATES.includes(e.state))) {         // nevienā veikalā nav ko rādīt — viena šaura josla
+      rows += renderCollapsedRow(m, cat, evs);
+      continue;
+    }
     rows += evs.map((ev, i) => {
       if (S.stockOnly && !ev.inStock) return '<div class="card-placeholder"></div>';
       return COMPACT_STATES.includes(ev.state) ? renderCompactCard(m, rKeys[i], cat, ev) : renderCard(m, rKeys[i], cat);
@@ -630,7 +646,7 @@ function viewCategory(type) {
     </div>
     <p class="sub">${sub}</p>
     <div class="sum">
-      <div><small>Labākā cena tavam profilam</small><b>${matches.length ? eur(Math.min(...matches)) : '—'}</b></div>
+      <div><small>Labākā cena tavam profilam</small><b>${matches.length ? eur(Math.min(...matches)) : '<span style="font-size:13px;color:var(--muted);font-weight:600">Nav tavā izmērā / budžetā</span>'}</b></div>
       <div><small>Zemākā cena (jebkurš izmērs)</small><b>${inStock.length ? eur(Math.min(...inStock)) : '—'}</b></div>
       <div><small>Pārbaudīti piedāvājumi</small><b>${verified} / ${tracked}</b></div>
       <div><small>Datu avots</small><b><span class="badge ${DATA.updatedAt ? 'b-ok' : 'b-no'}">${DATA.updatedAt ? 'GITHUB ACTIONS (LIVE)' : 'GAIDA DATUS'}</span></b></div>
