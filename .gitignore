@@ -1,2 +1,7 @@
+# Skrāpera atkļūdošanas faili
 debug/
 __pycache__/
+
+# Pagaidu mapes, kas nav daļa no lapas
+_ielikt-github-workflows/
+Claude outputs/
