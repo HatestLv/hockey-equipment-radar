@@ -35,6 +35,10 @@ REQUEST_PAUSE = 1.0    # pauze starp pieprasījumiem, lai nenoslogotu veikalus
 with open(CONFIG_PATH, encoding="utf-8") as f:
     CONFIG = json.load(f)
 
+# Diagnostika: katrs pieprasījums un tā rezultāts tiek ierakstīts scraped_data.json,
+# lai problēmas varētu redzēt bez GitHub Actions logiem.
+DIAG = []
+
 CATEGORIES = CONFIG["categories"]
 RETAILERS = CONFIG["retailers"]
 MODELS = CONFIG["models"]
@@ -80,14 +84,25 @@ def save_debug(name, html):
 
 def fetch(session, url, debug_name):
     """Atgriež (soup, html) vai (None, None), ja lapa nav pieejama."""
+    started = time.time()
     try:
         resp = session.get(url, timeout=15)
     except requests.RequestException as e:
         log(f"    ! Savienojuma kļūda: {url} -> {e}")
+        DIAG.append({"url": url, "status": "error", "error": f"{type(e).__name__}: {str(e)[:160]}",
+                     "seconds": round(time.time() - started, 1)})
         return None, None
+    entry = {"url": url, "status": resp.status_code, "bytes": len(resp.content),
+             "seconds": round(time.time() - started, 1)}
+    if resp.url != url:
+        entry["finalUrl"] = resp.url
     if resp.status_code != 200:
         log(f"    ! HTTP {resp.status_code}: {url}")
+        entry["server"] = resp.headers.get("server", "")
+        entry["snippet"] = re.sub(r"\s+", " ", resp.text[:300])
+        DIAG.append(entry)
         return None, None
+    DIAG.append(entry)
     save_debug(debug_name, resp.text)
     return BeautifulSoup(resp.text, "html.parser"), resp.text
 
@@ -361,6 +376,7 @@ def crawl_category(session, r_key, cat_url, all_keywords, debug_name):
         c = products_from_links(soup, url, all_keywords)
         found = a + b + c
         log(f"    lapa {pages}: {len(a)} pēc selektoriem, {len(b)} JSON-LD, {len(c)} pēc saitēm")
+        DIAG[-1].update({"found": {"selectors": len(a), "jsonld": len(b), "links": len(c)}})
         products.extend(found)
         nxt = soup.select_one(NEXT_PAGE_SELECTORS)
         url = absolute(nxt.get("href"), url) if nxt and nxt.get("href") else None
@@ -525,6 +541,15 @@ def get_product_details(session, url, r_key, model, category, debug_name):
         parse_generic(soup, v)
 
     price, stock = product_info_from_jsonld(soup)
+    # Lai varētu pielāgot nolasīšanu: kādi <select> un variantu bloki lapā vispār ir
+    DIAG[-1].update({
+        "variants": {"sizes": v.sizes, "fits": v.fits, "hands": v.hands, "flexes": v.flexes, "curves": v.curves},
+        "selects": [
+            {"name": sel.get("name"), "id": sel.get("id"), "class": " ".join(sel.get("class", [])),
+             "options": [o.get_text(" ", strip=True)[:30] for o in sel.select("option")][:8]}
+            for sel in soup.select("select")
+        ][:6],
+    })
     if not price:
         meta = soup.select_one('meta[property="product:price:amount"], meta[itemprop="price"]')
         if meta:
@@ -661,6 +686,7 @@ def scrape_all():
             for r_key in RETAILERS
         },
         "offers": offers,
+        "diagnostics": DIAG,
     }
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2, ensure_ascii=False)
