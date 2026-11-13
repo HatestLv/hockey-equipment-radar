@@ -1,8 +1,13 @@
 {
-  "version": "2.0.0",
-  "released": "2026-11-13T11:53:43+00:00",
-  "notes": "Atjauninājums",
+  "version": "2.0.1",
+  "released": "2026-11-13T12:28:06+00:00",
+  "notes": "Sportega izmēri un platumi, Hokeja Pasaule – saite",
   "history": [
+    {
+      "version": "2.0.1",
+      "released": "2026-11-13T12:28:06+00:00",
+      "notes": "Sportega izmēri un platumi, Hokeja Pasaule – saite"
+    },
     {
       "version": "2.0.0",
       "released": "2026-11-13T11:53:43+00:00",
