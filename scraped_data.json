@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-27T03:34:58+00:00",
+  "updatedAt": "2026-11-27T16:28:33+00:00",
   "retailerStatus": {
     "hj": "ok",
     "hp": "manual",
@@ -124,7 +124,7 @@
           "size": "7"
         },
         {
-          "stock": 18,
+          "stock": 17,
           "fit": "FIT 2",
           "size": "7.5"
         },
@@ -139,7 +139,7 @@
           "size": "8.5"
         },
         {
-          "stock": 15,
+          "stock": 14,
           "fit": "FIT 2",
           "size": "9"
         },
@@ -174,7 +174,7 @@
           "size": "8.5"
         },
         {
-          "stock": 16,
+          "stock": 15,
           "fit": "FIT 3",
           "size": "9"
         },
@@ -184,7 +184,7 @@
           "size": "9.5"
         },
         {
-          "stock": 7,
+          "stock": 6,
           "fit": "FIT 3",
           "size": "10"
         },
@@ -416,12 +416,12 @@
           "size": "2.5"
         },
         {
-          "stock": 24,
+          "stock": 23,
           "fit": "D",
           "size": "3"
         },
         {
-          "stock": 25,
+          "stock": 15,
           "fit": "D",
           "size": "3.5"
         },
@@ -451,7 +451,7 @@
           "size": "3"
         },
         {
-          "stock": 4,
+          "stock": 3,
           "fit": "EE",
           "size": "3.5"
         }
@@ -537,7 +537,7 @@
           "size": "Yth 11"
         },
         {
-          "stock": 36,
+          "stock": 35,
           "fit": "D",
           "size": "Yth 12"
         },
@@ -932,7 +932,7 @@
           "size": "5.5"
         },
         {
-          "stock": 10,
+          "stock": 11,
           "fit": "FIT 3",
           "size": "6"
         },
@@ -1068,7 +1068,7 @@
           "size": "9.5"
         },
         {
-          "stock": 2,
+          "stock": 1,
           "fit": "FIT 2",
           "size": "9.5"
         }
@@ -3272,8 +3272,8 @@
     {
       "url": "https://www.hokejam.lv/lv/48-pieauguso-hokeja-slidas",
       "status": 200,
-      "bytes": 187465,
-      "seconds": 1.3,
+      "bytes": 180218,
+      "seconds": 1.2,
       "finalUrl": "https://www.hokejam.lv/lv/48-hokeja-slidas",
       "found": {
         "selectors": 24,
@@ -3282,9 +3282,9 @@
       }
     },
     {
-      "url": "https://www.hokejam.lv/lv/48-hokeja-slidas?utm_source=120249250438880637&utm_medium=Instagram_Feed&utm_id=120249250438880637&utm_content=120249250438870637&utm_term=120249250438890637&utm_campaign=120249250438880637&page=2",
+      "url": "https://www.hokejam.lv/lv/48-hokeja-slidas?page=2",
       "status": 200,
-      "bytes": 188138,
+      "bytes": 180682,
       "seconds": 0.3,
       "found": {
         "selectors": 24,
@@ -3293,9 +3293,9 @@
       }
     },
     {
-      "url": "https://www.hokejam.lv/lv/48-hokeja-slidas?utm_source=120249250438880637&utm_medium=Instagram_Feed&utm_id=120249250438880637&utm_content=120249250438870637&utm_term=120249250438890637&utm_campaign=120249250438880637&page=3",
+      "url": "https://www.hokejam.lv/lv/48-hokeja-slidas?page=3",
       "status": 200,
-      "bytes": 186693,
+      "bytes": 179009,
       "seconds": 0.3,
       "found": {
         "selectors": 24,
@@ -3304,10 +3304,10 @@
       }
     },
     {
-      "url": "https://www.hokejam.lv/lv/48-hokeja-slidas?utm_source=120249250438880637&utm_medium=Instagram_Feed&utm_id=120249250438880637&utm_content=120249250438870637&utm_term=120249250438890637&utm_campaign=120249250438880637&page=4",
+      "url": "https://www.hokejam.lv/lv/48-hokeja-slidas?page=4",
       "status": 200,
-      "bytes": 186590,
-      "seconds": 0.3,
+      "bytes": 178935,
+      "seconds": 1.3,
       "found": {
         "selectors": 24,
         "jsonld": 24,
@@ -3315,10 +3315,10 @@
       }
     },
     {
-      "url": "https://www.hokejam.lv/lv/48-hokeja-slidas?utm_source=120249250438880637&utm_medium=Instagram_Feed&utm_id=120249250438880637&utm_content=120249250438870637&utm_term=120249250438890637&utm_campaign=120249250438880637&page=5",
+      "url": "https://www.hokejam.lv/lv/48-hokeja-slidas?page=5",
       "status": 200,
-      "bytes": 185837,
-      "seconds": 0.3,
+      "bytes": 178182,
+      "seconds": 1.3,
       "found": {
         "selectors": 24,
         "jsonld": 24,
@@ -3326,10 +3326,10 @@
       }
     },
     {
-      "url": "https://www.hokejam.lv/lv/48-hokeja-slidas?utm_source=120249250438880637&utm_medium=Instagram_Feed&utm_id=120249250438880637&utm_content=120249250438870637&utm_term=120249250438890637&utm_campaign=120249250438880637&page=6",
+      "url": "https://www.hokejam.lv/lv/48-hokeja-slidas?page=6",
       "status": 200,
-      "bytes": 185429,
-      "seconds": 0.3,
+      "bytes": 177770,
+      "seconds": 1.3,
       "found": {
         "selectors": 24,
         "jsonld": 24,
@@ -3337,9 +3337,9 @@
       }
     },
     {
-      "url": "https://www.hokejam.lv/lv/48-hokeja-slidas?utm_source=120249250438880637&utm_medium=Instagram_Feed&utm_id=120249250438880637&utm_content=120249250438870637&utm_term=120249250438890637&utm_campaign=120249250438880637&page=7",
+      "url": "https://www.hokejam.lv/lv/48-hokeja-slidas?page=7",
       "status": 200,
-      "bytes": 177215,
+      "bytes": 177218,
       "seconds": 0.3,
       "found": {
         "selectors": 24,
@@ -3350,7 +3350,7 @@
     {
       "url": "https://www.hokejam.lv/lv/48-hokeja-slidas?page=8",
       "status": 200,
-      "bytes": 175544,
+      "bytes": 175489,
       "seconds": 0.3,
       "found": {
         "selectors": 24,
@@ -3361,11 +3361,11 @@
     {
       "url": "https://www.hokejam.lv/lv/48-hokeja-slidas?page=9",
       "status": 200,
-      "bytes": 99768,
-      "seconds": 0.3,
+      "bytes": 96221,
+      "seconds": 0.8,
       "found": {
-        "selectors": 3,
-        "jsonld": 3,
+        "selectors": 2,
+        "jsonld": 2,
         "links": 0
       }
     },
@@ -3373,7 +3373,7 @@
       "url": "https://www.hokejam.lv/lv/241-pusaudzu-hokeja-slidas",
       "status": 200,
       "bytes": 192464,
-      "seconds": 0.3,
+      "seconds": 1.3,
       "found": {
         "selectors": 24,
         "jsonld": 24,
@@ -3383,8 +3383,8 @@
     {
       "url": "https://www.hokejam.lv/lv/241-pusaudzu-hokeja-slidas?page=2",
       "status": 200,
-      "bytes": 135677,
-      "seconds": 0.3,
+      "bytes": 135707,
+      "seconds": 1.0,
       "found": {
         "selectors": 9,
         "jsonld": 9,
@@ -3394,7 +3394,7 @@
     {
       "url": "https://www.hokejam.lv/lv/50-junioru-hokeja-slidas",
       "status": 200,
-      "bytes": 193063,
+      "bytes": 193083,
       "seconds": 0.3,
       "found": {
         "selectors": 24,
@@ -3405,19 +3405,19 @@
     {
       "url": "https://www.hokejam.lv/lv/50-junioru-hokeja-slidas?page=2",
       "status": 200,
-      "bytes": 184553,
-      "seconds": 0.3,
+      "bytes": 180901,
+      "seconds": 1.3,
       "found": {
-        "selectors": 22,
-        "jsonld": 22,
+        "selectors": 21,
+        "jsonld": 21,
         "links": 0
       }
     },
     {
       "url": "https://www.hokejam.lv/lv/51-bernu-hokeja-slidas",
       "status": 200,
-      "bytes": 192695,
-      "seconds": 0.3,
+      "bytes": 192700,
+      "seconds": 1.2,
       "found": {
         "selectors": 24,
         "jsonld": 24,
@@ -3427,8 +3427,8 @@
     {
       "url": "https://www.hokejam.lv/lv/51-bernu-hokeja-slidas?page=2",
       "status": 200,
-      "bytes": 123877,
-      "seconds": 0.3,
+      "bytes": 123876,
+      "seconds": 0.9,
       "found": {
         "selectors": 5,
         "jsonld": 5,
@@ -3438,7 +3438,7 @@
     {
       "url": "https://www.hokejam.lv/lv/30-kompozitu-hokeja-nujas",
       "status": 200,
-      "bytes": 186867,
+      "bytes": 186186,
       "seconds": 0.3,
       "found": {
         "selectors": 24,
@@ -3461,7 +3461,7 @@
       "url": "https://www.hokejam.lv/lv/30-kompozitu-hokeja-nujas?page=3",
       "status": 200,
       "bytes": 185635,
-      "seconds": 1.5,
+      "seconds": 0.3,
       "found": {
         "selectors": 24,
         "jsonld": 24,
@@ -3493,8 +3493,8 @@
     {
       "url": "https://www.hokejam.lv/lv/30-kompozitu-hokeja-nujas?page=6",
       "status": 200,
-      "bytes": 184724,
-      "seconds": 0.3,
+      "bytes": 184741,
+      "seconds": 1.3,
       "found": {
         "selectors": 24,
         "jsonld": 24,
@@ -3548,7 +3548,7 @@
     {
       "url": "https://www.sportega.lv/search?q=bauer+fly40",
       "status": 200,
-      "bytes": 289146,
+      "bytes": 288738,
       "seconds": 1.9,
       "found": {
         "selectors": 5,
@@ -3559,8 +3559,8 @@
     {
       "url": "https://www.sportega.lv/search?q=bauer%20fly40&page=2",
       "status": 200,
-      "bytes": 288922,
-      "seconds": 1.2,
+      "bytes": 288514,
+      "seconds": 1.3,
       "found": {
         "selectors": 5,
         "jsonld": 0,
@@ -3570,8 +3570,8 @@
     {
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-senior/d1502757",
       "status": 200,
-      "bytes": 550384,
-      "seconds": 2.1,
+      "bytes": 550383,
+      "seconds": 2.3,
       "variants": {
         "sizes": [
           "7",
@@ -3609,7 +3609,7 @@
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-intermediate/d1502758",
       "status": 200,
       "bytes": 502671,
-      "seconds": 2.0,
+      "seconds": 2.1,
       "variants": {
         "sizes": [
           "5",
@@ -3692,8 +3692,8 @@
     {
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-youth/d1502760",
       "status": 200,
-      "bytes": 484828,
-      "seconds": 2.3,
+      "bytes": 484839,
+      "seconds": 2.2,
       "variants": {
         "sizes": [
           "Yth 8",
@@ -3747,7 +3747,7 @@
       "url": "https://www.sportega.lv/search?q=bauer+f40",
       "status": 200,
       "bytes": 283402,
-      "seconds": 1.5,
+      "seconds": 1.4,
       "found": {
         "selectors": 5,
         "jsonld": 0,
@@ -3758,7 +3758,7 @@
       "url": "https://www.sportega.lv/search?q=bauer%20f40&page=2",
       "status": 200,
       "bytes": 277080,
-      "seconds": 1.1,
+      "seconds": 1.2,
       "found": {
         "selectors": 5,
         "jsonld": 0,
@@ -3768,8 +3768,8 @@
     {
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-f40-senior/d1583973",
       "status": 200,
-      "bytes": 566007,
-      "seconds": 2.2,
+      "bytes": 566006,
+      "seconds": 2.3,
       "variants": {
         "sizes": [
           "7",
@@ -3806,8 +3806,8 @@
     {
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-f40-intermediate/d1583974",
       "status": 200,
-      "bytes": 516631,
-      "seconds": 1.9,
+      "bytes": 516629,
+      "seconds": 2.0,
       "variants": {
         "sizes": [
           "4",
@@ -3859,7 +3859,7 @@
       "url": "https://www.sportega.lv/search?q=bauer+m40",
       "status": 200,
       "bytes": 255963,
-      "seconds": 1.2,
+      "seconds": 1.3,
       "found": {
         "selectors": 5,
         "jsonld": 0,
@@ -3869,8 +3869,8 @@
     {
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-senior/d1438036",
       "status": 200,
-      "bytes": 448846,
-      "seconds": 1.4,
+      "bytes": 448856,
+      "seconds": 1.5,
       "variants": {
         "sizes": [
           "8",
@@ -3918,8 +3918,8 @@
     {
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-intermediate/d1438037",
       "status": 200,
-      "bytes": 452952,
-      "seconds": 1.4,
+      "bytes": 452951,
+      "seconds": 2.6,
       "variants": {
         "sizes": [
           "5",
@@ -3948,8 +3948,8 @@
     {
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-junior/d1438038",
       "status": 200,
-      "bytes": 435104,
-      "seconds": 1.3,
+      "bytes": 435103,
+      "seconds": 1.5,
       "variants": {
         "sizes": [
           "3"
@@ -3995,8 +3995,8 @@
     {
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-youth/d1438039",
       "status": 200,
-      "bytes": 444511,
-      "seconds": 1.4,
+      "bytes": 444510,
+      "seconds": 1.5,
       "variants": {
         "sizes": [
           "Yth 8",
@@ -4087,7 +4087,7 @@
     {
       "url": "https://www.sportega.lv/search?q=bauer+supreme+fuse",
       "status": 200,
-      "bytes": 297304,
+      "bytes": 298556,
       "seconds": 1.5,
       "found": {
         "selectors": 5,
@@ -4098,8 +4098,8 @@
     {
       "url": "https://www.sportega.lv/search?q=bauer%20supreme%20fuse&page=2",
       "status": 200,
-      "bytes": 298146,
-      "seconds": 1.2,
+      "bytes": 299398,
+      "seconds": 1.3,
       "found": {
         "selectors": 5,
         "jsonld": 0,
@@ -4109,8 +4109,8 @@
     {
       "url": "https://www.sportega.lv/search?q=bauer%20supreme%20fuse&page=3",
       "status": 200,
-      "bytes": 298365,
-      "seconds": 1.2,
+      "bytes": 299617,
+      "seconds": 1.3,
       "found": {
         "selectors": 5,
         "jsonld": 0,
@@ -4120,12 +4120,12 @@
     {
       "url": "https://www.sportega.lv/search?q=bauer%20supreme%20fuse&page=4",
       "status": 200,
-      "bytes": 291645,
-      "seconds": 1.1,
+      "bytes": 293724,
+      "seconds": 1.2,
       "found": {
         "selectors": 5,
         "jsonld": 0,
-        "links": 6
+        "links": 11
       }
     },
     {
@@ -4222,7 +4222,7 @@
     {
       "url": "https://www.sportega.lv/kompozitmateriala-hokeja-nuja-bauer-supreme-fuse-intermediate/d1583953",
       "status": 200,
-      "bytes": 480367,
+      "bytes": 480366,
       "seconds": 1.9,
       "variants": {
         "sizes": [],
@@ -4309,8 +4309,8 @@
     {
       "url": "https://www.sportega.lv/kompozitmateriala-hokeja-nuja-bauer-supreme-fuse-junior/d1583954",
       "status": 200,
-      "bytes": 514669,
-      "seconds": 1.8,
+      "bytes": 514670,
+      "seconds": 2.2,
       "variants": {
         "sizes": [],
         "fits": [],
@@ -4397,8 +4397,8 @@
     {
       "url": "https://www.sportega.lv/kompozitmateriala-hokeja-nuja-bauer-supreme-fuse-youth/d1583955",
       "status": 200,
-      "bytes": 470483,
-      "seconds": 1.9,
+      "bytes": 470482,
+      "seconds": 1.8,
       "variants": {
         "sizes": [],
         "fits": [],
