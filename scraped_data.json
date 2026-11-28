@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-27T16:28:33+00:00",
+  "updatedAt": "2026-11-28T03:11:59+00:00",
   "retailerStatus": {
     "hj": "ok",
     "hp": "manual",
@@ -16,7 +16,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.hokejam.lv/lv/48-pieauguso-hokeja-slidas",
       "status": "NOT_FOUND",
       "stale": false
@@ -31,7 +31,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas",
       "status": "NOT_TRACKED",
       "stale": false
@@ -62,7 +62,7 @@
         "FIT 3"
       ],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-senior/d1502757",
       "status": "VERIFIED",
       "stale": false,
@@ -124,7 +124,7 @@
           "size": "7"
         },
         {
-          "stock": 17,
+          "stock": 18,
           "fit": "FIT 2",
           "size": "7.5"
         },
@@ -139,7 +139,7 @@
           "size": "8.5"
         },
         {
-          "stock": 14,
+          "stock": 15,
           "fit": "FIT 2",
           "size": "9"
         },
@@ -174,7 +174,7 @@
           "size": "8.5"
         },
         {
-          "stock": 15,
+          "stock": 16,
           "fit": "FIT 3",
           "size": "9"
         },
@@ -184,7 +184,7 @@
           "size": "9.5"
         },
         {
-          "stock": 6,
+          "stock": 7,
           "fit": "FIT 3",
           "size": "10"
         },
@@ -215,7 +215,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.hokejam.lv/lv/241-pusaudzu-hokeja-slidas",
       "status": "NOT_FOUND",
       "stale": false
@@ -230,7 +230,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas",
       "status": "NOT_TRACKED",
       "stale": false
@@ -256,7 +256,7 @@
         "FIT 3"
       ],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-intermediate/d1502758",
       "status": "VERIFIED",
       "stale": false,
@@ -348,7 +348,7 @@
         "EE"
       ],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.hokejam.lv/lv/junioru-hokeja-slidas/5528-19875-bauer-vapor-fly40-junioru-hokeja-slidas#/98-platums-ee/3211-slidu_izmers-15",
       "status": "VERIFIED",
       "stale": false,
@@ -364,7 +364,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-junioriem",
       "status": "NOT_TRACKED",
       "stale": false
@@ -389,7 +389,7 @@
         "EE"
       ],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-junior/d1502759",
       "status": "VERIFIED",
       "stale": false,
@@ -416,12 +416,12 @@
           "size": "2.5"
         },
         {
-          "stock": 23,
+          "stock": 24,
           "fit": "D",
           "size": "3"
         },
         {
-          "stock": 15,
+          "stock": 25,
           "fit": "D",
           "size": "3.5"
         },
@@ -451,7 +451,7 @@
           "size": "3"
         },
         {
-          "stock": 3,
+          "stock": 4,
           "fit": "EE",
           "size": "3.5"
         }
@@ -467,7 +467,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.hokejam.lv/lv/51-bernu-hokeja-slidas",
       "status": "NOT_FOUND",
       "stale": false
@@ -482,7 +482,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-berniem",
       "status": "NOT_TRACKED",
       "stale": false
@@ -510,7 +510,7 @@
         "D"
       ],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-youth/d1502760",
       "status": "VERIFIED",
       "stale": false,
@@ -537,7 +537,7 @@
           "size": "Yth 11"
         },
         {
-          "stock": 35,
+          "stock": 36,
           "fit": "D",
           "size": "Yth 12"
         },
@@ -582,7 +582,7 @@
         "FIT 2"
       ],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.hokejam.lv/lv/pieauguso-hokeja-slidas/5455-19596-bauer-supreme-f40-s26-pieauguso-hokeja-slidas#/882-slidu_izmers-80/2230-platums-fit_2",
       "status": "VERIFIED",
       "stale": false,
@@ -598,7 +598,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas",
       "status": "NOT_TRACKED",
       "stale": false
@@ -629,7 +629,7 @@
         "FIT 3"
       ],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-f40-senior/d1583973",
       "status": "VERIFIED",
       "stale": false,
@@ -809,7 +809,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.hokejam.lv/lv/241-pusaudzu-hokeja-slidas",
       "status": "NOT_FOUND",
       "stale": false
@@ -824,7 +824,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas",
       "status": "NOT_TRACKED",
       "stale": false
@@ -850,7 +850,7 @@
         "FIT 3"
       ],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-f40-intermediate/d1583974",
       "status": "VERIFIED",
       "stale": false,
@@ -932,7 +932,7 @@
           "size": "5.5"
         },
         {
-          "stock": 11,
+          "stock": 10,
           "fit": "FIT 3",
           "size": "6"
         },
@@ -953,7 +953,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.hokejam.lv/lv/50-junioru-hokeja-slidas",
       "status": "NOT_FOUND",
       "stale": false
@@ -968,7 +968,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-junioriem",
       "status": "NOT_TRACKED",
       "stale": false
@@ -983,7 +983,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.sportega.lv/hokeja-ekipejums/slidas/c8",
       "status": "NOT_FOUND",
       "stale": false
@@ -1002,7 +1002,7 @@
         "FIT 3"
       ],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.hokejam.lv/lv/pieauguso-hokeja-slidas/4507-16860-bauer-supreme-m40-pieauguso-hokeja-slidas#/1872-slidu_izmers-75/2229-platums-fit_3",
       "status": "VERIFIED",
       "stale": false,
@@ -1018,7 +1018,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas",
       "status": "NOT_TRACKED",
       "stale": false
@@ -1041,7 +1041,7 @@
         "FIT 2"
       ],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-senior/d1438036",
       "status": "VERIFIED",
       "stale": false,
@@ -1068,7 +1068,7 @@
           "size": "9.5"
         },
         {
-          "stock": 1,
+          "stock": 2,
           "fit": "FIT 2",
           "size": "9.5"
         }
@@ -1088,7 +1088,7 @@
         "FIT 2"
       ],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.hokejam.lv/lv/pusaudzu-hokeja-slidas/5674-20394-bauer-supreme-m40-s24-pusaudzu-hokeja-slidas#/102-slidu_izmers-60/2230-platums-fit_2",
       "status": "VERIFIED",
       "stale": false,
@@ -1104,7 +1104,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas",
       "status": "NOT_TRACKED",
       "stale": false
@@ -1127,7 +1127,7 @@
         "FIT 2"
       ],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-intermediate/d1438037",
       "status": "VERIFIED",
       "stale": false,
@@ -1185,7 +1185,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.hokejam.lv/lv/50-junioru-hokeja-slidas",
       "status": "NOT_FOUND",
       "stale": false
@@ -1200,7 +1200,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-junioriem",
       "status": "NOT_TRACKED",
       "stale": false
@@ -1220,7 +1220,7 @@
         "EE"
       ],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-junior/d1438038",
       "status": "VERIFIED",
       "stale": false,
@@ -1253,7 +1253,7 @@
         "D"
       ],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.hokejam.lv/lv/bernu-hokeja-slidas/5729-20693-bauer-supreme-m40-s24-bernu-hokeja-slidas#/94-platums-d/3931-slidu_izmers-y_115",
       "status": "VERIFIED",
       "stale": false,
@@ -1269,7 +1269,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://hokejapasaule.lv/lv_lv/slidas/hokeja-slidas/slidas-berniem",
       "status": "NOT_TRACKED",
       "stale": false
@@ -1292,7 +1292,7 @@
         "D"
       ],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-youth/d1438039",
       "status": "VERIFIED",
       "stale": false,
@@ -1335,7 +1335,7 @@
       "sizes": [],
       "fits": [],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.hokejam.lv/lv/pieauguso-kompozitu-hokeja-nujas/5726-20674-bauer-supreme-fuse-s26-senior-composite-hockey-stick#/27-virsma-grip/31-puse-kreisa_puse/43-liekums-p92/58-cietiba-65",
       "status": "VERIFIED",
       "stale": false,
@@ -1364,7 +1364,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://hokejapasaule.lv/lv_lv/nujas/hokeja-nujas",
       "status": "NOT_TRACKED",
       "stale": false,
@@ -1382,7 +1382,7 @@
       "sizes": [],
       "fits": [],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.sportega.lv/kompozitmateriala-hokeja-nuja-bauer-supreme-fuse-senior/d1585348",
       "status": "VERIFIED",
       "stale": false,
@@ -1510,7 +1510,7 @@
       "sizes": [],
       "fits": [],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.hokejam.lv/lv/pusaudzu-kompozitu-hokeja-nujas/5710-20550-bauer-supreme-fuse-s26-pusaudzu-kompozita-hokeja-nuja#/27-virsma-grip/31-puse-kreisa_puse/86-cietiba-55/934-liekums-p28",
       "status": "VERIFIED",
       "stale": false,
@@ -1537,7 +1537,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://hokejapasaule.lv/lv_lv/nujas/hokeja-nujas",
       "status": "NOT_TRACKED",
       "stale": false,
@@ -1555,7 +1555,7 @@
       "sizes": [],
       "fits": [],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.sportega.lv/kompozitmateriala-hokeja-nuja-bauer-supreme-fuse-intermediate/d1583953",
       "status": "VERIFIED",
       "stale": false,
@@ -1621,7 +1621,7 @@
       "sizes": [],
       "fits": [],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.hokejam.lv/lv/junioru-kompozitu-hokeja-nujas/5694-20455-bauer-supreme-fuse-s26-junioru-kompozita-hokeja-nuja#/27-virsma-grip/31-puse-kreisa_puse/43-liekums-p92/1064-cietiba-30",
       "status": "VERIFIED",
       "stale": false,
@@ -1647,7 +1647,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://hokejapasaule.lv/lv_lv/nujas/hokeja-nujas",
       "status": "NOT_TRACKED",
       "stale": false,
@@ -1665,7 +1665,7 @@
       "sizes": [],
       "fits": [],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.sportega.lv/kompozitmateriala-hokeja-nuja-bauer-supreme-fuse-junior/d1583954",
       "status": "VERIFIED",
       "stale": false,
@@ -1768,7 +1768,7 @@
       "sizes": [],
       "fits": [],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.hokejam.lv/lv/bernu-kompozitu-hokeja-nujas/5533-19891-bauer-supreme-fuse-s26-bernu-kompozita-hokeja-nuja#/27-virsma-grip/31-puse-kreisa_puse/934-liekums-p28/1788-cietiba-20",
       "status": "VERIFIED",
       "stale": false,
@@ -1794,7 +1794,7 @@
       "sizes": [],
       "fits": [],
       "stock": false,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://hokejapasaule.lv/lv_lv/nujas/hokeja-nujas",
       "status": "NOT_TRACKED",
       "stale": false,
@@ -1812,7 +1812,7 @@
       "sizes": [],
       "fits": [],
       "stock": true,
-      "checked": "2026-11-27",
+      "checked": "2026-11-28",
       "url": "https://www.sportega.lv/kompozitmateriala-hokeja-nuja-bauer-supreme-fuse-youth/d1583955",
       "status": "VERIFIED",
       "stale": false,
@@ -1917,6 +1917,10 @@
       [
         "2026-11-27",
         339.99
+      ],
+      [
+        "2026-11-28",
+        339.99
       ]
     ],
     "bauer-vapor-fly40|sp|Junior": [
@@ -1978,6 +1982,10 @@
       ],
       [
         "2026-11-27",
+        329.99
+      ],
+      [
+        "2026-11-28",
         329.99
       ]
     ],
@@ -2041,6 +2049,10 @@
       [
         "2026-11-27",
         143.99
+      ],
+      [
+        "2026-11-28",
+        143.99
       ]
     ],
     "bauer-supreme-m40|hj|Senior": [
@@ -2102,6 +2114,10 @@
       ],
       [
         "2026-11-27",
+        416.49
+      ],
+      [
+        "2026-11-28",
         416.49
       ]
     ],
@@ -2165,6 +2181,10 @@
       [
         "2026-11-27",
         322.99
+      ],
+      [
+        "2026-11-28",
+        322.99
       ]
     ],
     "bauer-supreme-m40|sp|Junior": [
@@ -2226,6 +2246,10 @@
       ],
       [
         "2026-11-27",
+        239.99
+      ],
+      [
+        "2026-11-28",
         239.99
       ]
     ],
@@ -2289,6 +2313,10 @@
       [
         "2026-11-27",
         114.74
+      ],
+      [
+        "2026-11-28",
+        114.74
       ]
     ],
     "bauer-supreme-m40|sp|Youth": [
@@ -2350,6 +2378,10 @@
       ],
       [
         "2026-11-27",
+        139.99
+      ],
+      [
+        "2026-11-28",
         139.99
       ]
     ],
@@ -2413,6 +2445,10 @@
       [
         "2026-11-27",
         288.99
+      ],
+      [
+        "2026-11-28",
+        288.99
       ]
     ],
     "bauer-supreme-fuse-s26|sp|Senior": [
@@ -2474,6 +2510,10 @@
       ],
       [
         "2026-11-27",
+        260.99
+      ],
+      [
+        "2026-11-28",
         260.99
       ]
     ],
@@ -2537,6 +2577,10 @@
       [
         "2026-11-27",
         246.49
+      ],
+      [
+        "2026-11-28",
+        246.49
       ]
     ],
     "bauer-supreme-fuse-s26|sp|Intermediate": [
@@ -2598,6 +2642,10 @@
       ],
       [
         "2026-11-27",
+        215.99
+      ],
+      [
+        "2026-11-28",
         215.99
       ]
     ],
@@ -2661,6 +2709,10 @@
       [
         "2026-11-27",
         195.49
+      ],
+      [
+        "2026-11-28",
+        195.49
       ]
     ],
     "bauer-supreme-fuse-s26|sp|Junior": [
@@ -2722,6 +2774,10 @@
       ],
       [
         "2026-11-27",
+        170.99
+      ],
+      [
+        "2026-11-28",
         170.99
       ]
     ],
@@ -2785,6 +2841,10 @@
       [
         "2026-11-27",
         157.24
+      ],
+      [
+        "2026-11-28",
+        157.24
       ]
     ],
     "bauer-supreme-fuse-s26|sp|Youth": [
@@ -2842,6 +2902,10 @@
       ],
       [
         "2026-11-27",
+        161.99
+      ],
+      [
+        "2026-11-28",
         161.99
       ]
     ],
@@ -2905,6 +2969,10 @@
       [
         "2026-11-27",
         464.99
+      ],
+      [
+        "2026-11-28",
+        464.99
       ]
     ],
     "bauer-vapor-fly40|sp|Intermediate": [
@@ -2966,6 +3034,10 @@
       ],
       [
         "2026-11-27",
+        395.99
+      ],
+      [
+        "2026-11-28",
         395.99
       ]
     ],
@@ -3029,6 +3101,10 @@
       [
         "2026-11-27",
         489.99
+      ],
+      [
+        "2026-11-28",
+        489.99
       ]
     ],
     "bauer-supreme-f40|sp|Intermediate": [
@@ -3090,6 +3166,10 @@
       ],
       [
         "2026-11-27",
+        399.99
+      ],
+      [
+        "2026-11-28",
         399.99
       ]
     ],
@@ -3153,6 +3233,10 @@
       [
         "2026-11-27",
         379.99
+      ],
+      [
+        "2026-11-28",
+        379.99
       ]
     ],
     "bauer-supreme-m40|sp|Intermediate": [
@@ -3215,6 +3299,10 @@
       [
         "2026-11-27",
         319.99
+      ],
+      [
+        "2026-11-28",
+        319.99
       ]
     ],
     "bauer-supreme-f40|hj|Senior": [
@@ -3265,6 +3353,10 @@
       [
         "2026-11-27",
         475.99
+      ],
+      [
+        "2026-11-28",
+        475.99
       ]
     ]
   },
@@ -3307,7 +3399,7 @@
       "url": "https://www.hokejam.lv/lv/48-hokeja-slidas?page=4",
       "status": 200,
       "bytes": 178935,
-      "seconds": 1.3,
+      "seconds": 0.3,
       "found": {
         "selectors": 24,
         "jsonld": 24,
@@ -3318,7 +3410,7 @@
       "url": "https://www.hokejam.lv/lv/48-hokeja-slidas?page=5",
       "status": 200,
       "bytes": 178182,
-      "seconds": 1.3,
+      "seconds": 0.3,
       "found": {
         "selectors": 24,
         "jsonld": 24,
@@ -3329,7 +3421,7 @@
       "url": "https://www.hokejam.lv/lv/48-hokeja-slidas?page=6",
       "status": 200,
       "bytes": 177770,
-      "seconds": 1.3,
+      "seconds": 0.3,
       "found": {
         "selectors": 24,
         "jsonld": 24,
@@ -3362,7 +3454,7 @@
       "url": "https://www.hokejam.lv/lv/48-hokeja-slidas?page=9",
       "status": 200,
       "bytes": 96221,
-      "seconds": 0.8,
+      "seconds": 0.3,
       "found": {
         "selectors": 2,
         "jsonld": 2,
@@ -3373,7 +3465,7 @@
       "url": "https://www.hokejam.lv/lv/241-pusaudzu-hokeja-slidas",
       "status": 200,
       "bytes": 192464,
-      "seconds": 1.3,
+      "seconds": 0.3,
       "found": {
         "selectors": 24,
         "jsonld": 24,
@@ -3384,7 +3476,7 @@
       "url": "https://www.hokejam.lv/lv/241-pusaudzu-hokeja-slidas?page=2",
       "status": 200,
       "bytes": 135707,
-      "seconds": 1.0,
+      "seconds": 0.3,
       "found": {
         "selectors": 9,
         "jsonld": 9,
@@ -3406,7 +3498,7 @@
       "url": "https://www.hokejam.lv/lv/50-junioru-hokeja-slidas?page=2",
       "status": 200,
       "bytes": 180901,
-      "seconds": 1.3,
+      "seconds": 0.3,
       "found": {
         "selectors": 21,
         "jsonld": 21,
@@ -3417,7 +3509,7 @@
       "url": "https://www.hokejam.lv/lv/51-bernu-hokeja-slidas",
       "status": 200,
       "bytes": 192700,
-      "seconds": 1.2,
+      "seconds": 0.3,
       "found": {
         "selectors": 24,
         "jsonld": 24,
@@ -3428,7 +3520,7 @@
       "url": "https://www.hokejam.lv/lv/51-bernu-hokeja-slidas?page=2",
       "status": 200,
       "bytes": 123876,
-      "seconds": 0.9,
+      "seconds": 0.3,
       "found": {
         "selectors": 5,
         "jsonld": 5,
@@ -3494,7 +3586,7 @@
       "url": "https://www.hokejam.lv/lv/30-kompozitu-hokeja-nujas?page=6",
       "status": 200,
       "bytes": 184741,
-      "seconds": 1.3,
+      "seconds": 0.3,
       "found": {
         "selectors": 24,
         "jsonld": 24,
@@ -3560,7 +3652,7 @@
       "url": "https://www.sportega.lv/search?q=bauer%20fly40&page=2",
       "status": 200,
       "bytes": 288514,
-      "seconds": 1.3,
+      "seconds": 1.2,
       "found": {
         "selectors": 5,
         "jsonld": 0,
@@ -3570,8 +3662,8 @@
     {
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-senior/d1502757",
       "status": 200,
-      "bytes": 550383,
-      "seconds": 2.3,
+      "bytes": 550384,
+      "seconds": 0.1,
       "variants": {
         "sizes": [
           "7",
@@ -3609,7 +3701,7 @@
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-intermediate/d1502758",
       "status": 200,
       "bytes": 502671,
-      "seconds": 2.1,
+      "seconds": 0.1,
       "variants": {
         "sizes": [
           "5",
@@ -3661,7 +3753,7 @@
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-junior/d1502759",
       "status": 200,
       "bytes": 490056,
-      "seconds": 2.0,
+      "seconds": 0.1,
       "variants": {
         "sizes": [
           "1",
@@ -3692,8 +3784,8 @@
     {
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-vapor-fly40-youth/d1502760",
       "status": 200,
-      "bytes": 484839,
-      "seconds": 2.2,
+      "bytes": 484828,
+      "seconds": 0.1,
       "variants": {
         "sizes": [
           "Yth 8",
@@ -3747,7 +3839,7 @@
       "url": "https://www.sportega.lv/search?q=bauer+f40",
       "status": 200,
       "bytes": 283402,
-      "seconds": 1.4,
+      "seconds": 1.3,
       "found": {
         "selectors": 5,
         "jsonld": 0,
@@ -3758,7 +3850,7 @@
       "url": "https://www.sportega.lv/search?q=bauer%20f40&page=2",
       "status": 200,
       "bytes": 277080,
-      "seconds": 1.2,
+      "seconds": 1.1,
       "found": {
         "selectors": 5,
         "jsonld": 0,
@@ -3768,8 +3860,8 @@
     {
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-f40-senior/d1583973",
       "status": 200,
-      "bytes": 566006,
-      "seconds": 2.3,
+      "bytes": 566007,
+      "seconds": 0.1,
       "variants": {
         "sizes": [
           "7",
@@ -3806,8 +3898,8 @@
     {
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-f40-intermediate/d1583974",
       "status": 200,
-      "bytes": 516629,
-      "seconds": 2.0,
+      "bytes": 516631,
+      "seconds": 0.0,
       "variants": {
         "sizes": [
           "4",
@@ -3859,7 +3951,7 @@
       "url": "https://www.sportega.lv/search?q=bauer+m40",
       "status": 200,
       "bytes": 255963,
-      "seconds": 1.3,
+      "seconds": 1.2,
       "found": {
         "selectors": 5,
         "jsonld": 0,
@@ -3869,8 +3961,8 @@
     {
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-senior/d1438036",
       "status": 200,
-      "bytes": 448856,
-      "seconds": 1.5,
+      "bytes": 448846,
+      "seconds": 0.0,
       "variants": {
         "sizes": [
           "8",
@@ -3918,8 +4010,8 @@
     {
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-intermediate/d1438037",
       "status": 200,
-      "bytes": 452951,
-      "seconds": 2.6,
+      "bytes": 452952,
+      "seconds": 0.0,
       "variants": {
         "sizes": [
           "5",
@@ -3948,8 +4040,8 @@
     {
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-junior/d1438038",
       "status": 200,
-      "bytes": 435103,
-      "seconds": 1.5,
+      "bytes": 435104,
+      "seconds": 0.1,
       "variants": {
         "sizes": [
           "3"
@@ -3995,8 +4087,8 @@
     {
       "url": "https://www.sportega.lv/hokeja-slidas-bauer-supreme-m40-youth/d1438039",
       "status": 200,
-      "bytes": 444510,
-      "seconds": 1.5,
+      "bytes": 444511,
+      "seconds": 0.0,
       "variants": {
         "sizes": [
           "Yth 8",
@@ -4087,7 +4179,7 @@
     {
       "url": "https://www.sportega.lv/search?q=bauer+supreme+fuse",
       "status": 200,
-      "bytes": 298556,
+      "bytes": 298574,
       "seconds": 1.5,
       "found": {
         "selectors": 5,
@@ -4098,8 +4190,8 @@
     {
       "url": "https://www.sportega.lv/search?q=bauer%20supreme%20fuse&page=2",
       "status": 200,
-      "bytes": 299398,
-      "seconds": 1.3,
+      "bytes": 299397,
+      "seconds": 1.2,
       "found": {
         "selectors": 5,
         "jsonld": 0,
@@ -4109,7 +4201,7 @@
     {
       "url": "https://www.sportega.lv/search?q=bauer%20supreme%20fuse&page=3",
       "status": 200,
-      "bytes": 299617,
+      "bytes": 299654,
       "seconds": 1.3,
       "found": {
         "selectors": 5,
@@ -4120,7 +4212,7 @@
     {
       "url": "https://www.sportega.lv/search?q=bauer%20supreme%20fuse&page=4",
       "status": 200,
-      "bytes": 293724,
+      "bytes": 293742,
       "seconds": 1.2,
       "found": {
         "selectors": 5,
@@ -4132,7 +4224,7 @@
       "url": "https://www.sportega.lv/kompozitmateriala-hokeja-nuja-bauer-supreme-fuse-senior/d1585348",
       "status": 200,
       "bytes": 499572,
-      "seconds": 1.7,
+      "seconds": 0.1,
       "variants": {
         "sizes": [],
         "fits": [],
@@ -4222,8 +4314,8 @@
     {
       "url": "https://www.sportega.lv/kompozitmateriala-hokeja-nuja-bauer-supreme-fuse-intermediate/d1583953",
       "status": 200,
-      "bytes": 480366,
-      "seconds": 1.9,
+      "bytes": 480367,
+      "seconds": 0.1,
       "variants": {
         "sizes": [],
         "fits": [],
@@ -4309,8 +4401,8 @@
     {
       "url": "https://www.sportega.lv/kompozitmateriala-hokeja-nuja-bauer-supreme-fuse-junior/d1583954",
       "status": 200,
-      "bytes": 514670,
-      "seconds": 2.2,
+      "bytes": 514669,
+      "seconds": 0.1,
       "variants": {
         "sizes": [],
         "fits": [],
@@ -4397,8 +4489,8 @@
     {
       "url": "https://www.sportega.lv/kompozitmateriala-hokeja-nuja-bauer-supreme-fuse-youth/d1583955",
       "status": 200,
-      "bytes": 470482,
-      "seconds": 1.8,
+      "bytes": 470483,
+      "seconds": 0.0,
       "variants": {
         "sizes": [],
         "fits": [],
